@@ -1,0 +1,29 @@
+.banner img {
+    width: 100%;
+}
+.unslider {
+    position: relative;
+}
+.unslider-nav {
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+}
+.unslider-arrow {
+    position: absolute;
+    top: 50%;
+    font-size: 2em;
+    visibility: hidden;
+}
+.unslider-arrow:before {
+    visibility: visible;
+}
+.unslider-arrow:after {
+    visibility: visible;
+}
+.unslider-arrow.prev:before {
+    content: '<';
+}
+.unslider-arrow.next:after {
+    content: '>';
+}
