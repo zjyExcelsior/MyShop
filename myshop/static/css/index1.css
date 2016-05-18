@@ -71,7 +71,7 @@ input:focus {
     display: block;
     width: 28px;
     height: 30px;
-    margin: 30px auto 10px;
+    margin: 12px auto 10px;
 }
 #toggle span:after, #toggle span:before {
     content: "";
