@@ -4,67 +4,36 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/css/normalize.css">
     <!-- <link rel="stylesheet" href="static/css/unslider.css">
     <link rel="stylesheet" href="static/css/unslider-dots.css">
     <link rel="stylesheet" href="static/css/index.css"> -->
-    <link rel="stylesheet" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/css/bootstrap-theme.min.css">
-    <!-- <link rel="stylesheet" href="static/css/burger.min.css"> -->
+    <!-- <link rel="stylesheet" href="static/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="static/css/bootstrap-theme.min.css"> -->
     <link rel="stylesheet" href="static/css/index1.css">
     <title>My Shop</title>
   </head>
   <body>
-    <div class="container nav">
-      <div class="row">
-        <div class="col-md-4 left col-xs-4">
-          <!-- <img class="hbg" src="static/images/icon_menu.png"> -->
-          <a href="#menu" id="toggle"><span></span></a>
-          <div id="menu">
-            <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-4 center col-xs-2">
-          <form>
-            <input type="search" placeholder="search me?" name="product">
-          </form>
-        </div>
-        <div class="col-md-4 right col-xs-6">
+    <div class="nav">
+      <div id="menu">
+        <a href="#"><img src="static/images/icon_menu.png"></a>
+      </div>
+      <div id="search">
+        <form id="search_form">
+          <input type="search" placeholder="search anything" name="search" id="search_it">
+        </form>
+      </div>
+      <div id="car">
+        <div class="denglu">
           <a href="#">登录</a>
           <a href="#">免费注册</a>
-          <img src="static/images/icon_car.png">
         </div>
-      </div>
-    </div>
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-      <img src="static/images/ZattaShop.png" alt="pixel" id="title">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-      </ol>
-
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <img src="static/images/banner1.png" alt="pixel">
-        </div>
-        <div class="item">
-          <img src="static/images/banner2.png" alt="pixel">
-        </div>
-        <div class="item">
-          <img src="static/images/banner3.png" alt="pixel">
-        </div>
+        <a href="#"><img src="static/images/icon_car.png" id="car_img"></a>
       </div>
     </div>
     <script src="static/js/jquery.min.js"></script>
     <script src="static/js/unslider-min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-    <!--<script src="static/js/burger.min.js"></script>-->
+    <!-- <script src="static/js/bootstrap.min.js"></script> -->
     <script src="static/js/index1.js"></script>
   </body>
 </html>
