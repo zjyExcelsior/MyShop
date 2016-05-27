@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/user.css">
+    <title>个人中心</title>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <i class="menu-icon"></i>
+            <form class="searchBar transition" id="search">
+                <input type="search" class="ft-m transition" width="0">
+                <div class="submit transition pointer"></div>
+            </form>
+            <div class="user ft-m">
+                <a class="user-cart">
+                    <span class="number">2</span>
+                </a>
+                <!-- <a href="login.html" class="nologin">登录</a>
+                <a href="regist.html" class="nologin ft-grey">免费注册</a> -->
+                <a href="user.html" class="username">CiCi</a>
+                
+            </div>
+        </div>
+        <ul class="menu-list" style="display:none">
+            <li><a href="">所有商品</a></li>
+            <li><a href="">木器使用保养</a></li>
+            <li><a href="">联系我们</a></li>
+        </ul>
+    </header>
+    <div class="banner logo-center yellowhalf"></div>
+    <div class="content">
+        <h2 class="ft-xl yellowBar page-title ">个人中心</h2>
+        <div class="user-con">
+            <div class="user-info">
+                <div class="user-img">
+                    <img src="image/user/default_user.png">
+                </div>
+                <div class="text">
+                    <div class="username">CiCi</div>
+                    <div class="ft-grey">下午好(,,• ₃ •,,)～</div>
+                </div>
+                <div class="btn ft-l" id="mdfy">修改个人信息</div>
+            </div>
+        </div>
+        <div class="user-con">
+            <h3 class="title">收货地址管理</h3>
+            <ul class="address-list noscroll">
+                <li class="addnew"></li>
+                <li>
+                    <div class="name">
+                        童陈陈
+                        <span class="hoverYellow pointer">删除</span>
+                        <span class="hoverYellow pointer">编辑</span>
+                    </div>
+                    <ul class="detail">
+                        <li>15757116455</li>
+                        <li>浙江省杭州市西湖区</li>
+                        <li>留和路288号浙江工业大学屏峰校区</li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="name">
+                        童陈陈
+                        <span class="hoverYellow pointer">删除</span>
+                        <span class="hoverYellow pointer">编辑</span>
+                    </div>
+                    <ul class="detail">
+                        <li>15757116455</li>
+                        <li>浙江省杭州市西湖区</li>
+                        <li>留和路288号浙江工业大学屏峰校区</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="user-con">
+            <h3 class="title">所有订单<span>待支付</span><span>待收货</span><span>已关闭</span></h3>
+            <div class="user-order topay">
+                <div class="head">
+                    <div class="ft-xl">等待支付</div>
+                    <div>
+                        <span class="time">2016-05-19</span>
+                        <div class="sum">
+                            订单金额：<span class="ft-xl">103.60</span>
+                        </div>
+                        <span class="number">订单号：1887263719799100</span>
+                    </div>
+                </div>
+                <ul class="order-list ft-m">
+                    <li class="gds-con">
+                        <div class="image" style="background-image: url(image/goods/m1.png)"></div>
+                        <div class="name"><b class="ellipsis">无印良品风U型抱枕</b><span>深灰白</span></div>
+                        <div class="sum"><span class="price">67.70</span>x1</div>
+                    </li>
+                    <li class="gds-con">
+                        <div class="image" style="background-image: url(image/goods/m2.png)"></div>
+                        <div class="name"><b class="ellipsis">日式单耳陶瓷碗</b><span>乳白色</span></div>
+                        <div class="sum"><span class="price">26.00</span>x1</div>
+                    </li>
+                    <li class="gds-con">
+                        <div class="image" style="background-image: url(image/goods/m3.png)"></div>
+                        <div class="name"><b class="ellipsis">创意木质手工皂盒</b><span>本木色</span></div>
+                        <div class="sum"><span class="price">9.90</span>x1</div>
+                    </li>
+                </ul>
+                <div class="user-order-btns">
+                    <div class="btn pay">立即支付</div>
+                    <div class="cancel pointer">取消订单</div>
+                </div>
+            </div>
+            <div class="user-order sended">
+                <div class="head">
+                    <p class="ft-xl">已发货</p>
+                    <p>
+                        <span class="time">2016-05-19</span>
+                        <div class="sum">
+                            订单金额：<span class="ft-xl">103.60</span>
+                        </div>
+                        <span class="number">订单号：1887263719799100</span>
+                    </p>
+                </div>
+                <ul class="order-list ft-m">
+                    <li class="gds-con">
+                        <div class="image" style="background-image: url(image/goods/m1.png)"></div>
+                        <div class="name">无印良品风U型抱枕<span>深灰白</span></div>
+                        <div class="sum"><span class="price">67.70</span>x1</div>
+                    </li>
+                    <li class="gds-con">
+                        <div class="image" style="background-image: url(image/goods/m2.png)"></div>
+                        <div class="name">日式单耳陶瓷碗<span>乳白色</span></div>
+                        <div class="sum"><span class="price">26.00</span>x1</div>
+                    </li>
+                    <li class="gds-con">
+                        <div class="image" style="background-image: url(image/goods/m3.png)"></div>
+                        <div class="name">创意木质手工皂盒<span>本木色</span></div>
+                        <div class="sum"><span class="price">9.90</span>x1</div>
+                    </li>
+                </ul>
+                <div class="user-order-btns">
+                    <div class="btn pay">确认收货</div>
+                </div>
+            </div>
+            <div class="user-order closed">
+                <div class="head">
+                    <p class="ft-xl">已关闭</p>
+                    <p>
+                        <span class="time">2016-05-19</span>
+                        <div class="sum">
+                            订单金额：<span class="ft-xl">103.60</span>
+                        </div>
+                        <span class="number">订单号：1887263719799100</span>
+                    </p>
+                </div>
+                <ul class="order-list ft-m">
+                    <li class="gds-con">
+                        <div class="image" style="background-image: url(image/goods/m1.png)"></div>
+                        <div class="name">无印良品风U型抱枕<span>深灰白</span></div>
+                        <div class="sum"><span class="price">67.70</span>x1</div>
+                    </li>
+                    <li class="gds-con">
+                        <div class="image" style="background-image: url(image/goods/m2.png)"></div>
+                        <div class="name">日式单耳陶瓷碗<span>乳白色</span></div>
+                        <div class="sum"><span class="price">26.00</span>x1</div>
+                    </li>
+                    <li class="gds-con">
+                        <div class="image" style="background-image: url(image/goods/m3.png)"></div>
+                        <div class="name">创意木质手工皂盒<span>本木色</span></div>
+                        <div class="sum"><span class="price">9.90</span>x1</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="usredt-con user-mdfy popup">
+        <form>
+            <div class="usredt-input">
+                <input type="text" class="username norepeat" placeholder="用户名">
+                <input type="password" class="password norepeat" placeholder="密码">
+                <input type="password" class="password norepeat" placeholder="请重新输入密码">
+            </div>
+            <div class="btn save">保存</div>
+            <div class="btn cancel" id="cancel">取消</div>
+        </form>
+    </div>
+    <footer> 
+        @ZattaShop, 2016 all right served.
+    </footer>
+    <script src="/static/bower_components/zepto/zepto.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script type="text/javascript">
+        $("#mdfy").on("click",function(){
+            $(".user-mdfy").addClass("show");
+        });
+        $("#cancel").on("click",function(){
+            $(".user-mdfy").removeClass("show");
+        });
+    </script>
+</body>
+</html>

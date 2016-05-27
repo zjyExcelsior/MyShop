@@ -1,0 +1,88 @@
+.user-con {
+  width: 100%;
+  margin-top: 3.5rem; }
+  .user-con h3 span {
+    padding: 0 .9rem;
+    border-left: 1px solid #efefef;
+    color: #999; }
+  .user-con h3 span:first-child {
+    margin-left: .9rem; }
+
+.user-info {
+  margin-top: 3rem;
+  height: 8rem;
+  overflow: hidden; }
+  .user-info .user-img {
+    float: left;
+    height: 7.5rem;
+    width: 7.5rem; }
+  .user-info .text {
+    float: left;
+    margin: 2rem 1rem;
+    line-height: 2rem; }
+  .user-info .btn {
+    float: right;
+    height: 2.6rem;
+    margin: 2.5rem 0;
+    color: #222; }
+
+.user-order {
+  position: relative;
+  margin-top: 1.8rem;
+  border: 2px solid #ffd245;
+  border-radius: .5rem;
+  overflow: auto; }
+  .user-order.closed {
+    border: 2px solid #f1f1f1; }
+  .user-order.closed .head {
+    background-color: #f1f1f1; }
+  .user-order .head {
+    background-color: #ffd245;
+    padding: .8rem 2rem;
+    line-height: 2rem;
+    overflow: hidden; }
+  .user-order .sum {
+    float: right; }
+  .user-order .time, .user-order .number {
+    float: left; }
+  .user-order .time {
+    margin-right: 1rem; }
+
+.order-list {
+  padding: 0 2rem; }
+  .order-list li {
+    margin: 1rem 0; }
+
+.user-order-btns {
+  position: absolute;
+  right: 1.5rem;
+  top: 7rem;
+  width: 6rem;
+  margin-bottom: .6rem; }
+  .user-order-btns div {
+    width: 100%;
+    padding: .7rem; }
+  .user-order-btns .pay {
+    color: #222; }
+  .user-order-btns .cancel {
+    box-sizing: border-box;
+    color: #666;
+    text-align: center; }
+  @media screen and (max-width: 767px) {
+    .user-order-btns {
+      position: initial;
+      float: right;
+      margin-right: 2rem; } }
+
+.user-mdfy {
+  display: none;
+  width: 75%;
+  padding: 5% 7%;
+  text-align: center; }
+  .user-mdfy input {
+    margin-bottom: 1rem; }
+  .user-mdfy .btn {
+    width: 40%;
+    margin: 1rem 3%; }
+  .user-mdfy.show {
+    display: block; }

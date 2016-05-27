@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/cart.css">
+    <title>购物车</title>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <i class="menu-icon"></i>
+            <form class="searchBar transition" id="search">
+                <input type="search" class="ft-m transition" width="0">
+                <div class="submit transition pointer"></div>
+            </form>
+            <div class="user ft-m">
+                <a class="user-cart">
+                    <span class="number">2</span>
+                </a>
+                <!-- <a href="login.html" class="nologin">登录</a>
+                <a href="regist.html" class="nologin ft-grey">免费注册</a> -->
+                <a href="user.html" class="username">CiCi</a>
+                
+            </div>
+        </div>
+        <ul class="menu-list" style="display:none">
+            <li><a href="">所有商品</a></li>
+            <li><a href="">木器使用保养</a></li>
+            <li><a href="">联系我们</a></li>
+        </ul>
+    </header>
+    <div class="banner logo-center yellowhalf"></div>
+    <div class="content">
+        <h2 class="ft-xl yellowBar page-title ">购物车</h2>
+        <ul class="order-list ft-m cart-list hoverShadow">
+            <li class="gds-con">
+                <div class="cart-radio"><i class="radio"></i></div>
+                <div class="image" style="background-image: url(image/goods/m1.png)"></div>
+                <div class="right">
+                    <div class="name"><b class="ellipsis">无印良品风U型抱枕</b><span>深灰白</span></div>
+                    <div class="number-pick ft-l"><i class="dec"></i><span>1</span><i class="add"></i></div>
+                    <div class="sum"><span class="price">67.70</span>x1</div>
+                    <div class="remove hoverYellow">删除</div>
+                </div>
+            </li>
+            <li class="gds-con">
+                <div class="cart-radio"><i class="radio"></i></div>
+                <div class="image" style="background-image: url(image/goods/m2.png)"></div>
+                <div class="right">
+                    <div class="name"><b class="ellipsis">日式单耳陶瓷碗</b><span>乳白色</span></div>
+                    <div class="number-pick ft-l"><i class="dec"></i><span>4</span><i class="add"></i></div>
+                    <div class="sum"><span class="price">26.00</span>x1</div>
+                    <div class="remove hoverYellow">删除</div>
+                </div>
+            </li>
+            <li class="gds-con">
+                <div class="cart-radio"><i class="radio"></i></div>
+                <div class="image" style="background-image: url(image/goods/m3.png)"></div>
+                <div class="right">
+                    <div class="name"><b class="ellipsis">创意木质手工皂盒</b><span>本木色</span></div>
+                    <div class="number-pick ft-l"><i class="dec"></i><span>10</span><i class="add"></i></div>
+                    <div class="sum"><span class="price">9.90</span>x1</div>
+                    <div class="remove hoverYellow">删除</div>
+                </div>
+            </li>
+        </ul>
+        <div class="cart-sum">
+            <div class="selected">已选中 1 件商品</div>
+            <div class="btn">结算</div>
+            <div class="price"> 67.70</div>
+        </div>
+    </div>
+    <footer> 
+        @ZattaShop, 2016 all right served.
+    </footer>
+    <script src="/static/bower_components/zepto/zepto.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/numInput.js"></script>
+    <script>
+        cmn.toggleStatus($(".cart-radio .radio"),{});
+        $(".gds-con .remove").on("click",function () {
+            $(this).parents(".gds-con").remove();
+        });
+    </script>
+</body>
+</html>

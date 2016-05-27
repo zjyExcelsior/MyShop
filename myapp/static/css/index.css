@@ -1,0 +1,130 @@
+.logo-center {
+  margin-top: 2rem; }
+
+.index-gly {
+  width: 100%;
+  height: 625px;
+  margin-top: 2rem; }
+  @media screen and (max-width: 767px) {
+    .index-gly {
+      height: 210px; } }
+  @media screen and (min-width: 768px) and (max-width: 1439px) {
+    .index-gly {
+      height: 390px; } }
+  .index-gly .pagination {
+    top: initial;
+    bottom: 1rem; }
+    .index-gly .pagination span {
+      background-color: transparent;
+      border: 1px solid #5a5a5a; }
+    .index-gly .pagination span.swiper-pagination-bullet-active {
+      background-color: #5a5a5a; }
+  .index-gly .image {
+    background-size: cover; }
+
+.index-goods {
+  position: relative;
+  padding-top: 6rem; }
+  .index-goods:before {
+    content: "";
+    position: absolute;
+    top: -1.75rem;
+    left: 50%;
+    z-index: 2;
+    height: 3.5rem;
+    width: 3.5rem;
+    margin-left: -1.75rem;
+    background: url("../image/index/icon_down.png");
+    background-size: 100% 100%; }
+  .index-goods h2 {
+    text-align: center;
+    font-family: "Simsun";
+    font-weight: bold;
+    margin-bottom: 1.5rem; }
+  .index-goods .sort-list li {
+    padding: .8rem; }
+  .index-goods .sort-list .image {
+    background-size: 100%; }
+  .index-goods .more {
+    width: 9rem;
+    padding: .5rem 0;
+    margin: 3.5rem auto;
+    color: #cacaca;
+    text-align: center;
+    border: .15rem solid #eee;
+    transition: all .4s; }
+    .index-goods .more:hover {
+      color: #999;
+      border-color: #999; }
+
+.wood-intro {
+  height: 620px;
+  background: #222 url("../image/index/wood_intro.png") center no-repeat;
+  background-size: auto 100%; }
+  @media screen and (max-width: 767px) {
+    .wood-intro {
+      height: 200px; } }
+  @media screen and (min-width: 768px) and (max-width: 1439px) {
+    .wood-intro {
+      height: 400px; } }
+
+.wood-text {
+  padding: 2.2rem 1.5rem;
+  overflow: auto; }
+  .wood-text .image {
+    float: right;
+    width: 30%; }
+    .wood-text .image img {
+      width: 100%; }
+  .wood-text .text {
+    margin-right: 32%; }
+  .wood-text h4 {
+    margin: .5rem;
+    font-size: 2em;
+    font-weight: bold; }
+    @media screen and (min-width: 1440px) {
+      .wood-text h4.pcfloat {
+        float: left; } }
+  .wood-text p {
+    margin: 1em 0;
+    line-height: 1.6em; }
+
+.contact {
+  display: flex;
+  flex-wrap: wrap; }
+  .contact .text, .contact .image {
+    width: 50%;
+    height: 420px; }
+    @media screen and (max-width: 767px) {
+      .contact .text, .contact .image {
+        height: 150px; } }
+    @media screen and (min-width: 768px) and (max-width: 1439px) {
+      .contact .text, .contact .image {
+        height: 250px; } }
+  .contact .text {
+    background: #222 url("../image/index/contact.png") center center no-repeat;
+    background-size: 10rem; }
+  .contact .image {
+    background: url("../image/index/contact_img.png") center;
+    background-size: cover; }
+  .contact .email {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 320px;
+    background-color: #ffd245; }
+    @media screen and (max-width: 767px) {
+      .contact .email {
+        height: 100px; } }
+    @media screen and (min-width: 768px) and (max-width: 1439px) {
+      .contact .email {
+        height: 160px; } }
+    .contact .email span {
+      align-self: center;
+      display: block;
+      width: 30%;
+      min-width: 280px;
+      padding: .6em 0;
+      border-bottom: 0.1rem solid #222; }
+    .contact .email a {
+      float: right; }

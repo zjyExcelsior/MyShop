@@ -1,0 +1,18 @@
+.lr-con {
+  width: 90%;
+  max-width: 450px;
+  height: 60%; }
+  .lr-con .logo {
+    width: 90%;
+    height: 12rem;
+    margin: 0 5%; }
+  .lr-con .btn {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1.6rem;
+    letter-spacing: 1em;
+    text-indent: 1em; }
+
+.lr-input {
+  margin-bottom: 7rem; }
