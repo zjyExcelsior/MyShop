@@ -9,39 +9,17 @@
     <title>个人中心</title>
 </head>
 <body>
-    <header>
-        <div class="header-top">
-            <i class="menu-icon"></i>
-            <form class="searchBar transition" id="search">
-                <input type="search" class="ft-m transition" width="0">
-                <div class="submit transition pointer"></div>
-            </form>
-            <div class="user ft-m">
-                <a class="user-cart">
-                    <span class="number">2</span>
-                </a>
-                <!-- <a href="login.html" class="nologin">登录</a>
-                <a href="regist.html" class="nologin ft-grey">免费注册</a> -->
-                <a href="user.html" class="username">CiCi</a>
-                
-            </div>
-        </div>
-        <ul class="menu-list" style="display:none">
-            <li><a href="">所有商品</a></li>
-            <li><a href="">木器使用保养</a></li>
-            <li><a href="">联系我们</a></li>
-        </ul>
-    </header>
+    {% include "header.html" %}
     <div class="banner logo-center yellowhalf"></div>
     <div class="content">
         <h2 class="ft-xl yellowBar page-title ">个人中心</h2>
         <div class="user-con">
             <div class="user-info">
                 <div class="user-img">
-                    <img src="image/user/default_user.png">
+                    <img src="{{ url_for('static', filename='image/user/default_user.png') }}">
                 </div>
                 <div class="text">
-                    <div class="username">CiCi</div>
+                    <div class="username">{{ current_user.username }}</div>
                     <div class="ft-grey">下午好(,,• ₃ •,,)～</div>
                 </div>
                 <div class="btn ft-l" id="mdfy">修改个人信息</div>
@@ -92,17 +70,17 @@
                 </div>
                 <ul class="order-list ft-m">
                     <li class="gds-con">
-                        <div class="image" style="background-image: url(image/goods/m1.png)"></div>
+                        <div class="image" style="background-image: url({{ url_for('static', filename='image/goods/m1.png') }})"></div>
                         <div class="name"><b class="ellipsis">无印良品风U型抱枕</b><span>深灰白</span></div>
                         <div class="sum"><span class="price">67.70</span>x1</div>
                     </li>
                     <li class="gds-con">
-                        <div class="image" style="background-image: url(image/goods/m2.png)"></div>
+                        <div class="image" style="background-image: url({{ url_for('static', filename='image/goods/m2.png') }})"></div>
                         <div class="name"><b class="ellipsis">日式单耳陶瓷碗</b><span>乳白色</span></div>
                         <div class="sum"><span class="price">26.00</span>x1</div>
                     </li>
                     <li class="gds-con">
-                        <div class="image" style="background-image: url(image/goods/m3.png)"></div>
+                        <div class="image" style="background-image: url({{ url_for('static', filename='image/goods/m3.png') }})"></div>
                         <div class="name"><b class="ellipsis">创意木质手工皂盒</b><span>本木色</span></div>
                         <div class="sum"><span class="price">9.90</span>x1</div>
                     </li>
@@ -125,17 +103,17 @@
                 </div>
                 <ul class="order-list ft-m">
                     <li class="gds-con">
-                        <div class="image" style="background-image: url(image/goods/m1.png)"></div>
+                        <div class="image" style="background-image: url({{ url_for('static', filename='image/goods/m1.png') }})"></div>
                         <div class="name">无印良品风U型抱枕<span>深灰白</span></div>
                         <div class="sum"><span class="price">67.70</span>x1</div>
                     </li>
                     <li class="gds-con">
-                        <div class="image" style="background-image: url(image/goods/m2.png)"></div>
+                        <div class="image" style="background-image: url({{ url_for('static', filename='image/goods/m2.png') }})"></div>
                         <div class="name">日式单耳陶瓷碗<span>乳白色</span></div>
                         <div class="sum"><span class="price">26.00</span>x1</div>
                     </li>
                     <li class="gds-con">
-                        <div class="image" style="background-image: url(image/goods/m3.png)"></div>
+                        <div class="image" style="background-image: url({{ url_for('static', filename='image/goods/m3.png') }})"></div>
                         <div class="name">创意木质手工皂盒<span>本木色</span></div>
                         <div class="sum"><span class="price">9.90</span>x1</div>
                     </li>
@@ -157,17 +135,17 @@
                 </div>
                 <ul class="order-list ft-m">
                     <li class="gds-con">
-                        <div class="image" style="background-image: url(image/goods/m1.png)"></div>
+                        <div class="image" style="background-image: url({{ url_for('static', filename='image/goods/m1.png') }})"></div>
                         <div class="name">无印良品风U型抱枕<span>深灰白</span></div>
                         <div class="sum"><span class="price">67.70</span>x1</div>
                     </li>
                     <li class="gds-con">
-                        <div class="image" style="background-image: url(image/goods/m2.png)"></div>
+                        <div class="image" style="background-image: url({{ url_for('static', filename='image/goods/m2.png') }})"></div>
                         <div class="name">日式单耳陶瓷碗<span>乳白色</span></div>
                         <div class="sum"><span class="price">26.00</span>x1</div>
                     </li>
                     <li class="gds-con">
-                        <div class="image" style="background-image: url(image/goods/m3.png)"></div>
+                        <div class="image" style="background-image: url({{ url_for('static', filename='image/goods/m3.png') }})"></div>
                         <div class="name">创意木质手工皂盒<span>本木色</span></div>
                         <div class="sum"><span class="price">9.90</span>x1</div>
                     </li>
@@ -176,14 +154,15 @@
         </div>
     </div>
     <div class="usredt-con user-mdfy popup">
-        <form>
+        <form method="post">
             <div class="usredt-input">
-                <input type="text" class="username norepeat" placeholder="用户名">
-                <input type="password" class="password norepeat" placeholder="密码">
-                <input type="password" class="password norepeat" placeholder="请重新输入密码">
+                {{ user_form.username(class="username norepeat", placeholder="用户名") }}
+                {{ user_form.password(class="password norepeat", placeholder="密码") }}
+                {{ user_form.password2(class="password norepeat", placeholder="请重新输入密码") }}
             </div>
-            <div class="btn save">保存</div>
-            <div class="btn cancel" id="cancel">取消</div>
+            {{ user_form.submit(class="btn save") }}
+            <input class="btn cancel" id="cancel" value="取消"></input>
+            {{ user_form.csrf_token }}
         </form>
     </div>
     <footer> 
@@ -192,6 +171,23 @@
     <script src="/static/bower_components/zepto/zepto.min.js"></script>
     <script src="/static/js/common.js"></script>
     <script type="text/javascript">
+        {% if get_flashed_messages() %}
+            $(".user-mdfy").addClass("show");
+            var alertBox = function(text){
+                var ab = $('<div class="alert-box">'+text+'</div>');
+
+                $(".popup").append(ab);
+                return function(){
+                    ab.show();
+                    $(".popup").one("click",function(){
+                        ab.hide();
+                    });
+                };
+            };
+            {% for message in get_flashed_messages() %}
+                alertBox(String("{{ message }}"))();
+            {% endfor %}
+        {% endif %}
         $("#mdfy").on("click",function(){
             $(".user-mdfy").addClass("show");
         });

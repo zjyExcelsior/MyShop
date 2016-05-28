@@ -1,0 +1,22 @@
+{% extends "auth/layout.html" %}
+
+{% block form %}
+    <form method="post">
+        <div class="usredt-input lr-input">
+            <input type="text" class="username norepeat ft-xl" placeholder="用户名", name="username">
+            <input type="password" class="password norepeat ft-xl" placeholder="密码", name="password">
+        </div>
+        <input type="submit" value="登录" class="btn">
+        {{ form.csrf_token }}
+    </form>
+{% endblock %}
+
+{% block script %}
+    {% if form.username.errors %}
+        var username_error = String("{{ form.username.errors[0] }}");
+        alertBox(username_error)();
+    {% elif get_flashed_messages() %}
+        var username_error = String("{{ get_flashed_messages()[0] }}");
+        alertBox(username_error)();
+    {% endif %}
+{% endblock %}

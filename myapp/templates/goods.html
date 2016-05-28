@@ -9,31 +9,10 @@
     <title>商品详情</title>
 </head>
 <body>
-    <header>
-        <div class="header-top">
-            <i class="menu-icon"></i>
-            <form class="searchBar transition" id="search">
-                <input type="search" class="ft-m transition" width="0">
-                <div class="submit transition pointer"></div>
-            </form>
-            <div class="user ft-m">
-                <a class="user-cart">
-                    <span class="number">2</span>
-                </a>
-                <!-- <a href="login.html" class="nologin">登录</a>
-                <a href="regist.html" class="nologin ft-grey">免费注册</a> -->
-                <a href="user.html" class="username">CiCi</a>
-            </div>
-        </div>
-        <ul class="menu-list" style="display:none">
-            <li><a href="">所有商品</a></li>
-            <li><a href="">木器使用保养</a></li>
-            <li><a href="">联系我们</a></li>
-        </ul>
-    </header>
+    {% include "header.html" %}
     <div class="goods-info logo-center">
         <div class="goods-image yellowhalf" id="image">
-            <img src="image/goods/l1.png">
+            <img src="/static/image/goods/l1.png">
         </div>
         <div class="goods-descr">
             <h2>无印良品风U型抱枕</h2>
@@ -58,7 +37,7 @@
         <h3 class="title">看了该宝贝的宝宝还看了</h3>
         <ul class="item-list max4 goods-list ft-m">
             <li>
-                <div class="image" style="background-image: url(image/goods/m4.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m4.png)"></div>
                 <ul class="goods-colors">
                     <li style="background-color: #1e353f"></li>
                 </ul>
@@ -67,7 +46,7 @@
                 <div class="price">52.25</div>
             </li>
             <li>
-                <div class="image" style="background-image: url(image/goods/m5.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m5.png)"></div>
                 <ul class="goods-colors">
                     <li style="background-color: #c1925b"></li>
                 </ul>
@@ -76,7 +55,7 @@
                 <div class="price">16.00</div>
             </li>
             <li>
-                <div class="image" style="background-image: url(image/goods/m2.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m2.png)"></div>
                 <ul class="goods-colors">
                     <li style="background-color: #c1925b"></li>
                     <li style="background-color: #f5f6f6"></li>
@@ -86,7 +65,7 @@
                 <div class="price">26.00</div>
             </li>
             <li>
-                <div class="image" style="background-image: url(image/goods/m6.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m6.png)"></div>
                 <ul class="goods-colors">
                     <li style="background-color: #f5f6f6"></li>
                 </ul>
@@ -95,7 +74,7 @@
                 <div class="price">195.00</div>
             </li>
             <li>
-                <div class="image" style="background-image: url(image/goods/m7.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m7.png)"></div>
                 <ul class="goods-colors">
                     <li style="background-color: #ffdbb7"></li>
                 </ul>
@@ -104,7 +83,7 @@
                 <div class="price">38.00</div>
             </li>
             <li>
-                <div class="image" style="background-image: url(image/goods/m3.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m3.png)"></div>
                 <ul class="goods-colors">
                     <li style="background-color: #eac090"></li>
                 </ul>
@@ -113,7 +92,7 @@
                 <div class="price">9.90</div>
             </li>
             <li>
-                <div class="image" style="background-image: url(image/goods/m8.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m8.png)"></div>
                 <ul class="goods-colors">
                     <li style="background-color: #957454"></li>
                 </ul>
@@ -122,7 +101,7 @@
                 <div class="price">32.00</div>
             </li>
             <li>
-                <div class="image" style="background-image: url(image/goods/m9.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m9.png)"></div>
                 <ul class="goods-colors">
                     <li style="background-color: #5d2a18"></li>
                     <li style="background-color: #ecd1b4"></li>

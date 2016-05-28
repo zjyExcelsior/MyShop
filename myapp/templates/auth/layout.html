@@ -11,21 +11,16 @@
 <body>
     <div class="usredt-con lr-con yellowBar">
         <div class="logo logo-grey"></div>
-        <form>
-            <div class="usredt-input lr-input">
-                <input type="text" class="username norepeat ft-xl" placeholder="用户名">
-                <input type="password" class="password norepeat ft-xl" placeholder="密码">
-            </div>
-            <input type="submit" value="登录" class="btn">
-        </form>
+        {% block form %}
+        {% endblock %}
     </div>
     <script src="/static/bower_components/zepto/zepto.min.js"></script>
-    <script src="/static/js/alertBox.js"></script>
+    <script src="/static/js/alertbox.js"></script>
     <script>
         //注册提示框 调用showAb显示
-        var showAb1 = alertBox("用户名不存在或密码错误");
-        var showAb2 = alertBox("密码错误"); 
-        var showAb3 = alertBox("该用户不存在");  
+        // var showAb1 = alertBox("用户名不存在或密码错误");
+        {% block script %}
+        {% endblock %}
     </script>
 </body>
 </html>

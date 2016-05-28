@@ -9,29 +9,7 @@
     <title>确认订单</title>
 </head>
 <body>
-    <header>
-        <div class="header-top">
-            <i class="menu-icon"></i>
-            <form class="searchBar transition" id="search">
-                <input type="search" class="ft-m transition" width="0">
-                <div class="submit transition pointer"></div>
-            </form>
-            <div class="user ft-m">
-                <a class="user-cart">
-                    <span class="number">2</span>
-                </a>
-                <!-- <a href="login.html" class="nologin">登录</a>
-                <a href="regist.html" class="nologin ft-grey">免费注册</a> -->
-                <a href="user.html" class="username">CiCi</a>
-                
-            </div>
-        </div>
-        <ul class="menu-list" style="display:none">
-            <li><a href="">所有商品</a></li>
-            <li><a href="">木器使用保养</a></li>
-            <li><a href="">联系我们</a></li>
-        </ul>
-    </header>
+    {% include "header.html" %}
     <div class="banner logo-center yellowhalf"></div>
     <div class="content">
         <ul class="order-status">
@@ -44,7 +22,7 @@
             </ul>
         <ul class="order-list ft-m cart-list" style="border-top: 2px solid #ffd245">
             <li class="gds-con">
-                <div class="image" style="background-image: url(image/goods/m1.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m1.png)"></div>
                 <div class="right" style="justify-content: space-between">
                     <div class="name"><b class="ellipsis">无印良品风U型抱枕</b><span>深灰白</span></div>
                     <div class="sum"><span class="price">67.70</span>x1</div>
@@ -52,7 +30,7 @@
                 </div>
             </li>
             <li class="gds-con">
-                <div class="image" style="background-image: url(image/goods/m2.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m2.png)"></div>
                 <div class="right" style="justify-content: space-between">
                     <div class="name"><b class="ellipsis">日式单耳陶瓷碗</b><span>乳白色</span></div>
                     <div class="sum"><span class="price">26.00</span>x1</div>
@@ -60,7 +38,7 @@
                 </div>
             </li>
             <li class="gds-con">
-                <div class="image" style="background-image: url(image/goods/m3.png)"></div>
+                <div class="image" style="background-image: url(../static/image/goods/m3.png)"></div>
                 <div class="right" style="justify-content: space-between">
                     <div class="name"><b class="ellipsis">创意木质手工皂盒</b><span>本木色</span></div>
                     <div class="sum"><span class="price">9.90</span>x1</div>
@@ -70,7 +48,7 @@
         </ul>
         <div class="cart-sum">
             <div class="selected">已选中 1 件商品</div>
-            <div class="btn">提交订单</div>
+            <div class="btn"><a href="{{ url_for('main.payconfirm') }}">提交订单</a></div>
             <div class="price"> 67.70</div>
         </div>
     </div>
