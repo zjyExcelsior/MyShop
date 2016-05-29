@@ -13,10 +13,10 @@
 
 {% block script %}
     {% if form.username.errors %}
-        var username_error = String("{{ form.username.errors[0] }}");
+        var username_error = {{ form.username.errors[0] | tojson | safe }};
         alertBox(username_error)();
     {% elif get_flashed_messages() %}
-        var username_error = String("{{ get_flashed_messages()[0] }}");
+        var username_error = {{ get_flashed_messages()[0] | tojson | safe }};
         alertBox(username_error)();
     {% endif %}
 {% endblock %}

@@ -413,8 +413,12 @@ button {
 .ft-xxl {
   font-size: 1.32rem; }
 
-.ft-grey {
+.nologin.ft-grey {
   color: #999; }
+/* FIXME: why .ft-grey error?
+.ft-grey {
+  color: #999; } 
+*/
 
 .transition {
   transition: all .4s; }

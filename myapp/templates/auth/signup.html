@@ -8,22 +8,18 @@
             placeholder="密码") }}
             {{ form.password2(class="password norepeat ft-xl",
             placeholder="确认密码") }}
-            <!-- <input type="text" class="username norepeat ft-xl" placeholder="用户名" name="username">
-            <input type="password" class="password norepeat ft-xl" placeholder="密码" name="password">
-            <input type="password" class="password norepeat ft-xl" placeholder="确认密码" name="password2"> -->
         </div>
         {{ form.submit(class="btn") }}
-        <!-- <input type="submit" value="注册" class="btn"> -->
         {{ form.csrf_token }}
     </form>
 {% endblock %}
 
 {% block script %}
     {% if form.username.errors %}
-        var username_error = String("{{ form.username.errors[0] }}");
+        var username_error = {{ form.username.errors[0] | tojson | safe }};
         alertBox(username_error)();
     {% elif form.password.errors %}
-        var password_error = String("{{ form.password.errors[0] }}");
+        var password_error = {{ form.password.errors[0] | tojson | safe }};
         alertBox(password_error)();
     {% endif %}
 {% endblock %}

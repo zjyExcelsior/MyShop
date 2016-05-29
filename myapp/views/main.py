@@ -3,8 +3,9 @@ from flask import render_template, Blueprint, redirect, flash, session
 from flask_login import login_required
 from flask import url_for
 from ..forms import UserInfoForm
-from ..models import User, Role
+from ..models import User, Role, Product
 from .. import db
+import json
 
 main = Blueprint('main', __name__)
 

@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="format-detection" content="telephone=no" />
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <link rel="stylesheet" type="text/css" href="static/css/common.css">
-    <link rel="stylesheet" type="text/css" href="static/bower_components/swiper/dist/css/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="static/css/index.css">
-    <link rel="stylesheet" type="text/css" href="static/css/goods.css">
-    <title>主页</title>
-</head>
-<body>
-    {% include "header.html" %}
+{% extends "layout.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/swiper/dist/css/swiper.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/goods.css') }}">
+{% endblock %}
+
+{% block title %}主页{% endblock %}
+
+{% block body %}
     <div class="logo-center"></div>
     <div class="swiper-container index-gly">
         <div class="swiper-wrapper">
@@ -103,9 +99,13 @@
     <footer style="margin-top: 0;"> 
         @ZattaShop, 2016 all right served.
     </footer>
-    <script src="static/bower_components/zepto/zepto.min.js"></script>
-    <script src="static/bower_components/Swiper/dist/js/swiper.jquery.min.js"></script>
-    <script src="static/js/common.js"></script>
+{% endblock %}
+
+{% block swiper_js %}
+    <script src="{{ url_for('static', filename='bower_components/Swiper/dist/js/swiper.jquery.min.js') }}"></script>
+{% endblock %}
+
+{% block js %}
     <script>
         var mySwiper = new Swiper ('.swiper-container', {
             autoplay: 5000,
@@ -131,5 +131,4 @@
         }
             
     </script>
-</body>
-</html>
+{% endblock %}

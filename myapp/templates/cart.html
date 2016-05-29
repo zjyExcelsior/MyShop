@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="format-detection" content="telephone=no" />
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/cart.css">
-    <title>购物车</title>
-</head>
-<body>
-    {% include "header.html" %}
+{% extends "layout.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cart.css') }}">
+{% endblock %}
+{% block title %}购物车{% endblock %}
+{% block body %}
     <div class="banner logo-center yellowhalf"></div>
     <div class="content">
         <h2 class="ft-xl yellowBar page-title ">购物车</h2>
@@ -54,14 +48,14 @@
     <footer> 
         @ZattaShop, 2016 all right served.
     </footer>
-    <script src="/static/bower_components/zepto/zepto.min.js"></script>
-    <script src="/static/js/common.js"></script>
-    <script src="/static/js/numInput.js"></script>
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='js/numInput.js') }}></script>
     <script>
         cmn.toggleStatus($(".cart-radio .radio"),{});
         $(".gds-con .remove").on("click",function () {
             $(this).parents(".gds-con").remove();
         });
     </script>
-</body>
-</html>
+{% endblock %}
