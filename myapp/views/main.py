@@ -3,7 +3,7 @@ from flask import render_template, Blueprint, redirect, flash, session
 from flask_login import login_required
 from flask import url_for
 from ..forms import UserInfoForm
-from ..models import User, Role, Product
+from ..models import User, Role, Product, Color
 from .. import db
 import json
 
@@ -54,7 +54,10 @@ def goods(product_id):
     '''
     商品详情
     '''
-    return render_template('goods.html')
+    product_detail = Product.query.get(product_id)
+    products = Product.query.all()
+    products_others = [product for product in products if product.id != product_id]
+    return render_template('goods.html', product_detail=product_detail, products_others=products_others)
 
 
 @main.route('/cart/')

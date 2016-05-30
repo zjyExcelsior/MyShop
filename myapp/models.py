@@ -14,7 +14,7 @@ class Role(db.Model):
     name = db.Column(db.String(64), unique=True, index=True)
 
     def __repr__(self):
-        return '<Role id=%r, name=%r>' % (self.id, self.name)
+        return '<Role id=%s, name=%s>' % (self.id, self.name)
 
 
 class User(UserMixin, db.Model):
@@ -35,10 +35,10 @@ class User(UserMixin, db.Model):
         self.password_hash = hashlib.md5(_password).hexdigest()
 
     def verify_password(self, password):
-        return self.password_hash == hashlib.md5(password).hexdigest()      
-    
+        return self.password_hash == hashlib.md5(password).hexdigest()
+
     def __repr__(self):
-        return '<User id=%r, username=%r>' % (self.id, self.username)
+        return '<User id=%s, username=%s>' % (self.id, self.username)
 
 
 class Address(db.Model):
@@ -56,7 +56,7 @@ class Address(db.Model):
                                                       cascade='all, delete-orphan'))
 
     def __repr__(self):
-        return '<Address id=%r, name=%r>' % (self.id, self.name)
+        return '<Address id=%s, name=%s>' % (self.id, self.name)
 
 
 class Product(db.Model):
@@ -65,21 +65,24 @@ class Product(db.Model):
     name = db.Column(db.String(64))
     description = db.Column(db.String(64))
     price = db.Column(db.String(8))
-    colors = db.Column(db.String(64))
     detail = db.Column(db.Text)
-    amount = db.Column(db.Integer)
-    img_url = db.Column(db.String(64))
-
-    @property
-    def colors_list(self):
-        return json.loads(self.colors)
-
-    @colors_list.setter
-    def colors_list(self, _colors_list):
-        self.colors = json.dumps(_colors_list)
 
     def __repr__(self):
-        return '<Product id=%r, name=%r>' % (self.id, self.name)
+        return '<Product id=%s, name=%s>' % (self.id, self.name)
+
+
+class Color(db.Model):
+    __tablename__ = 'colors'
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    color = db.Column(db.String(10))
+    img_url = db.Column(db.String(128))
+    amount = db.Column(db.Integer, default=0)
+    product = db.relationship('Product', backref=db.backref(
+        'colors', cascade='all, delete-orphan'))
+
+    def __repr__(self):
+        return '<Color id=%s, product_id=%s, color=%s' % (self.id, self.product_id, self.color)
 
 
 class Order(db.Model):
@@ -108,7 +111,7 @@ class OrderProduct(db.Model):
     product = db.relationship('Product', backref='orders')
 
     def __repr__(self):
-        return '<OrderProduct order_id=%r, product_id=%r, amount=%r>' % (self.order_id, self.product_id, self.amount)
+        return '<OrderProduct order_id=%s, product_id=%s, amount=%s>' % (self.order_id, self.product_id, self.amount)
 
 
 @login_manager.user_loader
@@ -119,5 +122,6 @@ admin.add_view(ModelView(Role, db.session))
 admin.add_view(ModelView(User, db.session))
 admin.add_view(ModelView(Address, db.session))
 admin.add_view(ModelView(Product, db.session))
+admin.add_view(ModelView(Color, db.session))
 admin.add_view(ModelView(Order, db.session))
 admin.add_view(ModelView(OrderProduct, db.session))

@@ -13,10 +13,10 @@
         <ul class="item-list max3 goods-list ft-m">
             {% for product in products %}
                 <li>
-                    <div class="image" style="background-image: url({{ product.img_url }})"></div>
+                    <div class="image" style="background-image: url({{ product.colors[0].img_url }})"></div>
                     <ul class="goods-colors">
-                        {% for _color in product.colors_list %}
-                            <li style="background-color: {{ _color }}"></li>
+                        {% for _color in product.colors %}
+                            <li style="background-color: {{ _color.color }}"></li>
                         {% endfor %}
                     </ul>
                     <a href="" class="name ellipsis">{{ product.name }}</a>
