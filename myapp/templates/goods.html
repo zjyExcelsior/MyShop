@@ -9,7 +9,7 @@
 {% block body %}
     <div class="goods-info logo-center">
         <div class="goods-image yellowhalf" id="image">
-            <img src="{{ product_detail.colors[0].img_url }}">
+            <img src="{{ product_detail.colors[0].img_url }}" id="detail_img">
         </div>
         <div class="goods-descr">
             <h2>{{ product_detail.name }}</h2>
@@ -22,7 +22,7 @@
             </ul>
             <ul class="goods-colors" id="colorpick">
                 {% for _color in product_detail.colors %}
-                    <li style="background-color: {{ _color.color }}" pic="/static/image/goods/l1.png"></li>
+                    <li style="background-color: {{ _color.color }}" pic="{{ _color.img_url }}" class="color_icon"></li>
                 {% endfor %}
             </ul>
             <!-- <div class="btn">加入购物车</div> -->
@@ -68,5 +68,10 @@
                 $(this).removeClass("toadd");
             }); 
         }
+        //
+        $(".color_icon").on("click", function(){
+            var img_url = $(this).attr("pic");
+            $('#detail_img').attr("src", img_url);
+        })
     </script>
 {% endblock %}

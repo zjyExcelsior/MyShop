@@ -12,7 +12,8 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+    products_hot = Product.query.order_by(Product.id).limit(3)
+    return render_template('index.html', products_hot=products_hot)
 
 
 @main.route('/user/<int:user_id>/', methods=['GET', 'POST'])

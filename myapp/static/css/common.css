@@ -449,3 +449,7 @@ button {
 
 .hoverYellow:hover {
   color: #f8980f; }
+
+.color_icon {
+  cursor: pointer;
+}
