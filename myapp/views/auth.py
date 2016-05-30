@@ -14,7 +14,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter(User.username == form.username.data).first()
-        if user and user.password == form.password.data:
+        if user and user.verify_password(form.password.data):
             login_user(user)
             next = request.args.get('next')
             return redirect(next or url_for('main.index'))

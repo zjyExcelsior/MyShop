@@ -3,6 +3,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_admin import Admin
+from flask_admin.contrib.fileadmin import FileAdmin
+import os.path as op
 
 
 login_manager = LoginManager()
@@ -10,6 +12,8 @@ login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
 db = SQLAlchemy()
 admin = Admin(name='MyShop', template_mode='bootstrap3')
+path =  op.join(op.dirname(__file__), 'static')
+admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
 
 from .views.main import main
 from .views.auth import auth

@@ -4,6 +4,8 @@ from flask_login import UserMixin
 from . import login_manager
 from . import admin
 from flask_admin.contrib.sqla import ModelView
+import hashlib
+import json
 
 
 class Role(db.Model):
@@ -19,11 +21,22 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
-    password = db.Column(db.String(64))
+    password_hash = db.Column(db.String(64))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     role = db.relationship('Role', backref=db.backref('users',
                                                       cascade='all, delete-orphan'))
 
+    @property
+    def password(self):
+        return self.password_hash
+
+    @password.setter
+    def password(self, _password):
+        self.password_hash = hashlib.md5(_password).hexdigest()
+
+    def verify_password(self, password):
+        return self.password_hash == hashlib.md5(password).hexdigest()      
+    
     def __repr__(self):
         return '<User id=%r, username=%r>' % (self.id, self.username)
 
@@ -56,6 +69,14 @@ class Product(db.Model):
     detail = db.Column(db.Text)
     amount = db.Column(db.Integer)
     img_url = db.Column(db.String(64))
+
+    @property
+    def colors_list(self):
+        return json.loads(self.colors)
+
+    @colors_list.setter
+    def colors_list(self, _colors_list):
+        self.colors = json.dumps(_colors_list)
 
     def __repr__(self):
         return '<Product id=%r, name=%r>' % (self.id, self.name)

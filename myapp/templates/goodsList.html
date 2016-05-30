@@ -11,94 +11,19 @@
     <div class="content">
         <h2 class="ft-xl yellowBar page-title ">所有商品</h2>
         <ul class="item-list max3 goods-list ft-m">
-            <li>
-                <div class="image" style="background-image: url(../static/image/goods/m1.png)"></div>
-                <ul class="goods-colors">
-                    <li style="background-color: #dddce4"></li>
-                    <li style="background-color: #f6e4e4"></li>
-                    <li style="background-color: #eeeef4"></li>
-                    <li style="background-color: #e1e1e1"></li>
-                </ul>
-                <a class="name ellipsis">无印良品风U型抱枕</a>
-                <div class="descr">懒人抱枕 办公室必备</div>
-                <div class="price">67.70</div>
-            </li>
-            <li>
-                <div class="image" style="background-image: url(../static/image/goods/m4.png)"></div>
-                <ul class="goods-colors">
-                    <li style="background-color: #1e353f"></li>
-                </ul>
-                <a class="name ellipsis">黑猫Tiimo美臀坐垫</a>
-                <div class="descr">柔软治愈 美臀不再费力</div>
-                <div class="price">52.25</div>
-            </li>
-            <li>
-                <div class="image" style="background-image: url(../static/image/goods/m5.png)"></div>
-                <ul class="goods-colors">
-                    <li style="background-color: #c1925b"></li>
-                </ul>
-                <a class="name ellipsis">日式原木木片篮子圆形面包篮</a>
-                <div class="descr">原木木片 自然生态</div>
-                <div class="price">16.00</div>
-            </li>
-            <li>
-                <div class="image" style="background-image: url(../static/image/goods/m2.png)"></div>
-                <ul class="goods-colors">
-                    <li style="background-color: #c1925b"></li>
-                    <li style="background-color: #f5f6f6"></li>
-                </ul>
-                <a class="name ellipsis">日式单耳陶瓷碗</a>
-                <div class="descr">亚光磨砂釉面 质感温润</div>
-                <div class="price">26.00</div>
-            </li>
-            <li>
-                <div class="image" style="background-image: url(../static/image/goods/m6.png)"></div>
-                <ul class="goods-colors">
-                    <li style="background-color: #f5f6f6"></li>
-                </ul>
-                <a class="name ellipsis">超声波负离子香薰机</a>
-                <div class="descr">润物无声 品质保障</div>
-                <div class="price">195.00</div>
-            </li>
-            <li>
-                <div class="image" style="background-image: url(../static/image/goods/m7.png)"></div>
-                <ul class="goods-colors">
-                    <li style="background-color: #ffdbb7"></li>
-                </ul>
-                <a class="name ellipsis">组合式木质盖子收纳盒</a>
-                <div class="descr">原木木片 自然生态</div>
-                <div class="price">38.00</div>
-            </li>
-            <li>
-                <div class="image" style="background-image: url(../static/image/goods/m3.png)"></div>
-                <ul class="goods-colors">
-                    <li style="background-color: #eac090"></li>
-                </ul>
-                <a class="name ellipsis">创意木质手工皂盒</a>
-                <div class="descr">木质本色 朴实自然</div>
-                <div class="price">9.90</div>
-            </li>
-            <li>
-                <div class="image" style="background-image: url(../static/image/goods/m8.png)"></div>
-                <ul class="goods-colors">
-                    <li style="background-color: #957454"></li>
-                </ul>
-                <a class="name ellipsis">手工编制藤编收纳筐</a>
-                <div class="descr">田园风情 匠人之心</div>
-                <div class="price">32.00</div>
-            </li>
-            <li>
-                <div class="image" style="background-image: url(../static/image/goods/m9.png)"></div>
-                <ul class="goods-colors">
-                    <li style="background-color: #5d2a18"></li>
-                    <li style="background-color: #ecd1b4"></li>
-                    <li style="background-color: #5d2a18"></li>
-                    <li style="background-color: #ecd1b4"></li>
-                </ul>
-                <a class="name ellipsis">创意实木小勺子</a>
-                <div class="descr">精致可爱 安全健康</div>
-                <div class="price">4.80</div>
-            </li>
+            {% for product in products %}
+                <li>
+                    <div class="image" style="background-image: url({{ product.img_url }})"></div>
+                    <ul class="goods-colors">
+                        {% for _color in product.colors_list %}
+                            <li style="background-color: {{ _color }}"></li>
+                        {% endfor %}
+                    </ul>
+                    <a href="" class="name ellipsis">{{ product.name }}</a>
+                    <div class="descr">{{ product.description }}</div>
+                    <div class="price">{{ product.price }}</div>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 

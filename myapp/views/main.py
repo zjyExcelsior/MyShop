@@ -45,11 +45,12 @@ def goodslist():
     '''
     所有商品
     '''
-    return render_template('goodsList.html')
+    products = Product.query.all()
+    return render_template('goodsList.html', products=products)
 
 
-@main.route('/goods/')
-def goods():
+@main.route('/goods/<int:product_id>/')
+def goods(product_id):
     '''
     商品详情
     '''
