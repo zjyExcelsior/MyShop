@@ -25,31 +25,7 @@
         <div class="user-con">
             <h3 class="title">收货地址管理</h3>
             <ul class="address-list noscroll">
-                <li class="addnew"></li>
-                <li>
-                    <div class="name">
-                        童陈陈
-                        <span class="hoverYellow pointer">删除</span>
-                        <span class="hoverYellow pointer">编辑</span>
-                    </div>
-                    <ul class="detail">
-                        <li>15757116455</li>
-                        <li>浙江省杭州市西湖区</li>
-                        <li>留和路288号浙江工业大学屏峰校区</li>
-                    </ul>
-                </li>
-                <li>
-                    <div class="name">
-                        童陈陈
-                        <span class="hoverYellow pointer">删除</span>
-                        <span class="hoverYellow pointer">编辑</span>
-                    </div>
-                    <ul class="detail">
-                        <li>15757116455</li>
-                        <li>浙江省杭州市西湖区</li>
-                        <li>留和路288号浙江工业大学屏峰校区</li>
-                    </ul>
-                </li>
+                <li class="addnew pointer"></li>
             </ul>
         </div>
         <div class="user-con">
@@ -162,9 +138,58 @@
             {{ user_form.csrf_token }}
         </form>
     </div>
+    <div class="usredt-con ads-mdfy popup">
+        <form>
+            <div class="usredt-input">
+                <input type="text" class="name" placeholder="姓名">
+                <input type="text" class="number" placeholder="手机号">
+                <input type="text" class="province" class="half" placeholder="省份/自治区">
+                <input type="text" class="city" class="half" placeholder="城市/地区">
+                <input type="text" class="area" placeholder="区/县">
+                <input type="text" class="location" placeholder="详细地址">
+                <input type="text" class="code" placeholder="邮政编码">
+            </div>
+            <div class="btn save">保存</div>
+            <div class="btn cancel">取消</div>
+        </form>
+    </div>
 {% endblock %}
 
 {% block js %}
+    <script src="{{ url_for('static', filename='js/addresslist.js') }}"></script>
+    <script>
+        var ue = $('.usredt-con');
+        var usredt = addressEdit(ue,al);
+        var al = addressList($(".address-list"), [], function() {
+            var that = this;
+            $(".ads-mdfy").addClass("show");
+            usredt.setAddress(that.data);
+            ue.find(".save").one("click", function() {
+                that.modify(usredt.getAddress());
+                $(".ads-mdfy").removeClass("show");
+            });
+        });
+        $(".address-list .addnew").on("click",function(){
+            $(".ads-mdfy").addClass("show");
+            usredt.setAddress({});
+            ue.find(".save").one("click",function(){
+                al.add(usredt.getAddress());
+                $(".ads-mdfy").removeClass("show");
+            });
+        });
+        al.add({
+            name:"童陈陈",
+            number:"15757116455",
+            province:"浙江省",
+            city:"杭州市",
+            area:"西湖区",
+            location:"留和路288号浙江工业大学屏峰校区"
+        });
+        
+
+        cmn.toggleStatus($(".cart-radio .radio"),{});
+
+    </script>
     <script type="text/javascript">
         {% if get_flashed_messages() %}
             $(".user-mdfy").addClass("show");
