@@ -17,7 +17,7 @@
                 </div>
                 <div class="text">
                     <div class="username">{{ current_user.username }}</div>
-                    <div class="ft-grey">下午好(,,• ₃ •,,)～</div>
+                    <div class="ft-grey">{{ time_now }}好(,,• ₃ •,,)～</div>
                 </div>
                 <div class="btn ft-l" id="mdfy">修改个人信息</div>
             </div>
@@ -162,9 +162,6 @@
             {{ user_form.csrf_token }}
         </form>
     </div>
-    <footer> 
-        @ZattaShop, 2016 all right served.
-    </footer>
 {% endblock %}
 
 {% block js %}

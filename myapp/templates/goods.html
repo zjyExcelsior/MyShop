@@ -47,9 +47,6 @@
             {% endfor %}
         </ul>
     </div>
-    <footer> 
-        @ZattaShop, 2016 all right served.
-    </footer>
 {% endblock %}
 
 {% block js %}
@@ -68,7 +65,7 @@
                 $(this).removeClass("toadd");
             }); 
         }
-        //
+        //颜色按钮的点击事件
         $(".color_icon").on("click", function(){
             var img_url = $(this).attr("pic");
             $('#detail_img').attr("src", img_url);

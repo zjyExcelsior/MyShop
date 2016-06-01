@@ -5,7 +5,7 @@ from flask import url_for
 from ..forms import UserInfoForm
 from ..models import User, Role, Product, Color
 from .. import db
-import json
+from ..utils.helpers import get_time
 
 main = Blueprint('main', __name__)
 
@@ -38,7 +38,8 @@ def user(user_id):
         flash(user_form.username.errors[0])
     elif user_form.password.errors:
         flash(user_form.password.errors[0])
-    return render_template('user.html', user_form=user_form)
+    time_now = get_time()
+    return render_template('user.html', user_form=user_form, time_now=time_now)
 
 
 @main.route('/goodslist/')

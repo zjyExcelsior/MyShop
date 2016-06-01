@@ -128,3 +128,7 @@
       border-bottom: 0.1rem solid #222; }
     .contact .email a {
       float: right; }
+
+footer {
+  margin-top: 0;
+}
