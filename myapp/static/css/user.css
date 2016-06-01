@@ -86,3 +86,21 @@
     margin: 1rem 3%; }
   .user-mdfy.show {
     display: block; }
+
+.ads-mdfy {
+  display: none;
+  width: 75%;
+  padding: 3%;
+  text-align: center; }
+  .ads-mdfy.show {
+    display: block; }
+  .ads-mdfy input {
+    margin-top: 1em;
+    padding-left: 8px;
+    padding-bottom: 4px; }
+    .ads-mdfy input.half {
+      display: inline-block;
+      width: 49%; }
+  .ads-mdfy .btn {
+    width: 40%;
+    margin: 1rem 3%; }
