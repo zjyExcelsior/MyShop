@@ -26,6 +26,20 @@
             <h3 class="title">收货地址管理</h3>
             <ul class="address-list noscroll">
                 <li class="addnew pointer"></li>
+                {% for address in addresses %}
+                    <li address_id="{{ address.id }}">
+                        <div class="name">
+                            {{ address.name }}
+                            <span class="hoverYellow pointer rm_address">删除</span>
+                            <span class="hoverYellow pointer edit_address">编辑</span>
+                        </div>
+                        <ul class="detail">
+                            <li>{{ address.phone_number }}</li>
+                            <li>{{ address.province }}{{ address.city }}{{ address.region }}</li>
+                            <li>{{ address.detail_address }}</li>
+                        </ul>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
         <div class="user-con">
@@ -134,61 +148,77 @@
                 {{ user_form.password2(class="password norepeat", placeholder="请重新输入密码") }}
             </div>
             {{ user_form.submit(class="btn save") }}
-            <input class="btn cancel" id="cancel" value="取消"></input>
+            <input class="btn cancel" id="cancel" value="取消">
             {{ user_form.csrf_token }}
         </form>
     </div>
     <div class="usredt-con ads-mdfy popup">
-        <form>
+        <form method="post">
             <div class="usredt-input">
-                <input type="text" class="name" placeholder="姓名">
-                <input type="text" class="number" placeholder="手机号">
-                <input type="text" class="province" class="half" placeholder="省份/自治区">
-                <input type="text" class="city" class="half" placeholder="城市/地区">
-                <input type="text" class="area" placeholder="区/县">
-                <input type="text" class="location" placeholder="详细地址">
-                <input type="text" class="code" placeholder="邮政编码">
+                {{ address_form.name(class="name", placeholder="姓名") }}
+                {{ address_form.phone_number(class="number", placeholder="手机号") }}
+                {{ address_form.province(class="province half", placeholder="省份/自治区") }}
+                {{ address_form.city(class="city half", placeholder="城市/地区") }}
+                {{ address_form.region(class="area", placeholder="区/县") }}
+                {{ address_form.detail_address(class="location", placeholder="详细地址") }}
+                {{ address_form.postcode(class="code", placeholder="邮政编码") }}
+                {{ address_form.address_id(hidden=True) }}
             </div>
-            <div class="btn save">保存</div>
-            <div class="btn cancel">取消</div>
+            {{ address_form.submit(class="btn save") }}
+            <input value="取消" class="btn cancel">
+            {{ address_form.csrf_token }}
         </form>
     </div>
 {% endblock %}
 
 {% block js %}
-    <script src="{{ url_for('static', filename='js/addresslist.js') }}"></script>
     <script>
-        var ue = $('.usredt-con');
-        var usredt = addressEdit(ue,al);
-        var al = addressList($(".address-list"), [], function() {
-            var that = this;
-            $(".ads-mdfy").addClass("show");
-            usredt.setAddress(that.data);
-            ue.find(".save").one("click", function() {
-                that.modify(usredt.getAddress());
-                $(".ads-mdfy").removeClass("show");
-            });
-        });
         $(".address-list .addnew").on("click",function(){
             $(".ads-mdfy").addClass("show");
-            usredt.setAddress({});
-            ue.find(".save").one("click",function(){
-                al.add(usredt.getAddress());
-                $(".ads-mdfy").removeClass("show");
+        });
+        $(".ads-mdfy .cancel").on("click", function(){
+            $(".ads-mdfy").removeAttr("address_id");
+            $(".ads-mdfy").removeClass("show");
+            $('#name').val('')
+            $('#phone_number').val('')
+            $('#province').val('')
+            $('#city').val('')
+            $('#region').val('')
+            $('#detail_address').val('')
+            $('#postcode').val('')
+        })
+        //点“编辑”，弹出表单
+        $(".edit_address").on("click", function(){
+            var address_id = $($(this).parents('li[address_id]')[0]).attr('address_id')
+            $('#address_id').val(address_id)
+            $.ajax({
+                type: 'GET',
+                url: "/address_info/" + address_id,
+                dataType: 'json',
+                success: function(data){
+                    $('#name').val(data.name);
+                    $('#phone_number').val(data.phone_number);
+                    $('#province').val(data.province);
+                    $('#city').val(data.city);
+                    $('#region').val(data.region);
+                    $('#detail_address').val(data.detail_address);
+                    $('#postcode').val(data.postcode);
+                }
             });
+            $(".ads-mdfy").addClass("show");
+            $(".ads-mdfy").attr("address_id", address_id)
         });
-        al.add({
-            name:"童陈陈",
-            number:"15757116455",
-            province:"浙江省",
-            city:"杭州市",
-            area:"西湖区",
-            location:"留和路288号浙江工业大学屏峰校区"
+        //点“删除”，将该地址删除
+        $(".rm_address").on("click", function(){
+            $($(this).parents('li[address_id]')[0]).remove()
+            var address_id = $($(this).parents('li[address_id]')[0]).attr('address_id')
+            $.ajax({
+                type: 'POST',
+                url: "{{ url_for('main.user', user_id=current_user.id) }}",
+                data: JSON.stringify({ address_id: address_id}),
+                contentType: 'application/json'
+            })
         });
-        
-
-        cmn.toggleStatus($(".cart-radio .radio"),{});
-
     </script>
     <script type="text/javascript">
         {% if get_flashed_messages() %}
@@ -196,10 +226,10 @@
             var alertBox = function(text){
                 var ab = $('<div class="alert-box">'+text+'</div>');
 
-                $(".popup").append(ab);
+                $(".user-mdfy.popup").append(ab);
                 return function(){
                     ab.show();
-                    $(".popup").one("click",function(){
+                    $(".user-mdfy.popup").one("click",function(){
                         ab.hide();
                     });
                 };

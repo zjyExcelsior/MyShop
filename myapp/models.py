@@ -49,11 +49,11 @@ class Address(db.Model):
     province = db.Column(db.String(64))
     city = db.Column(db.String(64))
     region = db.Column(db.String(64))
-    detail_address = db.Column(db.String(64))
+    detail_address = db.Column(db.String(128))
     postcode = db.Column(db.String(6))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref=db.backref('addresses',
-                                                      cascade='all, delete-orphan'))
+                                                      cascade='all, delete-orphan', lazy='dynamic'))
 
     def __repr__(self):
         return '<Address id=%s, name=%s>' % (self.id, self.name)
