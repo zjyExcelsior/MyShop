@@ -40,7 +40,7 @@
                             <li style="background-color: {{ _color.color }}"></li>
                         {% endfor %}
                     </ul>
-                    <a href="{{ url_for('main.goods', product_id=1) }}" class="name ellipsis">{{ product.name }}</a>
+                    <a href="{{ url_for('main.goods', product_id=product.id ) }}" class="name ellipsis">{{ product.name }}</a>
                     <div class="descr">{{ product.description }}</div>
                     <div class="price">{{ product.price }}</div>
                 </li>
@@ -48,7 +48,7 @@
         </ul>
         <div class="more pointer"><a href="{{ url_for('main.goodslist') }}" style="color: #999">更多商品</a></div>
     </div>
-    <div class="index-btm wood-intro"></div>
+    <div class="index-btm wood-intro" id="wood-intro"></div>
     <div class="wood-text">
         <div class="image">
             <img src="/static/image/index/wood.png">
@@ -70,7 +70,7 @@
             </p>
         </div>
     </div>
-    <div class="contact">
+    <div class="contact" id="contact">
         <div class="text"></div>
         <div class="image"></div>
         <div class="email">

@@ -12,14 +12,14 @@
         <h2 class="ft-xl yellowBar page-title ">所有商品</h2>
         <ul class="item-list max3 goods-list ft-m">
             {% for product in products %}
-                <li>
-                    <div class="image" style="background-image: url({{ product.colors[0].img_url }})"></div>
+                <li product_id="{{ product.id }}">
+                    <div class="image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }}></div>
                     <ul class="goods-colors">
                         {% for _color in product.colors %}
-                            <li style="background-color: {{ _color.color }}"></li>
+                            <li style="background-color: {{ _color.color }}" pic="{{ _color.img_url }}" class="color_icon" color_id="{{ _color.id }}"></li>
                         {% endfor %}
                     </ul>
-                    <a href="" class="name ellipsis">{{ product.name }}</a>
+                    <a href="{{ url_for('main.goods', product_id=product.id) }}" class="name ellipsis">{{ product.name }}</a>
                     <div class="descr">{{ product.description }}</div>
                     <div class="price">{{ product.price }}</div>
                 </li>
@@ -44,5 +44,15 @@
                 $(this).removeClass("toadd");
             }); 
         }
+    </script>
+    <script>
+        //颜色按钮的点击事件
+        $(".color_icon").on("click", function(){
+            var img_url = $(this).attr("pic");
+            var color_id = $(this).attr("color_id");
+            var img_div = $($(this).parents("li[product_id]").find(".image")[0]);
+            img_div.css("background-image", "url("+img_url+")");
+            img_div.attr("color_id", color_id);
+        });
     </script>
 {% endblock %}
