@@ -34,7 +34,7 @@
         <ul class="item-list max4 goods-list ft-m">
             {% for product in products_others %}
                 <li product_id="{{ product.id }}">
-                    <div class="image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }}></div>
+                    <div class="image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }} color_amount={{ product.colors[0].amount }}></div>
                     <ul class="goods-colors">
                         {% for _color in product.colors %}
                             <li style="background-color: {{ _color.color }}" class="color_icon" pic="{{ _color.img_url }}" color_id="{{ _color.id }}"></li>
@@ -59,6 +59,7 @@
         else{
             $("#detail_add").removeClass("nogoods");
         }
+        //其他商品添加到购物车
         if(document.body.clientWidth > 1024){
             var list = $(".goods-list>li");
             list.find(".image").on("click",function(){
@@ -74,11 +75,11 @@
             }); 
         }
         //细节商品颜色按钮的点击事件
-        $(".color_icon").on("click", function(){
-            var img_url = $(this).attr("pic");
+        $(".goods-descr .color_icon").on("click", function(){
+            var img_url_detail = $(this).attr("pic");
             var color_id = $(this).attr("color_id");
             var color_amount = $(this).attr("color_amount")
-            $("#detail_img").attr("src", img_url);
+            $("#detail_img").attr("src", img_url_detail);
             $("#detail_img").attr("color_id", color_id);
             $("#detail_add").attr("color_id", color_id);
             $("#detail_add").attr("color_amount", color_amount);
@@ -95,7 +96,7 @@
         $(".goods-list .color_icon").on("click", function(){
             var img_url = $(this).attr("pic");
             var color_id = $(this).attr("color_id");
-            var img_div = $($(this).parents("li[product_id]").find(".image")[0]);
+            var img_div = $($(this).parents(".goods-list li[product_id]").find(".image")[0]);
             img_div.css("background-image", "url("+img_url+")");
             img_div.attr("color_id", color_id);
         });

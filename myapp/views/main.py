@@ -8,6 +8,7 @@ from .. import db
 from ..utils.helpers import get_time
 from sqlalchemy import desc
 import json
+import time
 
 main = Blueprint('main', __name__)
 
@@ -97,10 +98,16 @@ def goods(product_id):
     if request.method == 'POST':
         color_id = json.loads(request.data).get('color_id')
         color = Color.query.get(int(color_id))
-        if str(color.id) in session:
-            session[str(color.id)] += 1
+        color_key = 'color_%s' % color.id
+        if color_key in session:
+            session[color_key]['amount'] += 1
         else:
-            session[str(color.id)] = 1
+            session[color_key] = {'amount': 1, 'timestamp': int(time.time())}
+            if 'product_amount' not in session:
+                session['product_amount'] = 1
+            else:
+                session['product_amount'] += 1
+        return redirect(url_for('main.goods', product_id=product_id))
     return render_template('goods.html', product_detail=product_detail, products_others=products_others)
 
 
@@ -110,7 +117,14 @@ def cart(user_id=0):
     '''
     购物车
     '''
-    return render_template('cart.html')
+    color_keys = [key for key in session.keys() if 'color' in key]
+    products_in_cart = {}
+    for key in color_keys:
+        color_id = key.split('_')[-1]
+        color = Color.query.get(int(color_id))
+        products_in_cart[key] = {"amount": session.get(key).get("amount"), "img_url": color.img_url, "name": color.product.name,
+                              "color_name": color.name, "price": color.product.price, "timestamp": session.get(key).get("timestamp")}
+    return render_template('cart.html', products=products_in_cart)
 
 
 @main.route('/orderconfirm/')

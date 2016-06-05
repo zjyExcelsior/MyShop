@@ -20,13 +20,13 @@
             <div class="user ft-m">
                 {% if not current_user.is_authenticated %}
                     <a href="{{ url_for('main.cart') }}" class="user-cart">
-                        <span class="number">2</span>
+                        <span class="number">{{ session.get('product_amount', 0) }}</span>
                     </a>
                     <a href="{{ url_for('auth.login') }}" class="nologin">登录</a>
                     <a href="{{ url_for('auth.signup') }}" class="nologin ft-grey">免费注册</a>
                 {% else %}
                     <a href="{{ url_for('main.cart', user_id=current_user.id) }}" class="user-cart">
-                        <span class="number">2</span>
+                        <span class="number">{{ session.get('product_amount', 0) }}</span>
                     </a>
                     <a href="{{ url_for('main.user', user_id=current_user.id) }}" class="username">{{ current_user.username }}</a>
                 {% endif %}
