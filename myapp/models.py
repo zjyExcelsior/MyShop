@@ -75,6 +75,7 @@ class Color(db.Model):
     __tablename__ = 'colors'
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    name = db.Column(db.String(64))
     color = db.Column(db.String(10))
     img_url = db.Column(db.String(128))
     amount = db.Column(db.Integer, default=0)
