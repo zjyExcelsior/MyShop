@@ -172,10 +172,11 @@ def payconfirm():
     '''
     确认支付
     '''
-    color_keys = json.loads(request.args.get('colors'))
-    for key in color_keys:
-        session.pop(key, None)
-        session['product_amount'] -= 1
+    if request.args:
+        color_keys = json.loads(request.args.get('colors'))
+        for key in color_keys:
+            session.pop(key, None)
+            session['product_amount'] -= 1
     return render_template('payConfirm.html')
 
 
