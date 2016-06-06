@@ -83,36 +83,39 @@ class Color(db.Model):
         'colors', cascade='all, delete-orphan'))
 
     def __repr__(self):
-        return '<Color id=%s, product_id=%s, color=%s' % (self.id, self.product_id, self.color)
+        return '<Color id=%s, product_id=%s, color=%s>' % (self.id, self.product_id, self.color)
 
 
 class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
-    order_number = db.Column(db.Integer)
+    order_number = db.Column(db.String(64))
     order_time = db.Column(db.Integer)
     total = db.Column(db.String(10))
     state = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'))
     user = db.relationship('User', backref=db.backref('orders',
                                                       cascade='all, delete-orphan'))
+    addresses = db.relationship('Address', backref=db.backref(
+        'orders', cascade='all, delete-orphan'))
 
     def __repr__(self):
         return '<Order id=%s, order_number=%s>' % (self.id, self.order_number)
 
 
-class OrderProduct(db.Model):
-    __tablename__ = 'orders_products'
+class OrderColor(db.Model):
+    __tablename__ = 'orders_colors'
     order_id = db.Column(db.Integer, db.ForeignKey(
         'orders.id'), primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey(
-        'products.id'), primary_key=True)
+    color_id = db.Column(db.Integer, db.ForeignKey(
+        'colors.id'), primary_key=True)
     amount = db.Column(db.Integer)
-    order = db.relationship('Order', backref='products')
-    product = db.relationship('Product', backref='orders')
+    order = db.relationship('Order', backref='colors')
+    color = db.relationship('Color', backref='orders')
 
     def __repr__(self):
-        return '<OrderProduct order_id=%s, product_id=%s, amount=%s>' % (self.order_id, self.product_id, self.amount)
+        return '<OrderColor order_id=%s, color_id=%s, amount=%s>' % (self.order_id, self.color_id, self.amount)
 
 
 @login_manager.user_loader
@@ -125,4 +128,4 @@ admin.add_view(ModelView(Address, db.session))
 admin.add_view(ModelView(Product, db.session))
 admin.add_view(ModelView(Color, db.session))
 admin.add_view(ModelView(Order, db.session))
-admin.add_view(ModelView(OrderProduct, db.session))
+admin.add_view(ModelView(OrderColor, db.session))

@@ -3,9 +3,9 @@ from flask import render_template, Blueprint, redirect, flash, session
 from flask_login import login_required, current_user
 from flask import url_for, jsonify, request
 from ..forms import UserInfoForm, AddressForm
-from ..models import User, Role, Product, Color, Address
+from ..models import User, Role, Product, Color, Address, Order, OrderColor
 from .. import db
-from ..utils.helpers import get_time
+from ..utils.helpers import get_time, get_products_in_cart
 from sqlalchemy import desc
 import json
 import time
@@ -118,21 +118,53 @@ def cart(user_id=0):
     购物车
     '''
     color_keys = [key for key in session.keys() if 'color' in key]
-    products_in_cart = {}
-    for key in color_keys:
-        color_id = key.split('_')[-1]
-        color = Color.query.get(int(color_id))
-        products_in_cart[key] = {"amount": session.get(key).get("amount"), "img_url": color.img_url, "name": color.product.name,
-                              "color_name": color.name, "price": color.product.price, "timestamp": session.get(key).get("timestamp")}
+    products_in_cart = get_products_in_cart(color_keys)
     return render_template('cart.html', products=products_in_cart)
 
 
-@main.route('/orderconfirm/')
-def orderconfirm():
+@main.route('/orderconfirm/<user_id>', methods=['GET', 'POST'])
+def orderconfirm(user_id):
     '''
     确认订单
     '''
-    return render_template('orderConfirm.html')
+    if 'color_keys' in request.args:
+        color_keys = json.loads(request.args.get('color_keys'))
+        products_selected = get_products_in_cart(color_keys)
+        session['products_selected'] = products_selected
+    address_form = AddressForm()
+    if address_form.validate_on_submit():
+        if not address_form.address_id.data:
+            address = Address(name=address_form.name.data, phone_number=address_form.phone_number.data,
+                              province=address_form.province.data, city=address_form.city.data,
+                              region=address_form.region.data, detail_address=address_form.detail_address.data,
+                              postcode=address_form.postcode.data, user_id=current_user.id)
+        else:
+            address = Address.query.get(int(address_form.address_id.data))
+            if address_form.name.data and address_form.name.data != address.name:
+                address.name = address_form.name.data
+            if address_form.phone_number.data and address_form.phone_number.data != address.phone_number:
+                address.phone_number = address_form.phone_number.data
+            if address_form.province.data and address_form.province.data != address.province:
+                address.province = address_form.province.data
+            if address_form.city.data and address_form.city.data != address.city:
+                address.city = address_form.city.data
+            if address_form.region.data and address_form.region.data != address.region:
+                address.region = address_form.region.data
+            if address_form.detail_address.data and address_form.detail_address.data != address.detail_address:
+                address.detail_address = address_form.detail_address.data
+            if address_form.postcode.data and address_form.postcode.data != address.postcode:
+                address.postcode = address_form.postcode.data
+        db.session.add(address)
+        db.session.commit()
+        return redirect(url_for('.orderconfirm', user_id=current_user.id, products=session.get('products_selected', {})))
+    if request.method == 'POST' and 'address_id' in request.data:
+        address_id = json.loads(request.data).get('address_id')
+        address = Address.query.get(int(address_id))
+        db.session.delete(address)
+        db.session.commit()
+        return redirect(url_for('.orderconfirm', user_id=current_user.id, products=session.get('products_selected', {})))
+    addresses = current_user.addresses.order_by(desc(Address.id)).all()
+    return render_template('orderConfirm.html', addresses=addresses, address_form=address_form, products=session.get('products_selected', {}))
 
 
 @main.route('/payconfirm/')
@@ -140,6 +172,10 @@ def payconfirm():
     '''
     确认支付
     '''
+    color_keys = json.loads(request.args.get('colors'))
+    for key in color_keys:
+        session.pop(key, None)
+        session['product_amount'] -= 1
     return render_template('payConfirm.html')
 
 
@@ -253,3 +289,25 @@ def add_products():
                         product_shaozi, color_shaozi1, color_shaozi2, color_shaozi3, color_shaozi4])
     db.session.commit()
     return 'add products success'
+
+
+@main.route('/add_orders/', methods=['GET', 'POST'])
+def add_orders():
+    '''添加新订单'''
+    if request.method == 'POST':
+        results = json.loads(request.data)
+        order_new = Order(order_time=int(time.time()), total=results.get(
+            'total'), state='等待支付', user_id=current_user.id, address_id=results.get('address_id'))
+        db.session.add(order_new)
+        for color_key, amount in results.get('colors').items():
+            color_id = color_key.split('_')[-1]
+            color = Color.query.get(color_id)
+            order_color = OrderColor(amount=amount)
+            order_color.order = order_new
+            order_color.color = color
+            db.session.add(order_color)
+        db.session.flush()
+        order_new.order_number = 'order%s' % order_new.id
+        db.session.commit()
+        return 'add new orders success'
+    return 'U can add new orders here.'

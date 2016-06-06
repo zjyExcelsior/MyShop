@@ -1,72 +1,46 @@
-var addressList = function(list, ads, editcallback) {
-    var ads_list = [];
-
-    function add(a) {
-        var item = $('<li><div class="head"><span class="name">' + a.name + '</span><span class="remove hoverYellow">删除</span><span class="edit hoverYellow">编辑</span></div><ul class="detail"><li class="number">' + a.number + '</li><li class="city">' + a.province + a.city + a.area + '</li><li class="location">' + a.location + '</li></ul></li>');
-        var _t = {
-            data: a,
-            item: item,
-            modify: function(ad) {
-                item.find(".name").text(ad.name);
-                item.find(".number").text(ad.number);
-                item.find(".city").text(ad.province + ad.city + ad.area);
-                item.find(".location").text(ad.location);
-            }
-        };
-        item.find(".remove").on("click", function() {
-            item.remove();
+$(".address-list .addnew").on("click",function(){
+            $(".ads-mdfy").addClass("show");
         });
-        item.find(".edit").on("click", function() {
-            editcallback.call(_t);
-        });
-        list.prepend(item);
-        return _t;
-    }
-    if (ads) {
-        ads.forEach(function(item) {
-            var ads = add(item);
-            ads_list.push(ads);
-        });
-    }
-    return {
-        list: ads_list,
-        add: add
-    };
-};
-var addressEdit = function(usredt, al) {
-    var input = {
-        name: usredt.find(".name"),
-        number: usredt.find(".number"),
-        province: usredt.find(".province"),
-        city: usredt.find(".city"),
-        area: usredt.find(".area"),
-        location: usredt.find(".location")
-    };
-
-    function setAddress(ads) {
-        input.name.val(ads.name || "");
-        input.number.val(ads.number || "");
-        input.province.val(ads.province || "");
-        input.city.val(ads.city || "");
-        input.area.val(ads.area || "");
-        input.location.val(ads.location || "");
-    }
-
-    function getAddress() {
-        return {
-            name: input.name.val(),
-            number: input.number.val(),
-            province: input.province.val(),
-            city: input.city.val(),
-            area: input.area.val(),
-            location: input.location.val()
-        };
-    }
-    usredt.find(".cancel").on("click", function() {
-        $(".ads-mdfy").removeClass("show");
+$(".ads-mdfy .cancel").on("click", function(){
+    $(".ads-mdfy").removeAttr("address_id");
+    $(".ads-mdfy").removeClass("show");
+    $('#name').val('')
+    $('#phone_number').val('')
+    $('#province').val('')
+    $('#city').val('')
+    $('#region').val('')
+    $('#detail_address').val('')
+    $('#postcode').val('')
+})
+//点“编辑”，弹出表单
+$(".edit_address").on("click", function(){
+    var address_id = $($(this).parents('li[address_id]')[0]).attr('address_id')
+    $('#address_id').val(address_id)
+    $.ajax({
+        type: 'GET',
+        url: "/address_info/" + address_id,
+        dataType: 'json',
+        success: function(data){
+            $('#name').val(data.name);
+            $('#phone_number').val(data.phone_number);
+            $('#province').val(data.province);
+            $('#city').val(data.city);
+            $('#region').val(data.region);
+            $('#detail_address').val(data.detail_address);
+            $('#postcode').val(data.postcode);
+        }
     });
-    return {
-        setAddress: setAddress,
-        getAddress: getAddress
-    };
-};
+    $(".ads-mdfy").addClass("show");
+    $(".ads-mdfy").attr("address_id", address_id)
+});
+//点“删除”，将该地址删除
+$(".rm_address").on("click", function(){
+    $($(this).parents('li[address_id]')[0]).remove()
+    var address_id = $($(this).parents('li[address_id]')[0]).attr('address_id')
+    $.ajax({
+        type: 'POST',
+        url: "",
+        data: JSON.stringify({ address_id: address_id}),
+        contentType: 'application/json'
+    })
+});

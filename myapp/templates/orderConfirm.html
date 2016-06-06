@@ -16,54 +16,54 @@
         </ul>
         <ul class="address-list noscroll cart-address">
             <li class="addnew pointer"></li>
+            {% for address in addresses %}
+                <li address_id="{{ address.id }}" class="addresses">
+                    <div class="name">
+                        {{ address.name }}
+                        <span class="hoverYellow pointer rm_address">删除</span>
+                        <span class="hoverYellow pointer edit_address">编辑</span>
+                    </div>
+                    <ul class="detail">
+                        <li>{{ address.phone_number }}</li>
+                        <li>{{ address.province }}{{ address.city }}{{ address.region }}</li>
+                        <li>{{ address.detail_address }}</li>
+                    </ul>
+                </li>
+            {% endfor %}
         </ul>
         <ul class="order-list ft-m cart-list" style="border-top: 2px solid #ffd245">
-            <li class="gds-con">
-                <div class="image" style="background-image: url(../static/image/goods/m1.png)"></div>
-                <div class="right" style="justify-content: space-between">
-                    <div class="name"><b class="ellipsis">无印良品风U型抱枕</b><span>深灰白</span></div>
-                    <div class="sum"><span class="price">67.70</span>x1</div>
-                    <div class="sum"><span class="price">67.70</span></div>
-                </div>
-            </li>
-            <li class="gds-con">
-                <div class="image" style="background-image: url(../static/image/goods/m2.png)"></div>
-                <div class="right" style="justify-content: space-between">
-                    <div class="name"><b class="ellipsis">日式单耳陶瓷碗</b><span>乳白色</span></div>
-                    <div class="sum"><span class="price">26.00</span>x1</div>
-                    <div class="sum"><span class="price">26.00</span></div>
-                </div>
-            </li>
-            <li class="gds-con">
-                <div class="image" style="background-image: url(../static/image/goods/m3.png)"></div>
-                <div class="right" style="justify-content: space-between">
-                    <div class="name"><b class="ellipsis">创意木质手工皂盒</b><span>本木色</span></div>
-                    <div class="sum"><span class="price">9.90</span>x1</div>
-                    <div class="sum"><span class="price">9.90</span></div>
-                </div>
-            </li>
+            {% for color_key, product in products.items() %}
+                <li class="gds-con" color_key={{ color_key }}>
+                    <div class="image" style="background-image: url({{ product.get('img_url') }})"></div>
+                    <div class="right" style="justify-content: space-between">
+                        <div class="name"><b class="ellipsis">{{ product.get('name') }}</b><span>{{ product.get('color_name') }}</span></div>
+                        <div class="sum"><span class="price price_single">{{ product.get('price') }}</span>x<span class="amount">{{ product.get('amount') }}</span></div>
+                        <div class="sum"><span class="price price_sum"></span></div>
+                    </div>
+                </li>
+            {% endfor %}
         </ul>
         <div class="cart-sum">
-            <div class="selected">已选中 1 件商品</div>
-            <div class="btn"><a href="{{ url_for('main.payconfirm') }}">提交订单</a></div>
-            <div class="price"> 67.70</div>
+            <div class="selected">已选中 <span id="products_total">0</span> 件商品</div>
+            <div class="btn"><a href="" id="submit_order">提交订单</a></div>
+            <div class="price" id="total_price">0</div>
         </div>
     </div>
     <div class="usredt-con ads-mdfy popup">
-        <form>
+        <form method="post">
             <div class="usredt-input">
-                <input type="text" class="name" placeholder="姓名">
-                <input type="text" class="number" placeholder="手机号">
-                <input type="text" class="province" class="half" placeholder="省份/自治区">
-                <input type="text" class="city" class="half" placeholder="城市/地区">
-                <input type="text" class="area" placeholder="区/县">
-                <input type="text" class="location" placeholder="详细地址">
-                <input type="text" class="code" placeholder="邮政编码">
+                {{ address_form.name(class="name", placeholder="姓名") }}
+                {{ address_form.phone_number(class="number", placeholder="手机号") }}
+                {{ address_form.province(class="province half", placeholder="省份/自治区") }}
+                {{ address_form.city(class="city half", placeholder="城市/地区") }}
+                {{ address_form.region(class="area", placeholder="区/县") }}
+                {{ address_form.detail_address(class="location", placeholder="详细地址") }}
+                {{ address_form.postcode(class="code", placeholder="邮政编码") }}
+                {{ address_form.address_id(hidden=True) }}
             </div>
-            <!-- <div class="btn save">保存</div>
-            <div class="btn cancel">取消</div> -->
-            <input type="submit" name="submit" value="保存" class="btn save" >
-            <input type="submit" name="submit" value="取消" class="btn cancel">
+            {{ address_form.submit(class="btn save") }}
+            <input value="取消" class="btn cancel">
+            {{ address_form.csrf_token }}
         </form>
     </div>
 {% endblock %}
@@ -72,36 +72,39 @@
     <script src="{{ url_for('static', filename='js/numInput.js') }}"></script>
     <script src="{{ url_for('static', filename='js/addresslist.js') }}"></script>
     <script>
-        var ue = $('.usredt-con');
-        var usredt = addressEdit(ue,al);
-        var al = addressList($(".address-list"), [], function() {
-            var that = this;
-            $(".ads-mdfy").addClass("show");
-            usredt.setAddress(that.data);
-            ue.find(".save").one("click", function() {
-                that.modify(usredt.getAddress());
-                $(".ads-mdfy").removeClass("show");
+        //商品相关条目
+        var total = $(".gds-con").length;
+        $('#products_total').text(total);
+        var price_amount = 0;
+        $(".gds-con").each(function(index, element){
+            var amount = parseInt($(element).find(".amount").text());
+            var price_single = parseFloat($(element).find(".price_single").text());
+            var price_sum = amount * parseInt(price_single * 100) / 100;
+            $(element).find('.price_sum').text(price_sum);
+            price_amount = (parseInt(price_amount * 100) + parseInt(price_sum * 100))/100;
+        });
+        $('#total_price').text(price_amount);
+        //选择地址
+        $('.addresses').click(function(){
+            $(this).toggleClass('addr_selected');
+        })
+        //提交订单
+        $("#submit_order").on("click", function(){
+            var address_id = $(".addr_selected").attr("address_id");
+            var colors = {};
+            $(".gds-con").each(function(index, element){
+                var amount = $(element).find(".amount").text();
+                var color_key = $(element).attr('color_key');
+                colors[color_key] = amount;
+            });
+            var colors_list = Object.keys(colors);
+            $(this).attr('href', {{ url_for('main.payconfirm') | safe}} + "?colors=" + JSON.stringify(colors_list));
+            $.ajax({
+                type: "POST",
+                url: {{ url_for('main.add_orders') | safe }},
+                data: JSON.stringify({"total": price_amount, "address_id": address_id, "colors": colors}),
+                contentType: "application/json"
             });
         });
-        $(".address-list .addnew").on("click",function(){
-            $(".ads-mdfy").addClass("show");
-            usredt.setAddress({});
-            ue.find(".save").one("click",function(){
-                al.add(usredt.getAddress());
-                $(".ads-mdfy").removeClass("show");
-            });
-        });
-        al.add({
-            name:"童陈陈",
-            number:"15757116455",
-            province:"浙江省",
-            city:"杭州市",
-            area:"西湖区",
-            location:"留和路288号浙江工业大学屏峰校区"
-        });
-        
-
-        cmn.toggleStatus($(".cart-radio .radio"),{});
-
     </script>
 {% endblock %}

@@ -8,22 +8,22 @@
     <div class="content">
         <h2 class="ft-xl yellowBar page-title ">购物车</h2>
         <ul class="order-list ft-m cart-list hoverShadow">
-            {% for product in products.values() %}
-                <li class="gds-con">
+            {% for color_key, product in products.items() %}
+                <li class="gds-con" color_key={{ color_key }}>
                     <div class="cart-radio"><i class="radio"></i></div>
                     <div class="image" style="background-image: url({{ product.get('img_url') }})"></div>
                     <div class="right">
                         <div class="name"><b class="ellipsis">{{ product.get('name') }}</b><span>{{ product.get('color_name') }}</span></div>
                         <div class="number-pick ft-l"><i class="dec"></i><span class="amount">{{ product.get('amount') }}</span><i class="add"></i></div>
-                        <div class="sum"><span class="price">{{ product.get('price') }}</span>x1</div>
+                        <div class="sum"><span class="price">{{ product.get('price') }}</span>x{{ product.get('amount') }}</div>
                         <div class="remove hoverYellow">删除</div>
                     </div>
                 </li>
             {% endfor %}
         </ul>
         <div class="cart-sum">
-            <div class="selected">已选中 <span id="products_total">1</span> 件商品</div>
-            <div class="btn"><a href="{{ url_for('main.orderconfirm') }}">结算</a></div>
+            <div class="selected">已选中 <span id="products_total">0</span> 件商品</div>
+            <div class="btn"><a id="billing" href="{{ url_for('main.orderconfirm', user_id=current_user.id) }}">结算</a></div>
             <div class="price" id="total_price">0</div>
         </div>
     </div>
@@ -35,12 +35,19 @@
         cmn.toggleStatus($(".cart-radio .radio"),{}, function(){
             var active_total = $(".active").length;
             $('#products_total').text(active_total);
-            // var active_amounts = $('.active').parents('.gds-con').find('.amount');
-            // var active_prices = $('.active').parents('.gds-con').find('.sum .price');
-            // active_amounts.each(function(index, element){
-                
-            // });
+            var active_lists = $(".active").parents(".gds-con");
+            var price_amount = 0;
+            var color_keys = [];
+            active_lists.each(function(index, element){
+                var amount = parseInt($(element).find(".amount").text());
+                var price = parseFloat($(element).find(".price").text());
+                price_amount = (parseInt(price_amount * 100) + amount * parseInt(price * 100))/100;
+                color_keys.push($(element).attr('color_key'));
+            });
+            $('#total_price').text(price_amount);
+            $('#billing').attr('href', {{ url_for('main.orderconfirm', user_id=current_user.id) | tojson }}+"?color_keys="+JSON.stringify(color_keys));
         });
+        //删除购物车中的物品，待做
         $(".gds-con .remove").on("click",function () {
             $(this).parents(".gds-con").remove();
         });
