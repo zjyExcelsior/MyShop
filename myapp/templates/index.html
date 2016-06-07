@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/swiper/dist/css/swiper.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/swiper.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/goods.css') }}">
 {% endblock %}
@@ -82,7 +82,7 @@
 {% endblock %}
 
 {% block swiper_js %}
-    <script src="{{ url_for('static', filename='bower_components/Swiper/dist/js/swiper.jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/swiper.jquery.min.js') }}"></script>
 {% endblock %}
 
 {% block js %}
