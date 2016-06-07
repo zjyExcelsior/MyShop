@@ -45,7 +45,7 @@
         </ul>
         <div class="cart-sum">
             <div class="selected">已选中 <span id="products_total">0</span> 件商品</div>
-            <div class="btn"><a href="" id="submit_order">提交订单</a></div>
+            <div class="btn"><a id="submit_order">提交订单</a></div>
             <div class="price" id="total_price">0</div>
         </div>
     </div>
@@ -97,13 +97,14 @@
                 var color_key = $(element).attr('color_key');
                 colors[color_key] = amount;
             });
-            var colors_list = Object.keys(colors);
-            $(this).attr('href', {{ url_for('main.payconfirm') | safe}} + "?colors=" + JSON.stringify(colors_list));
             $.ajax({
                 type: "POST",
                 url: {{ url_for('main.add_orders') | safe }},
                 data: JSON.stringify({"total": price_amount, "address_id": address_id, "colors": colors}),
-                contentType: "application/json"
+                contentType: "application/json",
+                success: function(data){
+                    window.location.href = {{ url_for('main.payconfirm') | safe}}
+                }
             });
         });
     </script>

@@ -15,6 +15,20 @@
             <li><h2 class="page-title">下单成功</h2></li>
         </ul>
         <div class="text-status caution">本平台暂只支持顺丰到付，是否确认支付？</div>
-        <a href="{{ url_for('main.paysuccess') }}" class="status-btn btn">确认支付</a>
+        <a class="status-btn btn" id="pay_confirm">确认支付</a>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#pay_confirm').click(function(){
+            $.ajax({
+                type: "POST",
+                url: {{ url_for('main.modify_order_state') | safe }},
+                success: function(data){
+                    window.location.href = {{ url_for('main.paysuccess') | safe}}
+                }
+            });
+        });
+    </script>
 {% endblock %}

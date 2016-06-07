@@ -95,19 +95,6 @@ def goods(product_id):
     products = Product.query.all()
     products_others = [
         product for product in products if product.id != product_id]
-    if request.method == 'POST':
-        color_id = json.loads(request.data).get('color_id')
-        color = Color.query.get(int(color_id))
-        color_key = 'color_%s' % color.id
-        if color_key in session:
-            session[color_key]['amount'] += 1
-        else:
-            session[color_key] = {'amount': 1, 'timestamp': int(time.time())}
-            if 'product_amount' not in session:
-                session['product_amount'] = 1
-            else:
-                session['product_amount'] += 1
-        return redirect(url_for('main.goods', product_id=product_id))
     return render_template('goods.html', product_detail=product_detail, products_others=products_others)
 
 
@@ -167,16 +154,11 @@ def orderconfirm(user_id):
     return render_template('orderConfirm.html', addresses=addresses, address_form=address_form, products=session.get('products_selected', {}))
 
 
-@main.route('/payconfirm/')
+@main.route('/payconfirm/', methods=['GET', 'POST'])
 def payconfirm():
     '''
     确认支付
     '''
-    if request.args:
-        color_keys = json.loads(request.args.get('colors'))
-        for key in color_keys:
-            session.pop(key, None)
-            session['product_amount'] -= 1
     return render_template('payConfirm.html')
 
 
@@ -292,6 +274,50 @@ def add_products():
     return 'add products success'
 
 
+@main.route('/modify_order_state/', methods=['GET', 'POST'])
+def modify_order_state():
+    '''修改订单状态'''
+    if request.method == 'POST':
+        order_id = session.get('order_id', '')
+        print order_id
+        if order_id:
+            order = Order.query.get(order_id)
+            if order.state == u'等待支付':
+                order.state = u'已发货'
+                session.pop('order_id', None)
+            db.session.add(order)
+            db.session.commit()
+    return 'U can modify the state of order'
+
+@main.route('/add_to_cart/', methods=['GET', 'POST'])
+def add_to_cart():
+    '''添加商品到购物车'''
+    if request.method == 'POST':
+        color_id = json.loads(request.data).get('color_id')
+        color = Color.query.get(int(color_id))
+        color_key = 'color_%s' % color.id
+        if color_key in session:
+            session[color_key]['amount'] += 1
+        else:
+            session[color_key] = {'amount': 1, 'timestamp': int(time.time())}
+            if 'product_amount' not in session:
+                session['product_amount'] = 1
+            else:
+                session['product_amount'] += 1
+        return 'add products to cart successfully.'
+    return 'U can add products to cart.'
+
+@main.route('/remove_from_cart/', methods=['GET', 'POST'])
+def remove_from_cart():
+    '''将商品从购物车中移除'''
+    if request.method == 'POST':
+        color_key = request.data
+        session.pop(color_key, None)
+        if session['product_amount'] != 0:
+            session['product_amount'] -= 1
+        return 'remove success'
+    return 'U can remove product from cart'
+
 @main.route('/add_orders/', methods=['GET', 'POST'])
 def add_orders():
     '''添加新订单'''
@@ -307,8 +333,13 @@ def add_orders():
             order_color.order = order_new
             order_color.color = color
             db.session.add(order_color)
+            session.pop(color_key, None)
+            if session['product_amount'] != 0:
+                session['product_amount'] -= 1
         db.session.flush()
         order_new.order_number = 'order%s' % order_new.id
+        # 把order的id加入session中
+        session['order_id'] = order_new.id
         db.session.commit()
         return 'add new orders success'
     return 'U can add new orders here.'

@@ -47,9 +47,18 @@
             $('#total_price').text(price_amount);
             $('#billing').attr('href', {{ url_for('main.orderconfirm', user_id=current_user.id) | tojson }}+"?color_keys="+JSON.stringify(color_keys));
         });
-        //删除购物车中的物品，待做
+        //删除购物车中的物品
         $(".gds-con .remove").on("click",function () {
-            $(this).parents(".gds-con").remove();
+            var color_key = $(this).parents('.gds-con').attr('color_key');
+            $.ajax({
+                type: "POST", 
+                url: {{ url_for('main.remove_from_cart') | tojson }},
+                data: color_key,
+                contentType: 'application/json',
+                success: function(data){
+                    window.location.reload();
+                }
+            });
         });
     </script>
 {% endblock %}
