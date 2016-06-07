@@ -97,8 +97,8 @@ class Order(db.Model):
     address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'))
     user = db.relationship('User', backref=db.backref('orders',
                                                       cascade='all, delete-orphan'))
-    addresses = db.relationship('Address', backref=db.backref(
-        'orders', cascade='all, delete-orphan'))
+    # 当地址不存在的时候，不删除该订单
+    addresses = db.relationship('Address', backref=db.backref('orders'))
 
     def __repr__(self):
         return '<Order id=%s, order_number=%s>' % (self.id, self.order_number)
@@ -111,8 +111,8 @@ class OrderColor(db.Model):
     color_id = db.Column(db.Integer, db.ForeignKey(
         'colors.id'), primary_key=True)
     amount = db.Column(db.Integer)
-    order = db.relationship('Order', backref='colors')
-    color = db.relationship('Color', backref='orders')
+    order = db.relationship('Order', backref=db.backref('colors', cascade='all, delete-orphan'))
+    color = db.relationship('Color', backref=db.backref('orders', cascade='all, delete-orphan'))
 
     def __repr__(self):
         return '<OrderColor order_id=%s, color_id=%s, amount=%s>' % (self.order_id, self.color_id, self.amount)

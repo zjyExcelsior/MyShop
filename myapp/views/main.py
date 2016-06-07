@@ -66,12 +66,6 @@ def user(user_id):
         flash(user_form.username.errors[0])
     elif user_form.password.errors:
         flash(user_form.password.errors[0])
-    if request.method == 'POST' and 'address_id' in request.data:
-        address_id = json.loads(request.data).get('address_id')
-        address = Address.query.get(int(address_id))
-        db.session.delete(address)
-        db.session.commit()
-        return redirect(url_for('.user', user_id=current_user.id))
     user_form.username.data = current_user.username
     addresses = current_user.addresses.order_by(desc(Address.id)).all()
     return render_template('user.html', user_form=user_form, address_form=address_form, time_now=time_now, addresses=addresses)
@@ -144,12 +138,6 @@ def orderconfirm(user_id):
         db.session.add(address)
         db.session.commit()
         return redirect(url_for('.orderconfirm', user_id=current_user.id, products=session.get('products_selected', {})))
-    if request.method == 'POST' and 'address_id' in request.data:
-        address_id = json.loads(request.data).get('address_id')
-        address = Address.query.get(int(address_id))
-        db.session.delete(address)
-        db.session.commit()
-        return redirect(url_for('.orderconfirm', user_id=current_user.id, products=session.get('products_selected', {})))
     addresses = current_user.addresses.order_by(desc(Address.id)).all()
     return render_template('orderConfirm.html', addresses=addresses, address_form=address_form, products=session.get('products_selected', {}))
 
@@ -187,6 +175,7 @@ def testsql():
 
 @main.route('/address_info/<int:address_id>/')
 def address_info(address_id):
+    '''得到地址信息'''
     address = Address.query.get(address_id)
     return jsonify({
         'name': address.name,
@@ -197,6 +186,15 @@ def address_info(address_id):
         'detail_address': address.detail_address,
         'postcode': address.postcode
     })
+
+@main.route('/remove_address/', methods=['POST'])
+def remove_address():
+    '''删除地址信息'''
+    address_id = json.loads(request.data).get('address_id')
+    address = Address.query.get(int(address_id))
+    db.session.delete(address)
+    db.session.commit()
+    return 'remove address success'
 
 
 @main.route('/add_products/')
@@ -343,3 +341,10 @@ def add_orders():
         db.session.commit()
         return 'add new orders success'
     return 'U can add new orders here.'
+
+@main.route('/test_remove_user/')
+def test_remove_user():
+    user = User.query.get(2)
+    db.session.delete(user)
+    db.session.commit()
+    return 'yes'

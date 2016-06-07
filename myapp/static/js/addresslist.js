@@ -35,12 +35,15 @@ $(".edit_address").on("click", function(){
 });
 //点“删除”，将该地址删除
 $(".rm_address").on("click", function(){
-    $($(this).parents('li[address_id]')[0]).remove()
+    // $($(this).parents('li[address_id]')[0]).remove()
     var address_id = $($(this).parents('li[address_id]')[0]).attr('address_id')
     $.ajax({
         type: 'POST',
-        url: "",
+        url: "/remove_address/",
         data: JSON.stringify({ address_id: address_id}),
-        contentType: 'application/json'
+        contentType: 'application/json',
+        success: function(data){
+            window.location.reload();
+        }
     })
 });
