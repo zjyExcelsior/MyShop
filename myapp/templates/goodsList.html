@@ -12,7 +12,7 @@
         <h2 class="ft-xl yellowBar page-title ">所有商品</h2>
         <ul class="item-list max3 goods-list ft-m">
             {% for product in products %}
-                <li product_id="{{ product.id }}">
+                <li product_id={{ product.id }}>
                     <div class="image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }}></div>
                     <ul class="goods-colors">
                         {% for _color in product.colors %}
@@ -29,6 +29,7 @@
 {% endblock %}
 
 {% block js %}
+    <script src="{{ url_for('static', filename='js/coloricon.js') }}"></script>
     <script>
         if(document.body.clientWidth > 1024){
             var list = $(".goods-list>li");
@@ -44,15 +45,5 @@
                 $(this).removeClass("toadd");
             }); 
         }
-    </script>
-    <script>
-        //颜色按钮的点击事件
-        $(".color_icon").on("click", function(){
-            var img_url = $(this).attr("pic");
-            var color_id = $(this).attr("color_id");
-            var img_div = $($(this).parents("li[product_id]").find(".image")[0]);
-            img_div.css("background-image", "url("+img_url+")");
-            img_div.attr("color_id", color_id);
-        });
     </script>
 {% endblock %}

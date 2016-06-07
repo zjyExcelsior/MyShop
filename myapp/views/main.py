@@ -66,9 +66,11 @@ def user(user_id):
         flash(user_form.username.errors[0])
     elif user_form.password.errors:
         flash(user_form.password.errors[0])
+    # 修改个人信息的时候，将当前用户名显示在表单中
     user_form.username.data = current_user.username
     addresses = current_user.addresses.order_by(desc(Address.id)).all()
-    return render_template('user.html', user_form=user_form, address_form=address_form, time_now=time_now, addresses=addresses)
+    orders = current_user.orders.order_by(desc(Order.id)).all()
+    return render_template('user.html', user_form=user_form, address_form=address_form, time_now=time_now, addresses=addresses, orders=orders)
 
 
 @main.route('/goodslist/')
@@ -158,21 +160,6 @@ def paysuccess():
     return render_template('paySuccess.html')
 
 
-@main.route('/teststatic/')
-def teststatic():
-    return url_for('static', filename='image/logo.png')
-
-
-@main.route('/testsql/')
-def testsql():
-    role = Role.query.filter(Role.id == 1).first()
-    if role:
-        db.session.delete(role)
-        db.session.commit()
-        return 'success'
-    return 'there is no role'
-
-
 @main.route('/address_info/<int:address_id>/')
 def address_info(address_id):
     '''得到地址信息'''
@@ -186,6 +173,7 @@ def address_info(address_id):
         'detail_address': address.detail_address,
         'postcode': address.postcode
     })
+
 
 @main.route('/remove_address/', methods=['POST'])
 def remove_address():
@@ -272,79 +260,105 @@ def add_products():
     return 'add products success'
 
 
-@main.route('/modify_order_state/', methods=['GET', 'POST'])
+@main.route('/modify_order_state/', methods=['POST'])
 def modify_order_state():
     '''修改订单状态'''
-    if request.method == 'POST':
-        order_id = session.get('order_id', '')
-        print order_id
-        if order_id:
-            order = Order.query.get(order_id)
-            if order.state == u'等待支付':
-                order.state = u'已发货'
-                session.pop('order_id', None)
-            db.session.add(order)
-            db.session.commit()
-    return 'U can modify the state of order'
+    order_id = session.get(
+        'order_id', '') if not request.data else request.data
+    if order_id:
+        order = Order.query.get(order_id)
+        if order.state == u'等待支付':
+            order.state = u'已发货'
+        elif order.state == u'已发货':
+            order.state = u'交易成功'
+        if session.get('order_id', ''):
+            session.pop('order_id', None)
+        db.session.add(order)
+        db.session.commit()
+    return 'modify the state of order success'
 
-@main.route('/add_to_cart/', methods=['GET', 'POST'])
+
+@main.route('/cancel_order/', methods=['POST'])
+def cancel_order():
+    '''关闭订单'''
+    order_id = request.data
+    order = Order.query.get(order_id)
+    order.state = u'已关闭'
+    db.session.add(order)
+    db.session.commit()
+    return 'cancel order success'
+
+
+@main.route('/add_to_cart/', methods=['POST'])
 def add_to_cart():
     '''添加商品到购物车'''
-    if request.method == 'POST':
-        color_id = json.loads(request.data).get('color_id')
-        color = Color.query.get(int(color_id))
-        color_key = 'color_%s' % color.id
-        if color_key in session:
-            session[color_key]['amount'] += 1
+    color_id = json.loads(request.data).get('color_id')
+    color = Color.query.get(int(color_id))
+    color_key = 'color_%s' % color.id
+    if color_key in session:
+        session[color_key]['amount'] += 1
+    else:
+        session[color_key] = {'amount': 1, 'timestamp': int(time.time())}
+        if 'product_amount' not in session:
+            session['product_amount'] = 1
         else:
-            session[color_key] = {'amount': 1, 'timestamp': int(time.time())}
-            if 'product_amount' not in session:
-                session['product_amount'] = 1
-            else:
-                session['product_amount'] += 1
-        return 'add products to cart successfully.'
-    return 'U can add products to cart.'
+            session['product_amount'] += 1
+    return 'add products to cart successfully.'
 
-@main.route('/remove_from_cart/', methods=['GET', 'POST'])
+
+@main.route('/remove_from_cart/', methods=['POST'])
 def remove_from_cart():
     '''将商品从购物车中移除'''
-    if request.method == 'POST':
-        color_key = request.data
+    color_key = request.data
+    session.pop(color_key, None)
+    if session['product_amount'] != 0:
+        session['product_amount'] -= 1
+    return 'remove success'
+
+
+@main.route('/add_orders/', methods=['POST'])
+def add_orders():
+    '''添加新订单'''
+    results = json.loads(request.data)
+    order_new = Order(order_time=int(time.time()), total=results.get(
+        'total'), state='等待支付', user_id=current_user.id, address_id=results.get('address_id'))
+    db.session.add(order_new)
+    for color_key, amount in results.get('colors').items():
+        color_id = color_key.split('_')[-1]
+        color = Color.query.get(color_id)
+        order_color = OrderColor(amount=amount)
+        order_color.order = order_new
+        order_color.color = color
+        db.session.add(order_color)
         session.pop(color_key, None)
         if session['product_amount'] != 0:
             session['product_amount'] -= 1
-        return 'remove success'
-    return 'U can remove product from cart'
+    db.session.flush()
+    order_new.order_number = 'order%s' % order_new.id
+    # 把order的id加入session中
+    session['order_id'] = order_new.id
+    db.session.commit()
+    return 'add new orders success'
 
-@main.route('/add_orders/', methods=['GET', 'POST'])
-def add_orders():
-    '''添加新订单'''
-    if request.method == 'POST':
-        results = json.loads(request.data)
-        order_new = Order(order_time=int(time.time()), total=results.get(
-            'total'), state='等待支付', user_id=current_user.id, address_id=results.get('address_id'))
-        db.session.add(order_new)
-        for color_key, amount in results.get('colors').items():
-            color_id = color_key.split('_')[-1]
-            color = Color.query.get(color_id)
-            order_color = OrderColor(amount=amount)
-            order_color.order = order_new
-            order_color.color = color
-            db.session.add(order_color)
-            session.pop(color_key, None)
-            if session['product_amount'] != 0:
-                session['product_amount'] -= 1
-        db.session.flush()
-        order_new.order_number = 'order%s' % order_new.id
-        # 把order的id加入session中
-        session['order_id'] = order_new.id
-        db.session.commit()
-        return 'add new orders success'
-    return 'U can add new orders here.'
 
 @main.route('/test_remove_user/')
 def test_remove_user():
-    user = User.query.get(2)
+    user = User.query.get(3)
     db.session.delete(user)
     db.session.commit()
     return 'yes'
+
+
+@main.route('/teststatic/')
+def teststatic():
+    return url_for('static', filename='image/logo.png')
+
+
+@main.route('/testsql/')
+def testsql():
+    role = Role.query.filter(Role.id == 1).first()
+    if role:
+        db.session.delete(role)
+        db.session.commit()
+        return 'success'
+    return 'there is no role'

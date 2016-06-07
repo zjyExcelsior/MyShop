@@ -33,11 +33,11 @@
         <h2 class="ft-xl">热销商品</h2>
         <ul class="item-list max3 goods-list ft-m">
             {% for product in products_hot %}
-                <li>
-                    <div class="image" style="background-image: url({{ product.colors[0].img_url }})"></div>
+                <li product_id={{ product.id }}>
+                    <div class="image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }}></div>
                     <ul class="goods-colors">
                         {% for _color in product.colors %}
-                            <li style="background-color: {{ _color.color }}"></li>
+                            <li style="background-color: {{ _color.color }}" pic="{{ _color.img_url }}" class="color_icon" color_id="{{ _color.id }}"></li>
                         {% endfor %}
                     </ul>
                     <a href="{{ url_for('main.goods', product_id=product.id ) }}" class="name ellipsis">{{ product.name }}</a>
@@ -86,6 +86,7 @@
 {% endblock %}
 
 {% block js %}
+    <script src="{{ url_for('static', filename='js/coloricon.js') }}"></script>
     <script>
         var mySwiper = new Swiper ('.swiper-container', {
             autoplay: 5000,
@@ -109,6 +110,5 @@
                 $(this).removeClass("toadd");
             }); 
         }
-            
     </script>
 {% endblock %}

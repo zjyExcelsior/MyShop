@@ -50,6 +50,7 @@
 {% endblock %}
 
 {% block js %}
+    <script src="{{ url_for('static', filename='js/coloricon.js') }}"></script>
     <script>
         //根据商品数量，判断是否可以加入购物车(初始化)
         var detail_amount = $("#detail_add").attr("color_amount");
@@ -91,14 +92,6 @@
             else{
                 $("#detail_add").removeClass("nogoods");
             }
-        });
-        //其他商品颜色按钮的点击事件
-        $(".goods-list .color_icon").on("click", function(){
-            var img_url = $(this).attr("pic");
-            var color_id = $(this).attr("color_id");
-            var img_div = $($(this).parents(".goods-list li[product_id]").find(".image")[0]);
-            img_div.css("background-image", "url("+img_url+")");
-            img_div.attr("color_id", color_id);
         });
         //细节商品加入购物车
         $("#detail_add").on("click", function(){

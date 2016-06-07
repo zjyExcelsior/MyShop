@@ -6,6 +6,7 @@ from . import admin
 from flask_admin.contrib.sqla import ModelView
 import hashlib
 import json
+from .utils.helpers import timestamp_to_datetime
 
 
 class Role(db.Model):
@@ -85,7 +86,6 @@ class Color(db.Model):
     def __repr__(self):
         return '<Color id=%s, product_id=%s, color=%s>' % (self.id, self.product_id, self.color)
 
-
 class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
@@ -96,9 +96,13 @@ class Order(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'))
     user = db.relationship('User', backref=db.backref('orders',
-                                                      cascade='all, delete-orphan'))
+                                                      cascade='all, delete-orphan', lazy='dynamic'))
     # 当地址不存在的时候，不删除该订单
     addresses = db.relationship('Address', backref=db.backref('orders'))
+
+    @property
+    def order_date(self):
+        return timestamp_to_datetime(self.order_time)
 
     def __repr__(self):
         return '<Order id=%s, order_number=%s>' % (self.id, self.order_number)

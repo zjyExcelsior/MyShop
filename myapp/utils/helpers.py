@@ -1,7 +1,7 @@
 # coding: utf-8
 import datetime
 from flask import session
-from ..models import Color
+import time
 
 
 def get_time():
@@ -17,6 +17,7 @@ def get_time():
 
 def get_products_in_cart(color_key_list):
     '''返回在购物车中的商品'''
+    from ..models import Color
     products_in_cart = {}
     for key in color_key_list:
         color_id = key.split('_')[-1]
@@ -25,6 +26,15 @@ def get_products_in_cart(color_key_list):
                               "color_name": color.name, "price": color.product.price, "timestamp": session.get(key).get("timestamp")}
     return products_in_cart
 
+def timestamp_to_datetime(timestamp):
+    '''
+    时间戳 -> 时间字符串
+    1461233180 -> '2016-06-06'
+    '''
+    tmp_struct_time = time.localtime(timestamp)
+    datetime_str = time.strftime('%Y-%m-%d', tmp_struct_time)
+    return datetime_str
 
 if __name__ == '__main__':
     print get_time()
+    print timestamp_to_datetime(int(time.time()))
