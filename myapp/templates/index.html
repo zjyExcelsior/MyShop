@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/swiper.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/goods.css') }}">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/lib/swiper.min.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/index.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/goods.css') }}>
 {% endblock %}
 
 {% block title %}主页{% endblock %}
@@ -34,19 +34,19 @@
         <ul class="item-list max3 goods-list ft-m">
             {% for product in products_hot %}
                 <li product_id={{ product.id }}>
-                    <div class="image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }}></div>
+                    <div class="image rough_image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }} color_amount={{ product.colors[0].amount }}></div>
                     <ul class="goods-colors">
                         {% for _color in product.colors %}
-                            <li style="background-color: {{ _color.color }}" pic="{{ _color.img_url }}" class="color_icon" color_id="{{ _color.id }}"></li>
+                            <li style="background-color: {{ _color.color }}" pic={{ _color.img_url }} class="color_icon" color_id={{ _color.id }} color_amount={{ _color.amount }}></li>
                         {% endfor %}
                     </ul>
-                    <a href="{{ url_for('main.goods', product_id=product.id ) }}" class="name ellipsis">{{ product.name }}</a>
+                    <a href={{ url_for('main.goods', product_id=product.id ) }} class="name ellipsis">{{ product.name }}</a>
                     <div class="descr">{{ product.description }}</div>
                     <div class="price">{{ product.price }}</div>
                 </li>
             {% endfor %}
         </ul>
-        <div class="more pointer"><a href="{{ url_for('main.goodslist') }}" style="color: #999">更多商品</a></div>
+        <div class="more pointer"><a href={{ url_for('main.goodslist') }} style="color: #999">更多商品</a></div>
     </div>
     <div class="index-btm wood-intro" id="wood-intro"></div>
     <div class="wood-text">
@@ -82,11 +82,11 @@
 {% endblock %}
 
 {% block swiper_js %}
-    <script src="{{ url_for('static', filename='js/lib/swiper.jquery.min.js') }}"></script>
+    <script src={{ url_for('static', filename='js/lib/swiper.jquery.min.js') }}></script>
 {% endblock %}
 
 {% block js %}
-    <script src="{{ url_for('static', filename='js/coloricon.js') }}"></script>
+    <script src={{ url_for('static', filename='js/goods.js') }}></script>
     <script>
         var mySwiper = new Swiper ('.swiper-container', {
             autoplay: 5000,
@@ -98,9 +98,6 @@
 
         if(document.body.clientWidth > 1024){
             var list = $(".goods-list:not(.sort-list)>li");
-            list.find(".image").on("click",function(){
-                $(this).parent().removeClass("toadd").toggleClass("carted");
-            });
             list.on("mouseenter",function(){
                 if(!$(this).hasClass("carted")){
                     $(this).addClass("toadd");

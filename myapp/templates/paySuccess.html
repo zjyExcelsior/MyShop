@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/cart.css') }}>
 {% endblock %}
 
 {% block title %}下单成功{% endblock %}
@@ -15,6 +15,6 @@
             <li class="active"><h2 class="page-title">下单成功</h2></li>
         </ul>
         <div class="text-status sended">支付成功，您的包裹正在飞来  (,,• ₃ •,,)</div>
-        <a href="{{ url_for('main.cart') }}" class="status-btn pointer hoverYellow">返回购物车></a>
+        <a href={{ url_for('main.cart') }} class="status-btn pointer hoverYellow">返回购物车></a>
     </div>
 {% endblock %}

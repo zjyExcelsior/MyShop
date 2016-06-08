@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/cart.css') }}>
 {% endblock %}
 {% block title %}购物车{% endblock %}
 {% block body %}
@@ -23,14 +23,14 @@
         </ul>
         <div class="cart-sum">
             <div class="selected">已选中 <span id="products_total">0</span> 件商品</div>
-            <div class="btn"><a id="billing" href="{{ url_for('main.orderconfirm', user_id=current_user.id) }}">结算</a></div>
+            <div class="btn"><a id="billing" href={{ url_for('main.orderconfirm', user_id=current_user.id) }}>结算</a></div>
             <div class="price" id="total_price">0</div>
         </div>
     </div>
 {% endblock %}
 
 {% block js %}
-    <script src="{{ url_for('static', filename='js/numInput.js') }}"></script>
+    <script src={{ url_for('static', filename='js/numInput.js') }}></script>
     <script>
         cmn.toggleStatus($(".cart-radio .radio"),{}, function(){
             var active_total = $(".active").length;

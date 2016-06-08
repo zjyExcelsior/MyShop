@@ -450,6 +450,6 @@ button {
 .hoverYellow:hover {
   color: #f8980f; }
 
-.color_icon {
+.color_icon, .menu-icon {
   cursor: pointer;
 }

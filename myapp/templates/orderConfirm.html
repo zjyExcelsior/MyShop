@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/cart.css') }}>
 {% endblock %}
 
 {% block title %}确认订单{% endblock %}
@@ -17,7 +17,7 @@
         <ul class="address-list noscroll cart-address">
             <li class="addnew pointer"></li>
             {% for address in addresses %}
-                <li address_id="{{ address.id }}" class="addresses">
+                <li address_id={{ address.id }} class="addresses">
                     <div class="name">
                         {{ address.name }}
                         <span class="hoverYellow pointer rm_address">删除</span>
@@ -69,8 +69,8 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{{ url_for('static', filename='js/numInput.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/addresslist.js') }}"></script>
+    <script src={{ url_for('static', filename='js/numInput.js') }}></script>
+    <script src={{ url_for('static', filename='js/addresslist.js') }}></script>
     <script>
         //商品相关条目
         var total = $(".gds-con").length;

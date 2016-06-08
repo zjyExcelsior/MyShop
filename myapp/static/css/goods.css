@@ -144,3 +144,7 @@
 
 .goods-rec {
   margin-top: 2.5rem; }
+
+.image {
+  cursor: pointer;
+}

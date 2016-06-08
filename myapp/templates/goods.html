@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/goods.css') }}">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/goods.css') }}>
 {% endblock %}
 
 {% block title %}商品详情{% endblock %}
@@ -9,7 +9,7 @@
 {% block body %}
     <div class="goods-info logo-center">
         <div class="goods-image yellowhalf" id="image">
-            <img src="{{ product_detail.colors[0].img_url }}" id="detail_img" color_id={{ product_detail.colors[0].id }}>
+            <img src={{ product_detail.colors[0].img_url }} id="detail_img" color_id={{ product_detail.colors[0].id }}>
         </div>
         <div class="goods-descr">
             <h2>{{ product_detail.name }}</h2>
@@ -22,7 +22,7 @@
             </ul>
             <ul class="goods-colors" id="colorpick">
                 {% for _color in product_detail.colors %}
-                    <li style="background-color: {{ _color.color }}" pic="{{ _color.img_url }}" class="color_icon" color_id={{ _color.id }} color_amount={{ _color.amount }}></li>
+                    <li style="background-color: {{ _color.color }}" pic={{ _color.img_url }} class="color_icon" color_id={{ _color.id }} color_amount={{ _color.amount }}></li>
                 {% endfor %}
             </ul>
             <!-- <div class="btn">加入购物车</div> -->
@@ -33,14 +33,14 @@
         <h3 class="title">看了该宝贝的宝宝还看了</h3>
         <ul class="item-list max4 goods-list ft-m">
             {% for product in products_others %}
-                <li product_id="{{ product.id }}">
-                    <div class="image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }} color_amount={{ product.colors[0].amount }}></div>
+                <li product_id={{ product.id }}>
+                    <div class="image rough_image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }} color_amount={{ product.colors[0].amount }}></div>
                     <ul class="goods-colors">
                         {% for _color in product.colors %}
-                            <li style="background-color: {{ _color.color }}" class="color_icon" pic="{{ _color.img_url }}" color_id="{{ _color.id }}"></li>
+                            <li style="background-color: {{ _color.color }}" class="color_icon" pic={{ _color.img_url }} color_id={{ _color.id }} color_amount={{ _color.amount }}></li>
                         {% endfor %}
                     </ul>
-                    <a href="{{ url_for('main.goods', product_id=product.id) }}" class="name ellipsis">{{ product.name }}</a>
+                    <a href={{ url_for('main.goods', product_id=product.id) }} class="name ellipsis">{{ product.name }}</a>
                     <div class="descr">{{ product.description }}</div>
                     <div class="price">{{ product.price }}</div>
                 </li>
@@ -50,7 +50,7 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{{ url_for('static', filename='js/coloricon.js') }}"></script>
+    <script src={{ url_for('static', filename='js/goods.js') }}></script>
     <script>
         //根据商品数量，判断是否可以加入购物车(初始化)
         var detail_amount = $("#detail_add").attr("color_amount");
@@ -60,12 +60,9 @@
         else{
             $("#detail_add").removeClass("nogoods");
         }
-        //其他商品添加到购物车
+        //其他商品添加到购物车效果。。。
         if(document.body.clientWidth > 1024){
             var list = $(".goods-list>li");
-            list.find(".image").on("click",function(){
-                $(this).parent().removeClass("toadd").toggleClass("carted");
-            });
             list.on("mouseenter",function(){
                 if(!$(this).hasClass("carted")){
                     $(this).addClass("toadd");
