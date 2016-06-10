@@ -11,9 +11,9 @@
     <div class="logo-center"></div>
     <div class="swiper-container index-gly">
         <div class="swiper-wrapper">
-            <div class="swiper-slide image" style="background-image: url(/static/image/index/g1.png)"></div>
-            <div class="swiper-slide image" style="background-image: url(/static/image/index/g2.png)"></div>
-            <div class="swiper-slide image" style="background-image: url(/static/image/index/g3.png)"></div>
+            <div class="swiper-slide image" style="background-image: url({{ url_for('static', filename='image/index/banner1.png') }})"></div>
+            <div class="swiper-slide image" style="background-image: url({{ url_for('static', filename='image/index/banner2.png') }})"></div>
+            <div class="swiper-slide image" style="background-image: url({{ url_for('static', filename='image/index/banner3.png') }})"></div>
         </div>
         <div class="swiper-pagination pagination"></div>
     </div>
