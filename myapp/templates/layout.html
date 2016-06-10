@@ -17,20 +17,23 @@
                 <input type="search" class="ft-m transition" width="0">
                 <div class="submit transition pointer"></div>
             </form>
-            <div class="user ft-m">
-                {% if not current_user.is_authenticated %}
+            {% if not current_user.is_authenticated %}
+                <div class="user ft-m">
                     <a href={{ url_for('main.cart') }} class="user-cart">
                         <span class="number">{{ session.get('product_amount', 0) }}</span>
                     </a>
                     <a href={{ url_for('auth.login') }} class="nologin">登录</a>
                     <a href={{ url_for('auth.signup') }} class="nologin ft-grey">免费注册</a>
-                {% else %}
+                </div>
+            {% else %}
+                <div style="width: 120px;" class="user ft-m">
                     <a href={{ url_for('main.cart', user_id=current_user.id) }} class="user-cart">
                         <span class="number">{{ session.get('product_amount', 0) }}</span>
                     </a>
                     <a href={{ url_for('main.user', user_id=current_user.id) }} class="username">{{ current_user.username }}</a>
-                {% endif %}
-            </div>
+                    <a href={{ url_for('auth.logout') }} class="username logout">登出</a>
+                </div>
+            {% endif %}
         </div>
         <ul class="menu-list" style="display:none">
             <li><a href={{ url_for('main.goodslist') }}>所有商品</a></li>
