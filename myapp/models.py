@@ -68,6 +68,11 @@ class Product(db.Model):
     price = db.Column(db.String(8))
     detail = db.Column(db.Text)
 
+    @property
+    def detail_lines(self):
+        return self.detail.splitlines()
+    
+
     def __repr__(self):
         return '<Product id=%s, name=%s>' % (self.id, self.name)
 

@@ -15,10 +15,9 @@
             <h2>{{ product_detail.name }}</h2>
             <b class="price ft-xl">{{ product_detail.price }}</b>
             <ul class="detail ft-s">
-                <li><span>材质：</span>外部（针织棉100%），内部套（95%聚酯纤维，5%氨纶）</li>
-                <li><span>颜色：</span>黑灰、深灰白、浅灰白、粉灰、蓝灰</li>
-                <li><span>粒子：</span>0.5mm级别进口粒子（无味无声触感细腻）</li>
-                <li><span>扣子：</span>日本NIFCO卡扣 </li>
+                {% for detail_line in product_detail.detail_lines %}
+                    <li>{{ detail_line }}</li>
+                {% endfor %}
             </ul>
             <ul class="goods-colors" id="colorpick">
                 {% for _color in product_detail.colors %}
