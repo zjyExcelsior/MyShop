@@ -43,12 +43,16 @@
             </ul>
         </div>
         <div class="user-con">
-            <h3 class="title">所有订单<span>待支付</span><span>待收货</span><span>已关闭</span></h3>
+            <h3 class="title"><span style="color:black;" class="btn_span all_order">所有订单</span><span class="btn_span wait_pay">待支付</span><span class="btn_span wait_receipt">待收货</span><span class="btn_span closed">已关闭</span></h3>
             {% for order in orders %}
                 {% if order.state == '已关闭' %}
                     <div class="user-order closed">
+                {% elif order.state == '等待支付'  %}
+                    <div class="user-order wait_pay">
+                {% elif order.state == '已发货' %}
+                    <div class="user-order wait_receipt">
                 {% else %}
-                    <div class="user-order">
+                    <div class="user-order order_success">
                 {% endif %}
 
                     <div class="head">
@@ -165,5 +169,23 @@
                 }
             });
         });
+        $(".btn_span").click(function(){
+            var btn_type = $(this).attr('class').split(' ')[1];
+            $(".btn_span").css("color", "#999");
+            $(this).css("color", "black");
+            if(btn_type === 'all_order'){
+                $('.user-order').show();
+            }
+            else{
+                $('.user-order').each(function(index, element){
+                    if($(element).attr('class').split(' ')[1] != btn_type){
+                        $(element).hide();
+                    }
+                    else{
+                        $(element).show();
+                    }
+                })
+            }
+        })
     </script>
 {% endblock %}

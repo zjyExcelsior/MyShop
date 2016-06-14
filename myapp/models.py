@@ -12,7 +12,7 @@ from .utils.helpers import timestamp_to_datetime
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True, index=True)
+    name = db.Column(db.String(64), unique=True)
 
     def __repr__(self):
         return '<Role id=%s, name=%s>' % (self.id, self.name)
@@ -21,7 +21,7 @@ class Role(db.Model):
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True, index=True)
+    username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(64))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     role = db.relationship('Role', backref=db.backref('users',

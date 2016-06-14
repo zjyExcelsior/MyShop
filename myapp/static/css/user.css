@@ -113,3 +113,6 @@
   padding: .6em 1.6em!important;
   font-size: 1.06rem!important;
 } */
+.btn_span {
+  cursor: pointer;
+}
