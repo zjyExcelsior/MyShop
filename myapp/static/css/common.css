@@ -145,8 +145,8 @@ footer {
 
 .logo-center {
   position: relative; }
-  .logo-center:before {
-    content: "";
+  .logo-center .logo {
+    cursor: pointer;
     position: absolute;
     left: 50%;
     top: -1rem;

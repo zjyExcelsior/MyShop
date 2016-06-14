@@ -43,3 +43,7 @@ var cmn = function($) {
         toggleStatus: toggleStatus
     };
 }(Zepto);
+
+$(".logo").click(function(){
+    window.location.href = '/';
+});

@@ -8,7 +8,9 @@
 {% block title %}主页{% endblock %}
 
 {% block body %}
-    <div class="logo-center"></div>
+    <div class="logo-center">
+        <span class="logo"></span>
+    </div>
     <div class="swiper-container index-gly">
         <div class="swiper-wrapper">
             <div class="swiper-slide image" style="background-image: url({{ url_for('static', filename='image/index/banner1.png') }})"></div>
