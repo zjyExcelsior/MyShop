@@ -34,7 +34,7 @@
         <ul class="item-list max4 goods-list ft-m">
             {% for product in products_others %}
                 <li product_id={{ product.id }}>
-                    <div class="image rough_image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }} color_amount={{ product.colors[0].amount }}></div>
+                    <div class="image rough_image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }} color_amount={{ product.colors[0].amount }}><span style="display: none;">加入购物车</span></div>
                     <ul class="goods-colors">
                         {% for _color in product.colors %}
                             <li style="background-color: {{ _color.color }}" class="color_icon" pic={{ _color.img_url }} color_id={{ _color.id }} color_amount={{ _color.amount }}></li>
@@ -50,6 +50,7 @@
 {% endblock %}
 
 {% block js %}
+    <!-- 处理非细节商品加入购物车的功能 -->
     <script src={{ url_for('static', filename='js/goods.js') }}></script>
     <script>
         //根据商品数量，判断是否可以加入购物车(初始化)
@@ -62,14 +63,13 @@
         }
         //其他商品添加到购物车效果。。。
         if(document.body.clientWidth > 1024){
-            var list = $(".goods-list>li");
-            list.on("mouseenter",function(){
+            $('.rough_image').on("mouseenter", function(){
                 if(!$(this).hasClass("carted")){
-                    $(this).addClass("toadd");
+                    $(this).find('span').addClass("toadd").show();
                 }
-            }); 
-            list.on("mouseleave",function(){
-                $(this).removeClass("toadd");
+            });
+            $('.rough_image').on("mouseleave", function(){
+                $(this).find('span').hide();
             }); 
         }
         //细节商品颜色按钮的点击事件

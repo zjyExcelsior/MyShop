@@ -10,8 +10,7 @@
     padding: 2rem; }
     .goods-list > li > * {
       width: 100%; }
-  .goods-list > li.carted:after,
-  .goods-list > li.toadd:after {
+  .toadd {
     position: absolute;
     left: 50%;
     top: 30%;
@@ -19,20 +18,20 @@
     padding: .8rem;
     background-color: #ffd245;
     background-repeat: no-repeat;
-    border-radius: 1.5rem; }
+    border-radius: 1.5rem; 
+
+    width: 5rem;
+    padding-left: 2.1rem;
+    background-image: url("../image/icon/cart.png");
+    background-position: .8rem center;
+    background-size: 1rem; 
+  }
   .goods-list > li.carted:after {
     content: "";
     height: .7rem;
     width: .7rem;
     background-image: url("../image/icon/chosen.png");
     background-position: center center;
-    background-size: 1rem; }
-  .goods-list > li.toadd:after {
-    content: "加入购物车";
-    width: 5rem;
-    padding-left: 2.1rem;
-    background-image: url("../image/icon/cart.png");
-    background-position: .8rem center;
     background-size: 1rem; }
   .goods-list:not(.sort-list) > li {
     border-radius: 12px;
