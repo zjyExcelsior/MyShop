@@ -5,7 +5,8 @@
   .lr-con .logo {
     width: 90%;
     height: 12rem;
-    margin: 0 5%; }
+    margin: 0 5%;
+    cursor: pointer; }
   .lr-con .btn {
     display: block;
     width: 80%;

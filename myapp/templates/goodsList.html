@@ -32,14 +32,4 @@
 
 {% block js %}
     <script src={{ url_for('static', filename='js/goods.js') }}></script>
-    <script>
-        if(document.body.clientWidth > 1024){
-            $('.rough_image').on("mouseenter", function(){
-                $(this).find('span').addClass("toadd").show();
-            });
-            $('.rough_image').on("mouseleave", function(){
-                $(this).find('span').hide();
-            }); 
-        }
-    </script>
 {% endblock %}

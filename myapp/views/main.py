@@ -320,6 +320,12 @@ def add_to_cart():
 def remove_from_cart():
     '''将商品从购物车中移除'''
     color_key = request.data
+    color_id = color_key.split('_')[-1]
+    color = Color.query.get(int(color_id))
+    color_amount = session.get(color_key).get('amount', 0)
+    color.amount += color_amount
+    db.session.add(color)
+    db.session.commit()
     session.pop(color_key, None)
     if session['product_amount'] != 0:
         session['product_amount'] -= 1

@@ -44,6 +44,7 @@ var cmn = function($) {
     };
 }(Zepto);
 
+// 点击logo图片跳转到首页
 $(".logo").click(function(){
     window.location.href = '/';
 });

@@ -61,17 +61,6 @@
         else{
             $("#detail_add").removeClass("nogoods");
         }
-        //其他商品添加到购物车效果。。。
-        if(document.body.clientWidth > 1024){
-            $('.rough_image').on("mouseenter", function(){
-                if(!$(this).hasClass("carted")){
-                    $(this).find('span').addClass("toadd").show();
-                }
-            });
-            $('.rough_image').on("mouseleave", function(){
-                $(this).find('span').hide();
-            }); 
-        }
         //细节商品颜色按钮的点击事件
         $(".goods-descr .color_icon").on("click", function(){
             var img_url_detail = $(this).attr("pic");

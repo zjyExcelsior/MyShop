@@ -16,7 +16,7 @@ $(".rough_image span").click(function(){
     var color_amount = $(this).parent().attr('color_amount');
     var color_id = $(this).parent().attr('color_id');
     if(parseInt(color_amount) > 0){
-        $(this).parent().parent().removeClass("toadd").toggleClass("carted");
+        $(this).removeClass("toadd").text("").toggleClass("carted");
         $.ajax({
             type: "POST", 
             url: '/add_to_cart/',
@@ -43,4 +43,14 @@ $(".rough_image span").click(function(){
         // window.location.reload();
     }
 });
+
+//移入鼠标出现“加入购物车”按钮，移出消失
+if(document.body.clientWidth > 1024){
+    $('.rough_image').on("mouseenter", function(){
+        $(this).find('span').addClass("toadd").show();
+    });
+    $('.rough_image').on("mouseleave", function(){
+        $(this).find('span').hide();
+    }); 
+}
 

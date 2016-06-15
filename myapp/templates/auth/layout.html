@@ -15,10 +15,9 @@
         {% endblock %}
     </div>
     <script src={{ url_for("static", filename="js/lib/zepto.min.js") }}></script>
+    <script src={{ url_for("static", filename="js/common.js") }}></script>
     <script src={{ url_for("static", filename="js/alertbox.js") }}></script>
     <script>
-        //注册提示框 调用showAb显示
-        // var showAb1 = alertBox("用户名不存在或密码错误");
         {% block script %}
         {% endblock %}
     </script>

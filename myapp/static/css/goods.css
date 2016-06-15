@@ -10,7 +10,7 @@
     padding: 2rem; }
     .goods-list > li > * {
       width: 100%; }
-  .toadd {
+  .toadd, .carted {
     position: absolute;
     left: 50%;
     top: 30%;
@@ -18,16 +18,16 @@
     padding: .8rem;
     background-color: #ffd245;
     background-repeat: no-repeat;
-    border-radius: 1.5rem; 
-
+    border-radius: 1.5rem;
+  }
+  .toadd { 
     width: 5rem;
     padding-left: 2.1rem;
     background-image: url("../image/icon/cart.png");
     background-position: .8rem center;
     background-size: 1rem; 
   }
-  .goods-list > li.carted:after {
-    content: "";
+  .carted {
     height: .7rem;
     width: .7rem;
     background-image: url("../image/icon/chosen.png");
