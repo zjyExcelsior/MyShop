@@ -11,7 +11,7 @@
         <span class="logo"></span>
     </div>
     <div class="content">
-        <h2 class="ft-xl yellowBar page-title ">所有商品</h2>
+        <h2 class="ft-xl yellowBar page-title ">{% block content_title %}所有商品{% endblock %}</h2>
         <ul class="item-list max3 goods-list ft-m">
             {% for product in products %}
                 <li product_id={{ product.id }}>

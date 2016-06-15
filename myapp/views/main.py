@@ -85,6 +85,15 @@ def goodslist():
     products = Product.query.all()
     return render_template('goodsList.html', products=products)
 
+@main.route('/products/result/<product_ids>/')
+def result(product_ids):
+    '''
+    搜索结果
+    '''
+    product_ids = json.loads(product_ids)
+    products = Product.query.filter(Product.id.in_(product_ids)).all() if product_ids else []
+    return render_template('searchresults.html', products=products)
+
 
 @main.route('/goods/<int:product_id>/', methods=['GET', 'POST'])
 def goods(product_id):
@@ -162,6 +171,21 @@ def paysuccess():
     支付成功
     '''
     return render_template('paySuccess.html')
+
+
+@main.route('/search_product/', methods=['POST'])
+def search_product():
+    '''搜索商品'''
+    product_name = request.form.get('name', '')
+    if product_name:
+        like_regex = u'%{0}%'.format(product_name)
+        products = Product.query.filter(Product.name.like(like_regex)).all()
+        product_ids = [product.id for product in products]
+        if products:
+            return redirect(url_for('.result', product_ids=json.dumps(product_ids)))
+        else:
+            return redirect(request.headers.get('Referer'))
+    return redirect(request.headers.get('Referer'))
 
 
 @main.route('/address_info/<int:address_id>/')

@@ -26,9 +26,23 @@
                         <span class="hoverYellow pointer edit_address">编辑</span>
                     </div>
                     <ul class="detail">
-                        <li>{{ address.phone_number }}</li>
-                        <li>{{ address.province }}{{ address.city }}{{ address.region }}</li>
-                        <li>{{ address.detail_address }}</li>
+                        {% if address.phone_number %}
+                            <li>{{ address.phone_number }}</li>
+                        {% endif %}
+                        <li>
+                            {% if address.province %}
+                                <span>{{ address.province }}</span>
+                            {% endif %}
+                            {% if address.city %}
+                                <span>{{ address.city }}</span>
+                            {% endif %}
+                            {% if address.region %}
+                                <span>{{ address.region }}</span>
+                            {% endif %}
+                        </li>
+                        {% if address.detail_address %}
+                            <li>{{ address.detail_address }}</li>
+                        {% endif %}
                     </ul>
                 </li>
             {% endfor %}

@@ -231,7 +231,7 @@ h3.title {
   .gds-con .image {
     width: 6rem;
     height: 6rem;
-    background: #bfbfbf center center no-repeat;
+    background: #fff center center no-repeat;
     background-size: 5rem; }
   .gds-con .name {
     flex-basis: 25%;
