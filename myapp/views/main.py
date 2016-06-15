@@ -298,9 +298,15 @@ def add_to_cart():
     '''添加商品到购物车'''
     color_id = json.loads(request.data).get('color_id')
     color = Color.query.get(int(color_id))
+    if color.amount > 0:
+        color.amount -= 1
+    db.session.add(color)
+    db.session.commit()
     color_key = 'color_%s' % color.id
     if color_key in session:
         session[color_key]['amount'] += 1
+        session[color_key]['timestamp'] = int(time.time())
+        session.modified = True
     else:
         session[color_key] = {'amount': 1, 'timestamp': int(time.time())}
         if 'product_amount' not in session:
@@ -352,6 +358,9 @@ def test_remove_user():
     db.session.commit()
     return 'yes'
 
+@main.route('/test_session/')
+def test_session():
+    raise Exception(session.get('color_1'))
 
 @main.route('/teststatic/')
 def teststatic():

@@ -35,9 +35,7 @@
     <script>
         if(document.body.clientWidth > 1024){
             $('.rough_image').on("mouseenter", function(){
-                if(!$(this).hasClass("carted")){
-                    $(this).find('span').addClass("toadd").show();
-                }
+                $(this).find('span').addClass("toadd").show();
             });
             $('.rough_image').on("mouseleave", function(){
                 $(this).find('span').hide();

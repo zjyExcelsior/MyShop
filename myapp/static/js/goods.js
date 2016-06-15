@@ -31,7 +31,16 @@ $(".rough_image span").click(function(){
         var ab = $('<div class="alert-box">'+'该商品库存不足'+'</div>');
         $("body").append(ab);
         ab.show();
-        window.location.reload();
+
+        $(document).bind("mouseup", function(e){
+            if($(".alert-box")){
+                var target = $(e.target);
+                if(target != $(".alert-box")){
+                    $(".alert-box").remove();
+                }
+            }
+        });
+        // window.location.reload();
     }
 });
 
