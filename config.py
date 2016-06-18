@@ -1,3 +1,7 @@
+import logging
+
 SECRET_KEY = '123456'
 SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@localhost/myshop'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
+FILE_LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = logging.INFO

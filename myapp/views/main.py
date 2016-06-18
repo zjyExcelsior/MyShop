@@ -55,9 +55,10 @@ def user(user_id):
         return redirect(url_for('.user', user_id=current_user.id))
     if user_form.validate_on_submit():
         user = User.query.get(current_user.id)
-        user_others = User.query.filter(User.username == user_form.username.data).first()
+        user_others = User.query.filter(
+            User.username == user_form.username.data).first()
         if user_others:
-            flash('该用户名已存在');
+            flash('该用户名已存在')
             return redirect(url_for('.user', user_id=current_user.id))
         if user_form.username.data != user.username:
             user.username = user_form.username.data
@@ -85,13 +86,15 @@ def goodslist():
     products = Product.query.all()
     return render_template('goodsList.html', products=products)
 
+
 @main.route('/products/result/<product_ids>/')
 def result(product_ids):
     '''
     搜索结果
     '''
     product_ids = json.loads(product_ids)
-    products = Product.query.filter(Product.id.in_(product_ids)).all() if product_ids else []
+    products = Product.query.filter(Product.id.in_(
+        product_ids)).all() if product_ids else []
     return render_template('searchresults.html', products=products)
 
 
@@ -388,9 +391,11 @@ def test_remove_user():
     db.session.commit()
     return 'yes'
 
+
 @main.route('/test_session/')
 def test_session():
     raise Exception(session.get('color_1'))
+
 
 @main.route('/teststatic/')
 def teststatic():

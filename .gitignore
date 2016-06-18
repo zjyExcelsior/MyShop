@@ -2,3 +2,4 @@
 venv/
 .DS_Store
 bower_components/
+logs/
