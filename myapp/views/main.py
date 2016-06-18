@@ -382,36 +382,3 @@ def add_orders():
     session['order_id'] = order_new.id
     db.session.commit()
     return 'add new orders success'
-
-
-@main.route('/test_remove_user/')
-def test_remove_user():
-    user = User.query.get(3)
-    db.session.delete(user)
-    db.session.commit()
-    return 'yes'
-
-
-@main.route('/test_session/')
-def test_session():
-    raise Exception(session.get('color_1'))
-
-
-@main.route('/teststatic/')
-def teststatic():
-    return url_for('static', filename='image/logo.png')
-
-
-@main.route('/testsql/')
-def testsql():
-    role = Role.query.filter(Role.id == 1).first()
-    if role:
-        db.session.delete(role)
-        db.session.commit()
-        return 'success'
-    return 'there is no role'
-
-@main.route('/test_log/')
-def test_log():
-    current_app.logger.info('test_log')
-    return 'log success'
