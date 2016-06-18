@@ -55,12 +55,12 @@ def user(user_id):
         return redirect(url_for('.user', user_id=current_user.id))
     if user_form.validate_on_submit():
         user = User.query.get(current_user.id)
-        user_others = User.query.filter(
-            User.username == user_form.username.data).first()
-        if user_others:
-            flash('该用户名已存在')
-            return redirect(url_for('.user', user_id=current_user.id))
         if user_form.username.data != user.username:
+            user_others = User.query.filter(
+                User.username == user_form.username.data).first()
+            if user_others:
+                flash('该用户名已存在')
+                return redirect(url_for('.user', user_id=current_user.id))
             user.username = user_form.username.data
         if user_form.password.data:
             user.password = user_form.password.data
