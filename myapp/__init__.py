@@ -25,7 +25,7 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config_name)
     app.logger.addHandler(get_filehandler(
-        'web', level=app.config.get('FILE_LOG_LEVEL')))
+        app.config.get('LOG_DIR'), 'web', level=app.config.get('FILE_LOG_LEVEL')))
     app.logger.setLevel(app.config.get('LOG_LEVEL'))
     login_manager.init_app(app)
     db.init_app(app)

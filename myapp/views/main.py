@@ -1,5 +1,5 @@
 # coding: utf-8
-from flask import render_template, Blueprint, redirect, flash, session
+from flask import render_template, Blueprint, redirect, flash, session, current_app
 from flask_login import login_required, current_user
 from flask import url_for, jsonify, request
 from ..forms import UserInfoForm, AddressForm
@@ -410,3 +410,8 @@ def testsql():
         db.session.commit()
         return 'success'
     return 'there is no role'
+
+@main.route('/test_log/')
+def test_log():
+    current_app.logger.info('test_log')
+    return 'log success'
