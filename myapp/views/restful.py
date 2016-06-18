@@ -1,12 +1,9 @@
 # coding: utf-8
-from flask import render_template, Blueprint, redirect, flash, session, current_app
+from flask import Blueprint, redirect, session
 from flask_login import login_required, current_user
 from flask import url_for, jsonify, request
-from ..forms import UserInfoForm, AddressForm
-from ..models import User, Role, Product, Color, Address, Order, OrderColor
+from ..models import Product, Color, Address, Order, OrderColor
 from .. import db
-from ..utils.helpers import get_time, get_products_in_cart
-from sqlalchemy import desc
 import json
 import time
 
@@ -28,6 +25,7 @@ def search_product():
 
 
 @restful.route('/address_info/<int:address_id>/')
+@login_required
 def address_info(address_id):
     '''得到地址信息'''
     address = Address.query.get(address_id)
@@ -43,6 +41,7 @@ def address_info(address_id):
 
 
 @restful.route('/remove_address/', methods=['POST'])
+@login_required
 def remove_address():
     '''删除地址信息'''
     address_id = json.loads(request.data).get('address_id')
@@ -53,6 +52,7 @@ def remove_address():
 
 
 @restful.route('/add_products/')
+@login_required
 def add_products():
     # 无印良品风U型抱枕
     product_baozhen = Product(
@@ -128,6 +128,7 @@ def add_products():
 
 
 @restful.route('/modify_order_state/', methods=['POST'])
+@login_required
 def modify_order_state():
     '''修改订单状态'''
     order_id = session.get(
@@ -146,6 +147,7 @@ def modify_order_state():
 
 
 @restful.route('/cancel_order/', methods=['POST'])
+@login_required
 def cancel_order():
     '''关闭订单'''
     order_id = request.data
@@ -196,6 +198,7 @@ def remove_from_cart():
 
 
 @restful.route('/add_orders/', methods=['POST'])
+@login_required
 def add_orders():
     '''添加新订单'''
     results = json.loads(request.data)

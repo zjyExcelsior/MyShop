@@ -122,6 +122,7 @@ def cart(user_id=0):
 
 
 @main.route('/orderconfirm/<user_id>', methods=['GET', 'POST'])
+@login_required
 def orderconfirm(user_id):
     '''
     确认订单
@@ -161,6 +162,7 @@ def orderconfirm(user_id):
 
 
 @main.route('/payconfirm/', methods=['GET', 'POST'])
+@login_required
 def payconfirm():
     '''
     确认支付
@@ -169,6 +171,7 @@ def payconfirm():
 
 
 @main.route('/paysuccess/')
+@login_required
 def paysuccess():
     '''
     支付成功
