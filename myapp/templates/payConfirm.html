@@ -26,7 +26,7 @@
         $('#pay_confirm').click(function(){
             $.ajax({
                 type: "POST",
-                url: {{ url_for('main.modify_order_state') | safe }},
+                url: {{ url_for('restful.modify_order_state') | safe }},
                 success: function(data){
                     window.location.href = {{ url_for('main.paysuccess') | safe}}
                 }

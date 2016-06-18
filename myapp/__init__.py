@@ -19,6 +19,7 @@ admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
 
 from .views.main import main
 from .views.auth import auth
+from .views.restful import restful
 from .views.test import test
 
 
@@ -34,4 +35,5 @@ def create_app(config_name):
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(test)
+    app.register_blueprint(restful)
     return app

@@ -164,7 +164,7 @@
             var order_id = $($(this).parents(".user-order-btns")[0]).attr("order_id");
             $.ajax({
                 type: "POST", 
-                url: {{ url_for('main.cancel_order') | tojson }},
+                url: {{ url_for('restful.cancel_order') | tojson }},
                 data: order_id,
                 contentType: "application/json",
                 success: function(data){
@@ -177,7 +177,7 @@
             var order_id = $($(this).parents(".user-order-btns")[0]).attr("order_id");
             $.ajax({
                 type: "POST", 
-                url: {{ url_for('main.modify_order_state') | tojson }},
+                url: {{ url_for('restful.modify_order_state') | tojson }},
                 data: order_id,
                 contentType: "application/json",
                 success: function(data){
