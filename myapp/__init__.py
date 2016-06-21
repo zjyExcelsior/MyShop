@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_admin import Admin
 from flask_admin.contrib.fileadmin import FileAdmin
+from flask_restful import Api
 import os.path as op
 from .utils.logger import get_filehandler
 import logging
@@ -16,6 +17,7 @@ db = SQLAlchemy()
 admin = Admin(name='MyShop', template_mode='bootstrap3')
 path = op.join(op.dirname(__file__), 'static')
 admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
+api = Api()
 
 from .views.main import main
 from .views.auth import auth
@@ -32,6 +34,7 @@ def create_app(config_name):
     login_manager.init_app(app)
     db.init_app(app)
     admin.init_app(app)
+    api.init_app(app)
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(test)
