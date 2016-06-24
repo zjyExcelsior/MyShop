@@ -6,6 +6,7 @@ from flask_admin import Admin
 from flask_admin.contrib.fileadmin import FileAdmin
 from flask_restful import Api
 from flask_cache import Cache
+from flask_debugtoolbar import DebugToolbarExtension
 import os.path as op
 from .utils.logger import get_filehandler
 import logging
@@ -20,6 +21,7 @@ path = op.join(op.dirname(__file__), 'static')
 admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
 api = Api()
 cache = Cache(config={'CACHE_TYPE': 'simple'})
+toolbar = DebugToolbarExtension()
 
 from .views.main import main
 from .views.auth import auth
@@ -38,6 +40,7 @@ def create_app(config_name):
     admin.init_app(app)
     api.init_app(app)
     cache.init_app(app)
+    toolbar.init_app(app)
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(test)
