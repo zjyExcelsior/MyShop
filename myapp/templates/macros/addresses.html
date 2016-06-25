@@ -1,0 +1,31 @@
+{% macro address_list(addresses) %}
+    <li class="addnew pointer"></li>
+    {% for address in addresses %}
+        <li address_id={{ address.id }}>
+            <div class="name">
+                {{ address.name }}
+                <span class="hoverYellow pointer rm_address">删除</span>
+                <span class="hoverYellow pointer edit_address">编辑</span>
+            </div>
+            <ul class="detail">
+                {% if address.phone_number %}
+                    <li>{{ address.phone_number }}</li>
+                {% endif %}
+                <li>
+                    {% if address.province %}
+                        <span>{{ address.province }}</span>
+                    {% endif %}
+                    {% if address.city %}
+                        <span>{{ address.city }}</span>
+                    {% endif %}
+                    {% if address.region %}
+                        <span>{{ address.region }}</span>
+                    {% endif %}
+                </li>
+                {% if address.detail_address %}
+                    <li>{{ address.detail_address }}</li>
+                {% endif %}
+            </ul>
+        </li>
+    {% endfor %}
+{% endmacro %}

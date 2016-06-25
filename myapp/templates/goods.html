@@ -32,19 +32,8 @@
     <div class="content goods-rec">
         <h3 class="title">看了该宝贝的宝宝还看了</h3>
         <ul class="item-list max4 goods-list ft-m">
-            {% for product in products_others %}
-                <li product_id={{ product.id }}>
-                    <div class="image rough_image" style="background-image: url({{ product.colors[0].img_url }})" color_id={{ product.colors[0].id }} color_amount={{ product.colors[0].amount }}><span style="display: none;">加入购物车</span></div>
-                    <ul class="goods-colors">
-                        {% for _color in product.colors %}
-                            <li style="background-color: {{ _color.color }}" class="color_icon" pic={{ _color.img_url }} color_id={{ _color.id }} color_amount={{ _color.amount }}></li>
-                        {% endfor %}
-                    </ul>
-                    <a href={{ url_for('main.goods', product_id=product.id) }} class="name ellipsis">{{ product.name }}</a>
-                    <div class="descr">{{ product.description }}</div>
-                    <div class="price">{{ product.price }}</div>
-                </li>
-            {% endfor %}
+            {% import 'macros/goods.html' as goods_macros %}
+            {{ goods_macros.goods(products_others) }}
         </ul>
     </div>
 {% endblock %}
