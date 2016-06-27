@@ -4,10 +4,12 @@ from flask_login import login_required, current_user
 from flask import url_for, jsonify, request
 from ..models import Product, Color, Address, Order, OrderColor
 from .. import db
+from ..forms import AddressForm
 import json
 import time
 
 restful = Blueprint('restful', __name__)
+
 
 @restful.route('/search_product/', methods=['POST'])
 def search_product():
@@ -221,3 +223,33 @@ def add_orders():
     session['order_id'] = order_new.id
     db.session.commit()
     return 'add new orders success'
+
+@restful.route('/deal_with_addresses/', methods=['POST'])
+@login_required
+def deal_with_addresses():
+    address_form = AddressForm()
+    if address_form.validate_on_submit():
+        if not address_form.address_id.data:
+            address = Address(name=address_form.name.data, phone_number=address_form.phone_number.data,
+                              province=address_form.province.data, city=address_form.city.data,
+                              region=address_form.region.data, detail_address=address_form.detail_address.data,
+                              postcode=address_form.postcode.data, user_id=current_user.id)
+        else:
+            address = Address.query.get(int(address_form.address_id.data))
+            if address_form.name.data and address_form.name.data != address.name:
+                address.name = address_form.name.data
+            if address_form.phone_number.data and address_form.phone_number.data != address.phone_number:
+                address.phone_number = address_form.phone_number.data
+            if address_form.province.data and address_form.province.data != address.province:
+                address.province = address_form.province.data
+            if address_form.city.data and address_form.city.data != address.city:
+                address.city = address_form.city.data
+            if address_form.region.data and address_form.region.data != address.region:
+                address.region = address_form.region.data
+            if address_form.detail_address.data and address_form.detail_address.data != address.detail_address:
+                address.detail_address = address_form.detail_address.data
+            if address_form.postcode.data and address_form.postcode.data != address.postcode:
+                address.postcode = address_form.postcode.data
+        db.session.add(address)
+        db.session.commit()
+        return redirect(request.headers.get('referer'))

@@ -29,3 +29,23 @@
         </li>
     {% endfor %}
 {% endmacro %}
+
+{% macro address_edit_form(address_form) %}
+    <div class="usredt-con ads-mdfy popup">
+        <form action={{ url_for("restful.deal_with_addresses") }} method="post">
+            <div class="usredt-input">
+                {{ address_form.name(class="name", placeholder="姓名") }}
+                {{ address_form.phone_number(class="number", placeholder="手机号") }}
+                {{ address_form.province(class="province half", placeholder="省份/自治区") }}
+                {{ address_form.city(class="city half", placeholder="城市/地区") }}
+                {{ address_form.region(class="area", placeholder="区/县") }}
+                {{ address_form.detail_address(class="location", placeholder="详细地址") }}
+                {{ address_form.postcode(class="code", placeholder="邮政编码") }}
+                {{ address_form.address_id(hidden=True) }}
+            </div>
+            {{ address_form.submit(class="btn save") }}
+            <input value="取消" class="btn cancel">
+            {{ address_form.csrf_token }}
+        </form>
+    </div>
+{% endmacro %}

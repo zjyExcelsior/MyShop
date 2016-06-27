@@ -28,31 +28,6 @@ def user(user_id):
     time_now = get_time()
     user_form = UserInfoForm()
     address_form = AddressForm()
-    if address_form.validate_on_submit():
-        if not address_form.address_id.data:
-            address = Address(name=address_form.name.data, phone_number=address_form.phone_number.data,
-                              province=address_form.province.data, city=address_form.city.data,
-                              region=address_form.region.data, detail_address=address_form.detail_address.data,
-                              postcode=address_form.postcode.data, user_id=current_user.id)
-        else:
-            address = Address.query.get(int(address_form.address_id.data))
-            if address_form.name.data and address_form.name.data != address.name:
-                address.name = address_form.name.data
-            if address_form.phone_number.data and address_form.phone_number.data != address.phone_number:
-                address.phone_number = address_form.phone_number.data
-            if address_form.province.data and address_form.province.data != address.province:
-                address.province = address_form.province.data
-            if address_form.city.data and address_form.city.data != address.city:
-                address.city = address_form.city.data
-            if address_form.region.data and address_form.region.data != address.region:
-                address.region = address_form.region.data
-            if address_form.detail_address.data and address_form.detail_address.data != address.detail_address:
-                address.detail_address = address_form.detail_address.data
-            if address_form.postcode.data and address_form.postcode.data != address.postcode:
-                address.postcode = address_form.postcode.data
-        db.session.add(address)
-        db.session.commit()
-        return redirect(url_for('.user', user_id=current_user.id))
     if user_form.validate_on_submit():
         user = User.query.get(current_user.id)
         if user_form.username.data != user.username:
@@ -132,31 +107,6 @@ def orderconfirm(user_id):
         products_selected = get_products_in_cart(color_keys)
         session['products_selected'] = products_selected
     address_form = AddressForm()
-    if address_form.validate_on_submit():
-        if not address_form.address_id.data:
-            address = Address(name=address_form.name.data, phone_number=address_form.phone_number.data,
-                              province=address_form.province.data, city=address_form.city.data,
-                              region=address_form.region.data, detail_address=address_form.detail_address.data,
-                              postcode=address_form.postcode.data, user_id=current_user.id)
-        else:
-            address = Address.query.get(int(address_form.address_id.data))
-            if address_form.name.data and address_form.name.data != address.name:
-                address.name = address_form.name.data
-            if address_form.phone_number.data and address_form.phone_number.data != address.phone_number:
-                address.phone_number = address_form.phone_number.data
-            if address_form.province.data and address_form.province.data != address.province:
-                address.province = address_form.province.data
-            if address_form.city.data and address_form.city.data != address.city:
-                address.city = address_form.city.data
-            if address_form.region.data and address_form.region.data != address.region:
-                address.region = address_form.region.data
-            if address_form.detail_address.data and address_form.detail_address.data != address.detail_address:
-                address.detail_address = address_form.detail_address.data
-            if address_form.postcode.data and address_form.postcode.data != address.postcode:
-                address.postcode = address_form.postcode.data
-        db.session.add(address)
-        db.session.commit()
-        return redirect(url_for('.orderconfirm', user_id=current_user.id, products=session.get('products_selected', {})))
     addresses = current_user.addresses.order_by(desc(Address.id)).all()
     return render_template('orderConfirm.html', addresses=addresses, address_form=address_form, products=session.get('products_selected', {}))
 
