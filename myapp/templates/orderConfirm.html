@@ -59,9 +59,13 @@
         });
         $('#total_price').text(price_amount);
         //选择地址
-        $('.addresses').click(function(){
+        $('li[address_id]').click(function(){
+            //只能选择一个地址
+            if($(this) != $(".addr_selected")){
+                $(".addr_selected").removeClass("addr_selected");
+            }
             $(this).toggleClass('addr_selected');
-        })
+        });
         //提交订单
         $("#submit_order").on("click", function(){
             var address_id = $(".addr_selected").attr("address_id");
