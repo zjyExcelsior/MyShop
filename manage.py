@@ -1,5 +1,5 @@
 # coding: utf-8
-from myapp import create_app, db
+from myshop import create_app, db
 from flask_script import Server, Manager
 
 app = create_app('config')
