@@ -5,7 +5,7 @@ from flask import url_for, jsonify, request
 from ..forms import UserInfoForm, AddressForm
 from ..models import User, Role, Product, Color, Address, Order, OrderColor
 from .. import db
-from ..utils.helpers import get_time, get_products_in_cart
+from ..utils.helpers import get_time_bucket, get_products_in_cart
 from sqlalchemy import desc
 import json
 import time
@@ -25,7 +25,7 @@ def user(user_id):
     '''
     用户个人页
     '''
-    time_now = get_time()
+    time_now = get_time_bucket()
     user_form = UserInfoForm()
     address_form = AddressForm()
     if user_form.validate_on_submit():

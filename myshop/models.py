@@ -1,8 +1,6 @@
 # coding: utf-8
-from . import db
+from .ext import db, login_manager, admin
 from flask_login import UserMixin
-from . import login_manager
-from . import admin
 from flask_admin.contrib.sqla import ModelView
 import hashlib
 import json

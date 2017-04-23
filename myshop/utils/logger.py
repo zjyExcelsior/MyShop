@@ -1,7 +1,6 @@
 # coding: utf-8
-'''
-Logger Module
-'''
+"""Logger Module
+"""
 
 import logging
 import logging.handlers

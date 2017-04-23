@@ -4,8 +4,8 @@ from flask import session
 import time
 
 
-def get_time():
-    '''返回上午/下午/晚上'''
+def get_time_bucket():
+    """返回上午/下午/晚上"""
     now = datetime.datetime.now()
     hour = int(now.strftime('%H'))
     if hour >= 6 and hour < 12:
@@ -16,7 +16,7 @@ def get_time():
         return u'晚上'
 
 def get_products_in_cart(color_key_list):
-    '''返回在购物车中的商品'''
+    """返回在购物车中的商品"""
     from ..models import Color
     products_in_cart = {}
     for key in color_key_list:
@@ -27,14 +27,13 @@ def get_products_in_cart(color_key_list):
     return products_in_cart
 
 def timestamp_to_datetime(timestamp):
-    '''
-    时间戳 -> 时间字符串
+    """时间戳 -> 时间字符串
     1461233180 -> '2016-06-06'
-    '''
+    """
     tmp_struct_time = time.localtime(timestamp)
     datetime_str = time.strftime('%Y-%m-%d', tmp_struct_time)
     return datetime_str
 
 if __name__ == '__main__':
-    print get_time()
-    print timestamp_to_datetime(int(time.time()))
+    print(get_time_bucket())
+    # print(timestamp_to_datetime(int(time.time())))
