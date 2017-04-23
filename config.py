@@ -20,9 +20,15 @@ SQLALCHEMY_DATABASE_URI = 'mysql://{0}:{1}@{2}:{3}/{4}?charset=utf8'.format(MYSQ
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # log configs
+LOGGER_NAME = 'myshop' # Flask's app logger name
 LOG_DIR = os.path.join(_basedir, 'logs')
-FILE_LOG_LEVEL = logging.DEBUG
 LOG_LEVEL = logging.INFO
+FILE_HANDLER_LEVEL = logging.DEBUG
+LOG_MAX_BYTES = 1024 * 1024 * 10
+LOG_BACKUP_COUNT = 5
+LOG_FMT = '%(asctime)s %(filename)s[line:%(lineno)d] %(funcName)s() %(levelname)s %(message)s'
+LOG_DATEFMT = '%Y-%m-%d %H:%M:%S'
+
 
 DEBUG = True
 DEBUG_TB_INTERCEPT_REDIRECTS = False

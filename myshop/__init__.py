@@ -10,10 +10,18 @@ def create_app(config_name):
     app.config.from_object(config_name)
 
     # app.logger
-    log_dir = app.config.get('LOG_DIR')
-    log_level = app.config.get('FILE_LOG_LEVEL')
-    app.logger.addHandler(get_filehandler(log_dir, 'web', level=log_level))
-    app.logger.setLevel(app.config.get('LOG_LEVEL'))
+    app_config = app.config
+    log_dir = app_config.get('LOG_DIR')
+    log_name = app_config.get('LOGGER_NAME')
+    log_max_bytes = app_config.get('LOG_MAX_BYTES')
+    log_backup_count = app_config.get('LOG_BACKUP_COUNT')
+    fmt = app_config.get('LOG_FMT')
+    datefmt = app_config.get('LOG_DATEFMT')
+    file_handler_level = app_config.get('FILE_HANDLER_LEVEL')
+    log_level = app_config.get('LOG_LEVEL')
+    file_handler = get_filehandler(log_dir, log_name, log_max_bytes, log_backup_count, fmt, datefmt, file_handler_level)
+    app.logger.addHandler(file_handler)
+    app.logger.setLevel(log_level)
 
     # 配置extensions
     login_manager.init_app(app)
