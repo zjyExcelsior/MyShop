@@ -75,7 +75,7 @@
             if(parseInt(detail_amount) > 0){
                 $.ajax({
                     type: "POST", 
-                    url: {{ url_for('restful.add_to_cart') | tojson }},
+                    url: {{ url_for('apis.add_to_cart') | tojson }},
                     data: JSON.stringify({ color_id: detail_color_id}),
                     contentType: 'application/json',
                     success: function(data){

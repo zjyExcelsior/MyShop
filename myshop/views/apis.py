@@ -7,10 +7,10 @@ from ..models import Product, Color, Address, Order, OrderColor
 from ..forms import AddressForm
 from ..ext import db
 
-restful = Blueprint('restful', __name__)
+apis = Blueprint('apis', __name__)
 
 
-@restful.route('/search_product/', methods=['POST'])
+@apis.route('/search_product/', methods=['POST'])
 def search_product():
     '''搜索商品'''
     product_name = request.form.get('name', '')
@@ -25,7 +25,7 @@ def search_product():
     return redirect(request.headers.get('Referer'))
 
 
-@restful.route('/address_info/<int:address_id>/')
+@apis.route('/address_info/<int:address_id>/')
 @login_required
 def address_info(address_id):
     '''得到地址信息'''
@@ -41,7 +41,7 @@ def address_info(address_id):
     })
 
 
-@restful.route('/remove_address/', methods=['POST'])
+@apis.route('/remove_address/', methods=['POST'])
 @login_required
 def remove_address():
     '''删除地址信息'''
@@ -52,7 +52,7 @@ def remove_address():
     return 'remove address success'
 
 
-@restful.route('/add_products/')
+@apis.route('/add_products/')
 @login_required
 def add_products():
     # 无印良品风U型抱枕
@@ -128,7 +128,7 @@ def add_products():
     return 'add products success'
 
 
-@restful.route('/modify_order_state/', methods=['POST'])
+@apis.route('/modify_order_state/', methods=['POST'])
 @login_required
 def modify_order_state():
     '''修改订单状态'''
@@ -147,7 +147,7 @@ def modify_order_state():
     return 'modify the state of order success'
 
 
-@restful.route('/cancel_order/', methods=['POST'])
+@apis.route('/cancel_order/', methods=['POST'])
 @login_required
 def cancel_order():
     '''关闭订单'''
@@ -159,7 +159,7 @@ def cancel_order():
     return 'cancel order success'
 
 
-@restful.route('/add_to_cart/', methods=['POST'])
+@apis.route('/add_to_cart/', methods=['POST'])
 def add_to_cart():
     '''添加商品到购物车'''
     color_id = json.loads(request.data).get('color_id')
@@ -182,7 +182,7 @@ def add_to_cart():
     return 'add products to cart successfully.'
 
 
-@restful.route('/remove_from_cart/', methods=['POST'])
+@apis.route('/remove_from_cart/', methods=['POST'])
 def remove_from_cart():
     '''将商品从购物车中移除'''
     color_key = request.data
@@ -198,7 +198,7 @@ def remove_from_cart():
     return 'remove success'
 
 
-@restful.route('/add_orders/', methods=['POST'])
+@apis.route('/add_orders/', methods=['POST'])
 @login_required
 def add_orders():
     '''添加新订单'''
@@ -224,7 +224,7 @@ def add_orders():
     return 'add new orders success'
 
 
-@restful.route('/deal_with_addresses/', methods=['POST'])
+@apis.route('/deal_with_addresses/', methods=['POST'])
 @login_required
 def deal_with_addresses():
     address_form = AddressForm()

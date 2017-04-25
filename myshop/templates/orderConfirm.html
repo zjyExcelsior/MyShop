@@ -77,7 +77,7 @@
             });
             $.ajax({
                 type: "POST",
-                url: {{ url_for('restful.add_orders') | safe }},
+                url: {{ url_for('apis.add_orders') | safe }},
                 data: JSON.stringify({"total": price_amount, "address_id": address_id, "colors": colors}),
                 contentType: "application/json",
                 success: function(data){

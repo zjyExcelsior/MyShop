@@ -35,11 +35,11 @@ def create_app(config_name):
     # 导入视图，注册蓝图
     from .views.main import main
     from .views.auth import auth
-    from .views.restful import restful
+    from .views.apis import apis
     from .views.test import test
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(test)
-    app.register_blueprint(restful)
+    app.register_blueprint(apis)
 
     return app

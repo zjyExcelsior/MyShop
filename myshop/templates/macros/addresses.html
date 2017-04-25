@@ -32,7 +32,7 @@
 
 {% macro address_edit_form(address_form) %}
     <div class="usredt-con ads-mdfy popup">
-        <form action={{ url_for("restful.deal_with_addresses") }} method="post">
+        <form action={{ url_for("apis.deal_with_addresses") }} method="post">
             <div class="usredt-input">
                 {{ address_form.name(class="name", placeholder="姓名") }}
                 {{ address_form.phone_number(class="number", placeholder="手机号") }}

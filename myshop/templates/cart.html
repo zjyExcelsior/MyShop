@@ -54,7 +54,7 @@
             var color_key = $(this).parents('.gds-con').attr('color_key');
             $.ajax({
                 type: "POST", 
-                url: {{ url_for('restful.remove_from_cart') | tojson }},
+                url: {{ url_for('apis.remove_from_cart') | tojson }},
                 data: color_key,
                 contentType: 'application/json',
                 success: function(data){
