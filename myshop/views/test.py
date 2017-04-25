@@ -1,8 +1,7 @@
 # coding: utf-8
-from flask import Blueprint, current_app
-from flask import url_for
+from flask import Blueprint, current_app, url_for
 from ..models import User, Role
-from .. import db
+from ..ext import db
 
 test = Blueprint('test', __name__)
 

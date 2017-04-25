@@ -1,10 +1,9 @@
 # coding: utf-8
-from flask import render_template, redirect, url_for, flash, request, abort
-from flask import Blueprint
-from ..forms import LoginForm, RegistrationForm
+from flask import render_template, redirect, url_for, flash, request, abort, Blueprint
 from flask_login import login_user, logout_user, login_required
+from ..forms import LoginForm, RegistrationForm
 from ..models import User
-from .. import db
+from ..ext import db
 
 auth = Blueprint('auth', __name__)
 

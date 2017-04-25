@@ -1,14 +1,13 @@
 # coding: utf-8
-from flask import render_template, Blueprint, redirect, flash, session, current_app
+import json
+from flask import (render_template, Blueprint, redirect, flash, session,
+                   current_app, url_for, jsonify, request)
 from flask_login import login_required, current_user
-from flask import url_for, jsonify, request
+from sqlalchemy import desc
 from ..forms import UserInfoForm, AddressForm
 from ..models import User, Role, Product, Color, Address, Order, OrderColor
-from .. import db
+from ..ext import db
 from ..utils.helpers import get_time_bucket, get_products_in_cart
-from sqlalchemy import desc
-import json
-import time
 
 main = Blueprint('main', __name__)
 

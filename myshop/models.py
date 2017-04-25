@@ -1,9 +1,8 @@
 # coding: utf-8
+import hashlib
 from .ext import db, login_manager, admin
 from flask_login import UserMixin
 from flask_admin.contrib.sqla import ModelView
-import hashlib
-import json
 from .utils.helpers import timestamp_to_datetime
 
 
@@ -52,7 +51,8 @@ class Address(db.Model):
     postcode = db.Column(db.String(6))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref=db.backref('addresses',
-                                                      cascade='all, delete-orphan', lazy='dynamic'))
+                                                      cascade='all, delete-orphan',
+                                                      lazy='dynamic'))
 
     def __repr__(self):
         return '<Address id=%s, name=%s>' % (self.id, self.name)
@@ -69,7 +69,6 @@ class Product(db.Model):
     @property
     def detail_lines(self):
         return self.detail.splitlines()
-    
 
     def __repr__(self):
         return '<Product id=%s, name=%s>' % (self.id, self.name)
@@ -83,11 +82,12 @@ class Color(db.Model):
     color = db.Column(db.String(10))
     img_url = db.Column(db.String(128))
     amount = db.Column(db.Integer, default=0)
-    product = db.relationship('Product', backref=db.backref(
-        'colors', cascade='all, delete-orphan'))
+    product = db.relationship('Product', backref=db.backref('colors',
+                                                            cascade='all, delete-orphan'))
 
     def __repr__(self):
         return '<Color id=%s, product_id=%s, color=%s>' % (self.id, self.product_id, self.color)
+
 
 class Order(db.Model):
     __tablename__ = 'orders'
@@ -99,9 +99,10 @@ class Order(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'))
     user = db.relationship('User', backref=db.backref('orders',
-                                                      cascade='all, delete-orphan', lazy='dynamic'))
-    # 当地址不存在的时候，不删除该订单
-    addresses = db.relationship('Address', backref=db.backref('orders'))
+                                                      cascade='all, delete-orphan',
+                                                      lazy='dynamic'))
+    addresses = db.relationship('Address',
+                                backref=db.backref('orders'))  # 当地址不存在的时候，不删除该订单
 
     @property
     def order_date(self):
@@ -113,13 +114,15 @@ class Order(db.Model):
 
 class OrderColor(db.Model):
     __tablename__ = 'orders_colors'
-    order_id = db.Column(db.Integer, db.ForeignKey(
-        'orders.id'), primary_key=True)
-    color_id = db.Column(db.Integer, db.ForeignKey(
-        'colors.id'), primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'),
+                         primary_key=True)
+    color_id = db.Column(db.Integer, db.ForeignKey('colors.id'),
+                         primary_key=True)
     amount = db.Column(db.Integer)
-    order = db.relationship('Order', backref=db.backref('colors', cascade='all, delete-orphan'))
-    color = db.relationship('Color', backref=db.backref('orders', cascade='all, delete-orphan'))
+    order = db.relationship('Order', backref=db.backref('colors',
+                                                        cascade='all, delete-orphan'))
+    color = db.relationship('Color', backref=db.backref('orders',
+                                                        cascade='all, delete-orphan'))
 
     def __repr__(self):
         return '<OrderColor order_id=%s, color_id=%s, amount=%s>' % (self.order_id, self.color_id, self.amount)

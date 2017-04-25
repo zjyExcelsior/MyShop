@@ -1,12 +1,11 @@
 # coding: utf-8
-from flask import Blueprint, redirect, session
-from flask_login import login_required, current_user
-from flask import url_for, jsonify, request
-from ..models import Product, Color, Address, Order, OrderColor
-from .. import db
-from ..forms import AddressForm
 import json
 import time
+from flask import Blueprint, redirect, session, url_for, jsonify, request
+from flask_login import login_required, current_user
+from ..models import Product, Color, Address, Order, OrderColor
+from ..forms import AddressForm
+from ..ext import db
 
 restful = Blueprint('restful', __name__)
 
@@ -223,6 +222,7 @@ def add_orders():
     session['order_id'] = order_new.id
     db.session.commit()
     return 'add new orders success'
+
 
 @restful.route('/deal_with_addresses/', methods=['POST'])
 @login_required
