@@ -56,64 +56,64 @@ def remove_address():
 @login_required
 def add_products():
     # 无印良品风U型抱枕
-    product_baozhen = Product(
-        name='无印良品风U型抱枕', description='懒人抱枕 办公室必备', price='67.70', detail='材质：外部（针织棉100%），内部套（95%聚酯纤维，5%氨纶）\n颜色：黑灰、深灰白、浅灰白、粉灰\n粒子：0.5mm级别进口粒子（无味无声触感细腻）\n扣子：日本NIFCO卡扣')
-    color_baozhen1 = Color(name="深灰白", color="#dddce4", img_url=url_for(
-        'static', filename='image/goods/baozhen#dddce4.png'), amount=1, product=product_baozhen)
-    color_baozhen2 = Color(name="粉灰", color="#f6e4e4", img_url=url_for(
-        'static', filename='image/goods/baozhen#f6e4e4.png'), amount=2, product=product_baozhen)
-    color_baozhen3 = Color(name="浅灰白", color="#eeeef4", img_url=url_for(
-        'static', filename='image/goods/baozhen#eeeef4.png'), amount=3, product=product_baozhen)
-    color_baozhen4 = Color(name="黑灰", color="#e1e1e1", img_url=url_for(
-        'static', filename='image/goods/baozhen#e1e1e1.png'), amount=4, product=product_baozhen)
+    product_baozhen = Product('无印良品风U型抱枕', '懒人抱枕 办公室必备', '67.70',
+                              '材质：外部（针织棉100%），内部套（95%聚酯纤维，5%氨纶）\n颜色：黑灰、深灰白、浅灰白、粉灰\n粒子：0.5mm级别进口粒子（无味无声触感细腻）\n扣子：日本NIFCO卡扣')
+    color_baozhen1 = Color("深灰白", "#dddce4", url_for(
+        'static', filename='image/goods/baozhen#dddce4.png'), 1, product_baozhen)
+    color_baozhen2 = Color("粉灰", "#f6e4e4", url_for(
+        'static', filename='image/goods/baozhen#f6e4e4.png'), 2, product_baozhen)
+    color_baozhen3 = Color("浅灰白", "#eeeef4", url_for(
+        'static', filename='image/goods/baozhen#eeeef4.png'), 3, product_baozhen)
+    color_baozhen4 = Color("黑灰", "#e1e1e1", url_for(
+        'static', filename='image/goods/baozhen#e1e1e1.png'), 4, product_baozhen)
     # 黑猫Tiimo美臀坐垫
-    product_zuodian = Product(
-        name='黑猫Tiimo美臀坐垫', description='柔软治愈 美臀不再费力', price='52.25', detail='尺寸：42cm＊42cm\n规格：单件\n材质：毛绒面料，填充（珍珠棉）\n特点：柔软治愈，表面细腻，手感软滑透气，不掉毛，还有美臀功效；长时间不会变形')
-    color_zuodian1 = Color(name="木炭黑", color="#1e353f", img_url=url_for(
-        'static', filename='image/goods/zuodian#1e353f.png'), amount=1, product=product_zuodian)
+    product_zuodian = Product('黑猫Tiimo美臀坐垫', '柔软治愈 美臀不再费力', '52.25',
+                              '尺寸：42cm＊42cm\n规格：单件\n材质：毛绒面料，填充（珍珠棉）\n特点：柔软治愈，表面细腻，手感软滑透气，不掉毛，还有美臀功效；长时间不会变形')
+    color_zuodian1 = Color("木炭黑", "#1e353f", url_for(
+        'static', filename='image/goods/zuodian#1e353f.png'), 1, product_zuodian)
     # 日式原木木片篮子圆形面包篮
-    product_mbl = Product(name='日式原木木片篮子圆形面包篮',
-                          description='原木木片 自然生态', price='16.00', detail='尺寸：19.5cm＊8cm\n材质：天然杉木\n产品贴士：本产品为手工编织，细节处难免不完美，材质原因可能造成表面及边缘有毛刺，介意请慎拍')
-    color_mbl1 = Color(name="本木色", color="#c1925b", img_url=url_for(
-        'static', filename='image/goods/mbl#c1925b.png'), amount=1, product=product_mbl)
+    product_mbl = Product('日式原木木片篮子圆形面包篮', '原木木片 自然生态', '16.00',
+                          '尺寸：19.5cm＊8cm\n材质：天然杉木\n产品贴士：本产品为手工编织，细节处难免不完美，材质原因可能造成表面及边缘有毛刺，介意请慎拍')
+    color_mbl1 = Color("本木色", "#c1925b", url_for(
+        'static', filename='image/goods/mbl#c1925b.png'), 1, product_mbl)
     # 日式单耳陶瓷碗
-    product_wan = Product(
-        name='日式单耳陶瓷碗', description='亚光磨砂釉面 质感温润', price='26.00', detail='尺寸：13cm＊6cm\n规格：单件\n材质：陶瓷\n工艺：亚光色釉\n特点：简单的经典色，表面的磨砂质感，手感和质感温润')
-    color_wan1 = Color(name="黑色", color="#35343a", img_url=url_for(
-        'static', filename='image/goods/wan#35343a.png'), amount=1, product=product_wan)
-    color_wan2 = Color(name="白色", color="#f5f6f6", img_url=url_for(
-        'static', filename='image/goods/wan#f5f6f6.png'), amount=1, product=product_wan)
+    product_wan = Product('日式单耳陶瓷碗', '亚光磨砂釉面 质感温润', '26.00',
+                          '尺寸：13cm＊6cm\n规格：单件\n材质：陶瓷\n工艺：亚光色釉\n特点：简单的经典色，表面的磨砂质感，手感和质感温润')
+    color_wan1 = Color("黑色", "#35343a", url_for(
+        'static', filename='image/goods/wan#35343a.png'), 1, product_wan)
+    color_wan2 = Color("白色", "#f5f6f6", url_for(
+        'static', filename='image/goods/wan#f5f6f6.png'), 1, product_wan)
     # 超声波负离子香薰机
-    product_xxj = Product(
-        name='超声波负离子香薰机', description='润物无声 品质保障', price='195.00', detail='尺寸：16.8cm＊13cm\n规格：单件\n材质：防腐PP材料\n特点：采用超声波雾化技术，细腻雾化；自然芳香，保湿空气，还可以做小夜灯\n产品贴士：切勿加入水温高于40℃的水；机器每使用3～5次，建议清洗；长时间不使用请切断电源并清洁后存放；再次使用可能有雾气变小的现象，可先将水槽清洗后再用')
-    color_xxj1 = Color(name="白色", color="#f5f6f6", img_url=url_for(
-        'static', filename='image/goods/xxj#f5f6f6.png'), amount=1, product=product_xxj)
+    product_xxj = Product('超声波负离子香薰机', '润物无声 品质保障', '195.00',
+                          '尺寸：16.8cm＊13cm\n规格：单件\n材质：防腐PP材料\n特点：采用超声波雾化技术，细腻雾化；自然芳香，保湿空气，还可以做小夜灯\n产品贴士：切勿加入水温高于40℃的水；机器每使用3～5次，建议清洗；长时间不使用请切断电源并清洁后存放；再次使用可能有雾气变小的现象，可先将水槽清洗后再用')
+    color_xxj1 = Color("白色", "#f5f6f6", url_for(
+        'static', filename='image/goods/xxj#f5f6f6.png'), 1, product_xxj)
     # 组合式木质盖子收纳盒
-    product_snh = Product(
-        name='组合式木质盖子收纳盒', description='原木木片 自然生态', price='38.00', detail='尺寸：25.5cm＊10cm\n规格：单件\n材质：橡胶木/PP塑料\n特点：清新淡雅，质感好，便利整洁；收纳日常杂物，既美观又实用')
-    color_snh1 = Color(name="本白色", color="#ffdbb7", img_url=url_for(
-        'static', filename='image/goods/snh#ffdbb7.png'), amount=1, product=product_snh)
+    product_snh = Product('组合式木质盖子收纳盒', '原木木片 自然生态', '38.00',
+                          '尺寸：25.5cm＊10cm\n规格：单件\n材质：橡胶木/PP塑料\n特点：清新淡雅，质感好，便利整洁；收纳日常杂物，既美观又实用')
+    color_snh1 = Color("本白色", "#ffdbb7", url_for(
+        'static', filename='image/goods/snh#ffdbb7.png'), 1, product_snh)
     # 创意木质手工皂盒
-    product_zaohe = Product(
-        name='创意木质手工皂盒', description='木质本色 朴实自然', price='9.90', detail='尺寸：10cm＊10cm\n规格：单件\n材质：木\n特点：木制本色，外层刷透明光漆，朴实自然，底部有漏水孔')
-    color_zaohe1 = Color(name="本木色", color="#eac090", img_url=url_for(
-        'static', filename='image/goods/zaohe#eac090.png'), amount=1, product=product_zaohe)
+    product_zaohe = Product('创意木质手工皂盒', '木质本色 朴实自然', '9.90',
+                            '尺寸：10cm＊10cm\n规格：单件\n材质：木\n特点：木制本色，外层刷透明光漆，朴实自然，底部有漏水孔')
+    color_zaohe1 = Color("本木色", "#eac090", url_for(
+        'static', filename='image/goods/zaohe#eac090.png'), 1, product_zaohe)
     # 手工编制藤编收纳筐
-    product_snk = Product(
-        name='手工编制藤编收纳筐', description='田园风情 匠人之心', price='32.00', detail='尺寸：25.5cm＊10cm\n规格：单件\n材质：橡胶木/PP塑料\n特点：清新淡雅，质感好，便利整洁；收纳日常杂物，既美观又实用')
-    color_snk1 = Color(name="藤木色", color="#957454", img_url=url_for(
-        'static', filename='image/goods/snk#957454.png'), amount=1, product=product_snk)
+    product_snk = Product('手工编制藤编收纳筐', '田园风情 匠人之心', '32.00',
+                          '尺寸：25.5cm＊10cm\n规格：单件\n材质：橡胶木/PP塑料\n特点：清新淡雅，质感好，便利整洁；收纳日常杂物，既美观又实用')
+    color_snk1 = Color("藤木色", "#957454", url_for(
+        'static', filename='image/goods/snk#957454.png'), 1, product_snk)
     # 创意实木小勺子
-    product_shaozi = Product(
-        name='创意实木小勺子', description='精致可爱 安全健康', price='4.80', detail='尺寸：13.5cm＊2.5cm\n规格：单件\n材质：楠木/杉木\n特点：精致可爱的日系方形小勺，原木材质安全健康；多色可选，满足不同使用需求\n产品贴士：本产品为木质，抹油保养可延长宝贝使用寿命，建议定期涂抹食用油保养')
-    color_shaozi1 = Color(name="楠木黑色线", color="#5d2a18", img_url=url_for(
-        'static', filename='image/goods/shaozi#5d2a18.png'), amount=1, product=product_shaozi)
-    color_shaozi2 = Color(name="楠木卡其色线", color="#69301c", img_url=url_for(
-        'static', filename='image/goods/shaozi#69301c.png'), amount=1, product=product_shaozi)
-    color_shaozi3 = Color(name="杉木卡其色线", color="#ecd1b4", img_url=url_for(
-        'static', filename='image/goods/shaozi#ecd1b4.png'), amount=1, product=product_shaozi)
-    color_shaozi4 = Color(name="杉木黑色线", color="#edd3b7", img_url=url_for(
-        'static', filename='image/goods/shaozi#edd3b7.png'), amount=1, product=product_shaozi)
+    product_shaozi = Product('创意实木小勺子', '精致可爱 安全健康', '4.80',
+                             '尺寸：13.5cm＊2.5cm\n规格：单件\n材质：楠木/杉木\n特点：精致可爱的日系方形小勺，原木材质安全健康；多色可选，满足不同使用需求\n产品贴士：本产品为木质，抹油保养可延长宝贝使用寿命，建议定期涂抹食用油保养')
+    color_shaozi1 = Color("楠木黑色线", "#5d2a18", url_for(
+        'static', filename='image/goods/shaozi#5d2a18.png'), 1, product_shaozi)
+    color_shaozi2 = Color("楠木卡其色线", "#69301c", url_for(
+        'static', filename='image/goods/shaozi#69301c.png'), 1, product_shaozi)
+    color_shaozi3 = Color("杉木卡其色线", "#ecd1b4", url_for(
+        'static', filename='image/goods/shaozi#ecd1b4.png'), 1, product_shaozi)
+    color_shaozi4 = Color("杉木黑色线", "#edd3b7", url_for(
+        'static', filename='image/goods/shaozi#edd3b7.png'), 1, product_shaozi)
     # 添加所有商品
     db.session.add_all([product_baozhen, color_baozhen1, color_baozhen2, color_baozhen3, color_baozhen4,
                         product_zuodian, color_zuodian1,
@@ -203,8 +203,8 @@ def remove_from_cart():
 def add_orders():
     '''添加新订单'''
     results = json.loads(request.data)
-    order_new = Order(order_time=int(time.time()), total=results.get(
-        'total'), state='等待支付', user_id=current_user.id, address_id=results.get('address_id'))
+    order_new = Order(int(time.time()), results.get('total'),
+                      '等待支付', current_user.id, results.get('address_id'))
     db.session.add(order_new)
     for color_key, amount in results.get('colors').items():
         color_id = color_key.split('_')[-1]
@@ -230,10 +230,10 @@ def deal_with_addresses():
     address_form = AddressForm()
     if address_form.validate_on_submit():
         if not address_form.address_id.data:
-            address = Address(name=address_form.name.data, phone_number=address_form.phone_number.data,
-                              province=address_form.province.data, city=address_form.city.data,
-                              region=address_form.region.data, detail_address=address_form.detail_address.data,
-                              postcode=address_form.postcode.data, user_id=current_user.id)
+            address = Address(address_form.name.data, address_form.phone_number.data,
+                              address_form.province.data, address_form.city.data,
+                              address_form.region.data, address_form.detail_address.data,
+                              address_form.postcode.data, current_user.id)
         else:
             address = Address.query.get(int(address_form.address_id.data))
             if address_form.name.data and address_form.name.data != address.name:

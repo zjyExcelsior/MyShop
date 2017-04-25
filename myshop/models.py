@@ -11,6 +11,9 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
 
+    def __init__(self, name):
+        self.name = name
+
     def __repr__(self):
         return '<Role id=%s, name=%s>' % (self.id, self.name)
 
@@ -23,6 +26,10 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     role = db.relationship('Role', backref=db.backref('users',
                                                       cascade='all, delete-orphan'))
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 
     @property
     def password(self):
@@ -54,6 +61,16 @@ class Address(db.Model):
                                                       cascade='all, delete-orphan',
                                                       lazy='dynamic'))
 
+    def __init__(self, name, phone_number, province, city, region, detail_address, postcode, user_id):
+        self.name = name
+        self.phone_number = phone_number
+        self.province = province
+        self.city = city
+        self.region = region
+        self.detail_address = detail_address
+        self.postcode = postcode
+        self.user_id = user_id
+
     def __repr__(self):
         return '<Address id=%s, name=%s>' % (self.id, self.name)
 
@@ -66,6 +83,12 @@ class Product(db.Model):
     price = db.Column(db.String(8))
     detail = db.Column(db.Text)
 
+    def __init__(self, name, description, price, detail):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.detail = detail
+
     @property
     def detail_lines(self):
         return self.detail.splitlines()
@@ -77,13 +100,20 @@ class Product(db.Model):
 class Color(db.Model):
     __tablename__ = 'colors'
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     name = db.Column(db.String(64))
     color = db.Column(db.String(10))
     img_url = db.Column(db.String(128))
     amount = db.Column(db.Integer, default=0)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     product = db.relationship('Product', backref=db.backref('colors',
                                                             cascade='all, delete-orphan'))
+
+    def __init__(self, name, color, img_url, amount, product):
+        self.name = name
+        self.color = color
+        self.img_url = img_url
+        self.amount = amount
+        self.product = product
 
     def __repr__(self):
         return '<Color id=%s, product_id=%s, color=%s>' % (self.id, self.product_id, self.color)
@@ -103,6 +133,13 @@ class Order(db.Model):
                                                       lazy='dynamic'))
     addresses = db.relationship('Address',
                                 backref=db.backref('orders'))  # 当地址不存在的时候，不删除该订单
+
+    def __init__(self, order_time, total, state, user_id, address_id):
+        self.order_time = order_time
+        self.total = total
+        self.state = state
+        self.user_id = user_id
+        self.address_id = address_id
 
     @property
     def order_date(self):
