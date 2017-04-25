@@ -12,7 +12,7 @@ apis = Blueprint('apis', __name__)
 
 @apis.route('/search_product/', methods=['POST'])
 def search_product():
-    '''搜索商品'''
+    """搜索商品"""
     product_name = request.form.get('name', '')
     if product_name:
         like_regex = u'%{0}%'.format(product_name)
@@ -28,7 +28,7 @@ def search_product():
 @apis.route('/address_info/<int:address_id>/')
 @login_required
 def address_info(address_id):
-    '''得到地址信息'''
+    """得到地址信息"""
     address = Address.query.get(address_id)
     return jsonify({
         'name': address.name,
@@ -44,7 +44,7 @@ def address_info(address_id):
 @apis.route('/remove_address/', methods=['POST'])
 @login_required
 def remove_address():
-    '''删除地址信息'''
+    """删除地址信息"""
     address_id = json.loads(request.data).get('address_id')
     address = Address.query.get(int(address_id))
     db.session.delete(address)
@@ -131,7 +131,7 @@ def add_products():
 @apis.route('/modify_order_state/', methods=['POST'])
 @login_required
 def modify_order_state():
-    '''修改订单状态'''
+    """修改订单状态"""
     order_id = session.get(
         'order_id', '') if not request.data else request.data
     if order_id:
@@ -150,7 +150,7 @@ def modify_order_state():
 @apis.route('/cancel_order/', methods=['POST'])
 @login_required
 def cancel_order():
-    '''关闭订单'''
+    """关闭订单"""
     order_id = request.data
     order = Order.query.get(order_id)
     order.state = u'已关闭'
@@ -161,7 +161,7 @@ def cancel_order():
 
 @apis.route('/add_to_cart/', methods=['POST'])
 def add_to_cart():
-    '''添加商品到购物车'''
+    """添加商品到购物车"""
     color_id = json.loads(request.data).get('color_id')
     color = Color.query.get(int(color_id))
     if color.amount > 0:
@@ -184,7 +184,7 @@ def add_to_cart():
 
 @apis.route('/remove_from_cart/', methods=['POST'])
 def remove_from_cart():
-    '''将商品从购物车中移除'''
+    """将商品从购物车中移除"""
     color_key = request.data
     color_id = color_key.split('_')[-1]
     color = Color.query.get(int(color_id))
@@ -201,7 +201,7 @@ def remove_from_cart():
 @apis.route('/add_orders/', methods=['POST'])
 @login_required
 def add_orders():
-    '''添加新订单'''
+    """添加新订单"""
     results = json.loads(request.data)
     order_new = Order(int(time.time()), results.get('total'),
                       '等待支付', current_user.id, results.get('address_id'))
@@ -218,8 +218,7 @@ def add_orders():
             session['product_amount'] -= 1
     db.session.flush()
     order_new.order_number = 'order%s' % order_new.id
-    # 把order的id加入session中
-    session['order_id'] = order_new.id
+    session['order_id'] = order_new.id  # 把order的id加入session中
     db.session.commit()
     return 'add new orders success'
 

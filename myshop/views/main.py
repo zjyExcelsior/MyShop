@@ -1,6 +1,6 @@
 # coding: utf-8
 import json
-from flask import (render_template, Blueprint, redirect, flash, session,
+from flask import (Blueprint, render_template, redirect, flash, session,
                    current_app, url_for, jsonify, request)
 from flask_login import login_required, current_user
 from sqlalchemy import desc
@@ -14,16 +14,16 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    products_hot = Product.query.order_by(Product.id).limit(3)
+    products_hot_counts = current_app.config.get('BEST_SELLER_DISPLAY_COUNT')
+    products_hot = Product.query.order_by(
+        Product.id).limit(products_hot_counts)
     return render_template('index.html', products_hot=products_hot)
 
 
 @main.route('/user/<int:user_id>/', methods=['GET', 'POST'])
 @login_required
 def user(user_id):
-    '''
-    用户个人页
-    '''
+    """用户个人页"""
     time_now = get_time_bucket()
     user_form = UserInfoForm()
     address_form = AddressForm()
@@ -49,47 +49,40 @@ def user(user_id):
     user_form.username.data = current_user.username
     addresses = current_user.addresses.order_by(desc(Address.id)).all()
     orders = current_user.orders.order_by(desc(Order.id)).all()
-    return render_template('user.html', user_form=user_form, address_form=address_form, time_now=time_now, addresses=addresses, orders=orders)
+    return render_template('user.html', user_form=user_form, address_form=address_form,
+                           time_now=time_now, addresses=addresses, orders=orders)
 
 
 @main.route('/goodslist/')
 def goodslist():
-    '''
-    所有商品
-    '''
+    """所有商品"""
     products = Product.query.all()
     return render_template('goodsList.html', products=products)
 
 
 @main.route('/products/result/<product_ids>/')
 def result(product_ids):
-    '''
-    搜索结果
-    '''
+    """搜索结果"""
     product_ids = json.loads(product_ids)
-    products = Product.query.filter(Product.id.in_(
-        product_ids)).all() if product_ids else []
+    products = Product.query.filter(
+        Product.id.in_(product_ids)).all() if product_ids else []
     return render_template('searchresults.html', products=products)
 
 
 @main.route('/goods/<int:product_id>/', methods=['GET', 'POST'])
 def goods(product_id):
-    '''
-    商品详情
-    '''
+    """商品详情"""
     product_detail = Product.query.get(product_id)
     products = Product.query.all()
-    products_others = [
-        product for product in products if product.id != product_id]
+    products_others = [product for product in products
+                       if product.id != product_id]
     return render_template('goods.html', product_detail=product_detail, products_others=products_others)
 
 
 @main.route('/cart/')
 @main.route('/cart/<user_id>/')
 def cart(user_id=0):
-    '''
-    购物车
-    '''
+    """购物车"""
     color_keys = [key for key in session.keys() if 'color' in key]
     products_in_cart = get_products_in_cart(color_keys)
     return render_template('cart.html', products=products_in_cart)
@@ -98,9 +91,7 @@ def cart(user_id=0):
 @main.route('/orderconfirm/<user_id>', methods=['GET', 'POST'])
 @login_required
 def orderconfirm(user_id):
-    '''
-    确认订单
-    '''
+    """确认订单"""
     if 'color_keys' in request.args:
         color_keys = json.loads(request.args.get('color_keys'))
         products_selected = get_products_in_cart(color_keys)
@@ -113,16 +104,12 @@ def orderconfirm(user_id):
 @main.route('/payconfirm/', methods=['GET', 'POST'])
 @login_required
 def payconfirm():
-    '''
-    确认支付
-    '''
+    """确认支付"""
     return render_template('payConfirm.html')
 
 
 @main.route('/paysuccess/')
 @login_required
 def paysuccess():
-    '''
-    支付成功
-    '''
+    """支付成功"""
     return render_template('paySuccess.html')

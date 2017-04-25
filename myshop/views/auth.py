@@ -1,5 +1,5 @@
 # coding: utf-8
-from flask import render_template, redirect, url_for, flash, request, abort, Blueprint
+from flask import Blueprint, render_template, redirect, url_for, flash, request, abort
 from flask_login import login_user, logout_user, login_required
 from ..forms import LoginForm, RegistrationForm
 from ..models import User

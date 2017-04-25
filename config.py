@@ -33,6 +33,9 @@ LOG_DATEFMT = '%Y-%m-%d %H:%M:%S'
 DEBUG = True
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
+# myshop configs
+BEST_SELLER_DISPLAY_COUNT = 3 # 首页热销商品展示数量
+
 try:
     from local_settings import *  # 导入本地配置
 except ImportError:
